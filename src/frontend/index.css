@@ -1,0 +1,208 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =============================================
+   FONT DECLARATIONS — Travellers Points
+   ============================================= */
+
+@font-face {
+  font-family: "Fraunces";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/assets/fonts/Fraunces.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Cabinet Grotesk";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/assets/fonts/CabinetGrotesk.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "General Sans";
+  font-style: normal;
+  font-weight: 200 700;
+  font-display: swap;
+  src: url("/assets/fonts/GeneralSans.woff2") format("woff2");
+}
+
+/* =============================================
+   DESIGN TOKENS — Warm Travel Palette
+   ============================================= */
+
+@layer base {
+  :root {
+    --radius: 0.75rem;
+
+    /* Core palette: warm sand & deep ocean */
+    --background: 0.98 0.008 85;
+    --foreground: 0.18 0.04 250;
+
+    --card: 0.995 0.004 85;
+    --card-foreground: 0.18 0.04 250;
+
+    --popover: 0.995 0.004 85;
+    --popover-foreground: 0.18 0.04 250;
+
+    /* Primary: Deep Ocean Blue */
+    --primary: 0.32 0.1 248;
+    --primary-foreground: 0.98 0.008 85;
+
+    /* Secondary: Warm Amber/Gold */
+    --secondary: 0.88 0.06 72;
+    --secondary-foreground: 0.18 0.04 250;
+
+    /* Muted: Warm light sand */
+    --muted: 0.94 0.015 80;
+    --muted-foreground: 0.48 0.04 240;
+
+    /* Accent: Warm Coral/Amber */
+    --accent: 0.75 0.18 52;
+    --accent-foreground: 0.98 0.008 85;
+
+    --destructive: 0.577 0.245 27.325;
+    --destructive-foreground: 0.985 0 0;
+
+    --border: 0.88 0.02 80;
+    --input: 0.90 0.015 80;
+    --ring: 0.52 0.12 248;
+
+    /* Chart colors */
+    --chart-1: 0.75 0.18 52;
+    --chart-2: 0.32 0.1 248;
+    --chart-3: 0.65 0.2 145;
+    --chart-4: 0.70 0.15 30;
+    --chart-5: 0.55 0.14 190;
+
+    /* Custom travel tokens */
+    --ocean: 0.32 0.1 248;
+    --ocean-light: 0.52 0.14 248;
+    --ocean-pale: 0.88 0.05 248;
+    --gold: 0.78 0.19 52;
+    --gold-light: 0.88 0.12 72;
+    --coral: 0.68 0.21 32;
+    --sand: 0.96 0.02 80;
+    --sand-dark: 0.90 0.03 75;
+
+    /* Sidebar */
+    --sidebar: 0.985 0 0;
+    --sidebar-foreground: 0.145 0 0;
+    --sidebar-primary: 0.205 0 0;
+    --sidebar-primary-foreground: 0.985 0 0;
+    --sidebar-accent: 0.97 0 0;
+    --sidebar-accent-foreground: 0.205 0 0;
+    --sidebar-border: 0.922 0 0;
+    --sidebar-ring: 0.708 0 0;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "General Sans", "Cabinet Grotesk", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: "Fraunces", Georgia, serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* =============================================
+   UTILITIES & CUSTOM CLASSES
+   ============================================= */
+
+@layer utilities {
+  .font-display {
+    font-family: "Fraunces", Georgia, serif;
+  }
+
+  .font-body {
+    font-family: "General Sans", "Cabinet Grotesk", sans-serif;
+  }
+
+  .text-ocean {
+    color: oklch(var(--ocean));
+  }
+
+  .text-gold {
+    color: oklch(var(--gold));
+  }
+
+  .text-coral {
+    color: oklch(var(--coral));
+  }
+
+  .bg-ocean {
+    background-color: oklch(var(--ocean));
+  }
+
+  .bg-ocean-light {
+    background-color: oklch(var(--ocean-light));
+  }
+
+  .bg-ocean-pale {
+    background-color: oklch(var(--ocean-pale));
+  }
+
+  .bg-gold {
+    background-color: oklch(var(--gold));
+  }
+
+  .bg-gold-light {
+    background-color: oklch(var(--gold-light));
+  }
+
+  .bg-coral {
+    background-color: oklch(var(--coral));
+  }
+
+  .bg-sand {
+    background-color: oklch(var(--sand));
+  }
+
+  .bg-sand-dark {
+    background-color: oklch(var(--sand-dark));
+  }
+
+  .border-ocean {
+    border-color: oklch(var(--ocean));
+  }
+
+  .border-gold {
+    border-color: oklch(var(--gold));
+  }
+
+  .gradient-ocean {
+    background: linear-gradient(135deg, oklch(var(--ocean)) 0%, oklch(var(--ocean-light)) 100%);
+  }
+
+  .gradient-warm {
+    background: linear-gradient(135deg, oklch(var(--gold)) 0%, oklch(var(--coral)) 100%);
+  }
+
+  .card-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .section-padding {
+    @apply py-20 px-4 md:px-8 lg:px-16;
+  }
+}
