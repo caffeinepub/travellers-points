@@ -21,12 +21,14 @@ import {
   Menu,
   Phone,
   Plane,
+  Play,
   Search,
   ShieldCheck,
   Star,
   Tag,
   Twitter,
   Users,
+  Video,
   X,
   Youtube,
 } from "lucide-react";
@@ -46,6 +48,7 @@ const NAV_LINKS = [
   { label: "Services", href: "#services" },
   { label: "Why Us", href: "#why-us" },
   { label: "Deals", href: "#deals" },
+  { label: "Reviews", href: "#reviews" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -109,8 +112,8 @@ const DESTINATIONS = [
     country: "Land of Thunder Dragon",
     image: "/assets/generated/dest-bhutan.dim_600x400.jpg",
     description:
-      "Mystical monasteries, pristine Himalayan landscapes, and a kingdom that measures happiness — Bhutan is unlike anywhere on earth.",
-    price: "From ₹28,999",
+      "Mystical monasteries, pristine Himalayan landscapes, and a kingdom that measures happiness. Group tours from ₹25,000 with Bagdogra/NJP pickup.",
+    price: "From ₹25,000",
     duration: "6N / 7D",
   },
   {
@@ -227,6 +230,16 @@ const DEALS = [
     image: "/assets/generated/dest-bhutan.dim_600x400.jpg",
   },
   {
+    badge: "Group Tour Deal",
+    destination: "Bhutan Group Tour",
+    country: "Bagdogra / NJP Pickup",
+    nights: 6,
+    originalPrice: "₹30,000",
+    currentPrice: "₹25,000",
+    savings: "Save 17%",
+    image: "/assets/generated/dest-bhutan.dim_600x400.jpg",
+  },
+  {
     badge: "Hill Station Getaway",
     destination: "Sikkim & Darjeeling",
     country: "India",
@@ -273,6 +286,81 @@ const TESTIMONIALS = [
     rating: 5,
     text: "Sikkim Darjeeling tour was perfectly organized. The sunrise at Tiger Hill was breathtaking. Will book again!",
     destination: "Sikkim & Darjeeling",
+  },
+];
+
+// =============================================
+// CLIENT REVIEWS DATA
+// =============================================
+
+const CLIENT_REVIEWS = [
+  {
+    id: 1,
+    name: "Rohit & Priya Sharma",
+    destination: "Bhutan",
+    tag: "Bhutan",
+    photo: "/assets/generated/client-bhutan-1.dim_400x400.jpg",
+    rating: 5,
+    text: "The Tiger's Nest hike was the most magical experience of our lives! Travellers Points handled everything perfectly — from Bagdogra pickup to the farewell dinner with cultural show. Highly recommend this trip!",
+    tripLabel: "Bhutan 6N/7D",
+    videoEmbed: "https://www.youtube.com/embed/8P7RYphq23s",
+    hasVideo: true,
+  },
+  {
+    id: 2,
+    name: "The Mehta Family",
+    destination: "Bhutan",
+    tag: "Bhutan",
+    photo: "/assets/generated/client-bhutan-2.dim_400x400.jpg",
+    rating: 5,
+    text: "We traveled as a family of 5 and Travellers Points made it stress-free. The kids loved the Punakha Dzong, the suspension bridge, and Bhutanese food. Best family trip ever!",
+    tripLabel: "Bhutan Group Tour",
+    hasVideo: false,
+  },
+  {
+    id: 3,
+    name: "Ananya Bose",
+    destination: "Darjeeling",
+    tag: "Darjeeling",
+    photo: "/assets/generated/client-darjeeling-1.dim_400x400.jpg",
+    rating: 5,
+    text: "The tea garden visit and the toy train joy ride in Darjeeling were absolutely dreamy! Everything was well-organized and our guide was so knowledgeable. The hotel views were stunning!",
+    tripLabel: "Sikkim & Darjeeling 5N/6D",
+    videoEmbed: "https://www.youtube.com/embed/5AkVaB8HgC0",
+    hasVideo: true,
+  },
+  {
+    id: 4,
+    name: "Vikram Nair",
+    destination: "Darjeeling",
+    tag: "Darjeeling",
+    photo: "/assets/generated/client-darjeeling-2.dim_400x400.jpg",
+    rating: 5,
+    text: "Waking up at 4am for the Tiger Hill sunrise was 100% worth it — Kanchenjunga glowing pink at dawn is something I'll never forget. Travellers Points made this trip seamless!",
+    tripLabel: "Sikkim & Darjeeling 5N/6D",
+    hasVideo: false,
+  },
+  {
+    id: 5,
+    name: "Delhi Group Tour",
+    destination: "Bhutan",
+    tag: "Bhutan",
+    photo: "/assets/generated/client-bhutan-3.dim_400x400.jpg",
+    rating: 5,
+    text: "Dochula Pass with the 108 chortens backdrop was surreal! Our group of 12 had an amazing time — the guide was fantastic, food was great, and the whole Bhutan experience was life-changing.",
+    tripLabel: "Bhutan Group Tour",
+    hasVideo: false,
+  },
+  {
+    id: 6,
+    name: "Sunita & Raj Kapoor",
+    destination: "Darjeeling",
+    tag: "Darjeeling",
+    photo: "/assets/generated/client-darjeeling-3.dim_400x400.jpg",
+    rating: 5,
+    text: "Riding the Darjeeling Himalayan Railway was a dream come true! The UNESCO toy train through mountain mist and green tea gardens — pure bliss. Thank you Travellers Points for an unforgettable trip!",
+    tripLabel: "Sikkim & Darjeeling 5N/6D",
+    hasVideo: false,
   },
 ];
 
@@ -348,6 +436,44 @@ const SIKKIM_ITINERARY = [
     day: 6,
     title: "Departure",
     desc: "Morning at leisure. Transfer to NJP / Bagdogra for onward journey, carrying the scent of tea and the memory of mountain peaks.",
+  },
+];
+
+const BHUTAN_GROUP_ITINERARY = [
+  {
+    day: 1,
+    title: "Bagdogra / NJP Pickup → Phuentsholing",
+    desc: "Pick up from Bagdogra Airport or NJP Railway Station. Drive to Phuentsholing (approx. 4 hrs) — the gateway town on the India-Bhutan border. Check-in at hotel. Evening walk along the border town. Overnight at Phuentsholing.",
+  },
+  {
+    day: 2,
+    title: "Phuentsholing → Thimphu",
+    desc: "Complete border immigration and permits. Drive to Thimphu (5–6 hrs) through scenic Himalayan valleys and Chuzom confluence. Check-in at Thimphu hotel. Evening stroll at Thimphu clock tower and local market. Dinner together.",
+  },
+  {
+    day: 3,
+    title: "Thimphu Full Day Sightseeing",
+    desc: "Visit Buddha Dordenma statue (the world's largest sitting Buddha), Tashichho Dzong, Folk Heritage Museum, Changangkha Lhakhang, National Memorial Chorten, and Takin Preserve. Evening at Thimphu Night Market with street food.",
+  },
+  {
+    day: 4,
+    title: "Thimphu → Punakha via Dochula Pass",
+    desc: "Drive over the scenic Dochula Pass (3,100m) featuring 108 memorial chortens and panoramic Himalayan views on clear days. Visit Punakha Dzong — the most beautiful Dzong in Bhutan, where the Pho Chhu and Mo Chhu rivers meet. Explore the famous Punakha suspension bridge.",
+  },
+  {
+    day: 5,
+    title: "Punakha → Paro",
+    desc: "Morning at leisure in Punakha. Drive to Paro (4 hrs) through mountain roads. Visit Rinpung Dzong and National Museum of Bhutan (Ta Dzong). Evening walk along Paro Chhu river. Traditional Bhutanese hot stone bath experience (optional). Overnight in Paro.",
+  },
+  {
+    day: 6,
+    title: "Paro — Tiger's Nest Monastery Hike",
+    desc: "Early morning hike to Paro Taktsang (Tiger's Nest) — the iconic monastery perched 900m above the Paro Valley. The 4-5 hour round-trip hike is one of Bhutan's most rewarding adventures. Lunch at hillside café with valley views. Evening cultural show with farewell dinner and Bhutanese folk performances.",
+  },
+  {
+    day: 7,
+    title: "Paro Departure → Bagdogra / NJP",
+    desc: "After breakfast, check-out and drive back to Bagdogra Airport or NJP Railway Station (approx. 6–7 hrs). Group drop at Bagdogra / NJP. Bid farewell to the Land of Happiness carrying memories of monasteries, mountains, and mountain magic.",
   },
 ];
 
@@ -435,6 +561,49 @@ const TOUR_PACKAGES = [
     itinerary: SIKKIM_ITINERARY,
     accentColor: "from-emerald-900/80 to-teal-900/60",
     badgeColor: "bg-emerald-700",
+  },
+  {
+    id: "bhutan-group",
+    name: "Bhutan Group Tour",
+    tagline: "Bagdogra / NJP Pickup — Affordable Group Experience",
+    duration: "6 Nights / 7 Days",
+    price: "₹25,000",
+    priceLabel: "per person (group)",
+    heroImage: "/assets/generated/dest-bhutan.dim_600x400.jpg",
+    galleryImages: [
+      {
+        src: "/assets/generated/bhutan-tigers-nest.dim_800x500.jpg",
+        alt: "Tiger's Nest Monastery",
+      },
+      {
+        src: "/assets/generated/bhutan-punakha.dim_800x500.jpg",
+        alt: "Punakha Dzong",
+      },
+      {
+        src: "/assets/generated/bhutan-thimphu.dim_800x500.jpg",
+        alt: "Thimphu City",
+      },
+    ],
+    highlights: [
+      "Pickup & drop from Bagdogra Airport or NJP Railway Station",
+      "Tiger's Nest (Taktsang) Monastery hike — Day 6",
+      "Punakha Dzong & suspension bridge via Dochula Pass",
+      "Thimphu full-day sightseeing — Buddha Dordenma, Tashichho Dzong",
+      "Phuentsholing border crossing with permits",
+      "Farewell cultural show & Bhutanese dinner",
+    ],
+    includes: [
+      "Pickup & drop: Bagdogra Airport or NJP Station",
+      "Accommodation (3-star hotels)",
+      "All meals (breakfast & dinner daily)",
+      "Licensed English-speaking group guide",
+      "All transfers by shared group vehicle",
+      "Bhutan SDF & entry tickets to all monuments",
+      "Bhutan visa & border permits",
+    ],
+    itinerary: BHUTAN_GROUP_ITINERARY,
+    accentColor: "from-yellow-900/80 to-amber-800/60",
+    badgeColor: "bg-yellow-700",
   },
 ];
 
@@ -950,13 +1119,19 @@ function PackageCard({ pkg }: { pkg: (typeof TOUR_PACKAGES)[0] }) {
         />
 
         {/* Duration badge */}
-        <div className="absolute top-5 left-5">
+        <div className="absolute top-5 left-5 flex flex-col gap-2">
           <span
             className={`${pkg.badgeColor} text-white text-sm font-bold px-4 py-1.5 rounded-full shadow-md flex items-center gap-1.5`}
           >
             <CalendarDays className="w-3.5 h-3.5" />
             {pkg.duration}
           </span>
+          {pkg.id === "bhutan-group" && (
+            <span className="bg-coral text-white text-xs font-bold px-3 py-1 rounded-full shadow-md flex items-center gap-1.5">
+              <Users className="w-3 h-3" />
+              Group Tour
+            </span>
+          )}
         </div>
 
         {/* Price badge */}
@@ -1564,6 +1739,216 @@ function TestimonialsSection() {
 }
 
 // =============================================
+// CLIENT REVIEWS SECTION
+// =============================================
+
+function ClientReviewsSection() {
+  const [activeFilter, setActiveFilter] = useState<
+    "All" | "Bhutan" | "Darjeeling"
+  >("All");
+  const [activeVideo, setActiveVideo] = useState<number | null>(null);
+
+  const filtered =
+    activeFilter === "All"
+      ? CLIENT_REVIEWS
+      : CLIENT_REVIEWS.filter((r) => r.tag === activeFilter);
+
+  const filters = ["All", "Bhutan", "Darjeeling"] as const;
+
+  return (
+    <section id="reviews" className="py-24 px-4 md:px-8 lg:px-16 bg-sand">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={staggerContainer}
+          className="text-center mb-12"
+        >
+          <motion.span
+            variants={fadeUp}
+            className="inline-block text-gold font-semibold text-sm uppercase tracking-widest mb-3"
+          >
+            Real Experiences
+          </motion.span>
+          <motion.h2
+            variants={fadeUp}
+            className="font-display text-4xl md:text-5xl font-bold text-foreground"
+          >
+            Client Reviews & Stories
+          </motion.h2>
+          <motion.p
+            variants={fadeUp}
+            className="mt-4 text-muted-foreground text-lg max-w-2xl mx-auto"
+          >
+            Photos and videos from our happy travelers in Bhutan and Darjeeling
+          </motion.p>
+
+          {/* Filter Tabs */}
+          <motion.div
+            variants={fadeUp}
+            className="flex justify-center gap-2 mt-8"
+          >
+            {filters.map((f) => (
+              <button
+                key={f}
+                type="button"
+                data-ocid={`reviews.tab.${f.toLowerCase()}`}
+                onClick={() => setActiveFilter(f)}
+                className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
+                  activeFilter === f
+                    ? "bg-ocean text-white shadow-md"
+                    : "bg-white text-foreground border border-sand-dark hover:border-ocean hover:text-ocean"
+                }`}
+              >
+                {f}
+              </button>
+            ))}
+          </motion.div>
+        </motion.div>
+
+        {/* Review Cards Grid */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          variants={staggerContainer}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7"
+        >
+          {filtered.map((review, i) => (
+            <motion.div
+              key={review.id}
+              variants={fadeUp}
+              data-ocid={`reviews.item.${i + 1}`}
+              className="bg-white rounded-2xl border border-sand-dark shadow-card overflow-hidden group hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300"
+            >
+              {/* Client Photo Banner */}
+              <div className="relative h-52 overflow-hidden bg-sand">
+                <img
+                  src={review.photo}
+                  alt={`${review.name} at ${review.destination}`}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                {/* Destination badge */}
+                <div className="absolute top-3 left-3">
+                  <span
+                    className={`px-3 py-1 text-xs font-bold rounded-full text-white shadow-md ${
+                      review.tag === "Bhutan"
+                        ? "bg-amber-600"
+                        : "bg-emerald-600"
+                    }`}
+                  >
+                    {review.tripLabel}
+                  </span>
+                </div>
+                {/* Video indicator */}
+                {review.hasVideo && (
+                  <div className="absolute top-3 right-3">
+                    <span className="flex items-center gap-1 px-2.5 py-1 bg-coral/90 text-white text-xs font-bold rounded-full shadow-md backdrop-blur-sm">
+                      <Video className="w-3 h-3" />
+                      Video
+                    </span>
+                  </div>
+                )}
+                {/* Client name over photo */}
+                <div className="absolute bottom-3 left-4">
+                  <p className="font-display font-bold text-white text-sm">
+                    {review.name}
+                  </p>
+                </div>
+              </div>
+
+              {/* Card Body */}
+              <div className="p-5">
+                {/* Stars */}
+                <div className="flex gap-1 mb-3">
+                  {Array.from({ length: review.rating }, (_, j) => (
+                    <Star
+                      key={`rstar-${review.id}-${j}`}
+                      className="w-4 h-4 text-gold"
+                      fill="currentColor"
+                    />
+                  ))}
+                </div>
+
+                {/* Review Text */}
+                <p className="text-foreground/75 text-sm leading-relaxed line-clamp-3 mb-4">
+                  "{review.text}"
+                </p>
+
+                {/* Video embed button */}
+                {review.hasVideo && (
+                  <div className="mt-1">
+                    {activeVideo === review.id ? (
+                      <div
+                        className="relative rounded-xl overflow-hidden"
+                        style={{ paddingTop: "56.25%" }}
+                      >
+                        <iframe
+                          src={`${review.videoEmbed}?autoplay=1`}
+                          title={`Review video by ${review.name}`}
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                          className="absolute inset-0 w-full h-full rounded-xl"
+                        />
+                      </div>
+                    ) : (
+                      <button
+                        type="button"
+                        data-ocid={`reviews.video.button.${i + 1}`}
+                        onClick={() => setActiveVideo(review.id)}
+                        className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-coral/10 hover:bg-coral/20 text-coral border border-coral/30 hover:border-coral/60 rounded-xl font-semibold text-sm transition-all duration-200 group/btn"
+                      >
+                        <div className="w-8 h-8 rounded-full bg-coral flex items-center justify-center shrink-0 group-hover/btn:scale-110 transition-transform">
+                          <Play className="w-4 h-4 text-white fill-white ml-0.5" />
+                        </div>
+                        Watch Video Review
+                      </button>
+                    )}
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Bottom CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="text-center mt-12"
+        >
+          <p className="text-muted-foreground text-sm mb-4">
+            Want to share your travel story with us?
+          </p>
+          <a
+            href="https://wa.me/917319076862?text=Hi%2C%20I%20want%20to%20share%20my%20travel%20experience%20with%20Travellers%20Points!"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-white font-semibold text-sm transition-all hover:opacity-90 hover:scale-[1.02] shadow-md"
+            style={{ backgroundColor: "#25D366" }}
+          >
+            <svg
+              viewBox="0 0 24 24"
+              className="w-4 h-4 fill-white shrink-0"
+              aria-hidden="true"
+            >
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+            </svg>
+            Share Your Story on WhatsApp
+          </a>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+// =============================================
 // CONTACT SECTION
 // =============================================
 
@@ -2106,6 +2491,7 @@ export default function App() {
         <WhyUsSection />
         <DealsSection />
         <TestimonialsSection />
+        <ClientReviewsSection />
         <ContactSection />
       </main>
       <Footer />
