@@ -642,20 +642,11 @@ function Navbar() {
           onClick={() => handleNavClick("#home")}
           className="flex items-center gap-2.5 group"
         >
-          <div
-            className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 ${
-              scrolled ? "bg-ocean" : "bg-white/20 backdrop-blur-sm"
-            }`}
-          >
-            <Globe className="w-5 h-5 text-white" />
-          </div>
-          <span
-            className={`font-display font-bold text-xl tracking-tight transition-colors duration-300 ${
-              scrolled ? "text-foreground" : "text-white"
-            }`}
-          >
-            Travellers Points
-          </span>
+          <img
+            src="/assets/uploads/image_b1a1f18a-1.png"
+            alt="Travellers Points Logo"
+            className="h-12 w-auto object-contain"
+          />
         </button>
 
         {/* Desktop Nav */}
@@ -2269,12 +2260,11 @@ function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-gold flex items-center justify-center">
-                <Globe className="w-5 h-5 text-white" />
-              </div>
-              <span className="font-display text-xl font-bold text-white">
-                Travellers Points
-              </span>
+              <img
+                src="/assets/uploads/image_b1a1f18a-1.png"
+                alt="Travellers Points Logo"
+                className="h-14 w-auto object-contain"
+              />
             </div>
             <p className="text-white/60 text-sm leading-relaxed mb-4">
               Specializing in Bhutan, Sikkim, Darjeeling, and exotic
