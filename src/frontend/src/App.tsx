@@ -54,60 +54,6 @@ const NAV_LINKS = [
 
 const DESTINATIONS = [
   {
-    name: "Santorini",
-    country: "Greece",
-    image: "/assets/generated/dest-santorini.dim_600x400.jpg",
-    description:
-      "Sun-drenched cliffs, iconic blue domes, and romantic sunsets over the Aegean Sea",
-    price: "From $1,299",
-    duration: null,
-  },
-  {
-    name: "Bali",
-    country: "Indonesia",
-    image: "/assets/generated/dest-bali.dim_600x400.jpg",
-    description:
-      "Lush rice terraces, ancient temples, and vibrant culture in the Island of the Gods",
-    price: "From $899",
-    duration: null,
-  },
-  {
-    name: "Maldives",
-    country: "Maldives",
-    image: "/assets/generated/dest-maldives.dim_600x400.jpg",
-    description:
-      "Overwater bungalows, pristine beaches, and crystal-clear turquoise lagoons",
-    price: "From $2,499",
-    duration: null,
-  },
-  {
-    name: "Paris",
-    country: "France",
-    image: "/assets/generated/dest-paris.dim_600x400.jpg",
-    description:
-      "The City of Light beckons with iconic landmarks, world-class cuisine and timeless romance",
-    price: "From $1,099",
-    duration: null,
-  },
-  {
-    name: "Tokyo",
-    country: "Japan",
-    image: "/assets/generated/dest-tokyo.dim_600x400.jpg",
-    description:
-      "A dazzling blend of ultramodern and traditional, where neon lights meet ancient shrines",
-    price: "From $1,599",
-    duration: null,
-  },
-  {
-    name: "New York City",
-    country: "USA",
-    image: "/assets/generated/dest-newyork.dim_600x400.jpg",
-    description:
-      "The city that never sleeps — iconic skyline, Broadway, world-famous neighborhoods",
-    price: "From $799",
-    duration: null,
-  },
-  {
     name: "Bhutan",
     country: "Land of Thunder Dragon",
     image: "/assets/generated/dest-bhutan.dim_600x400.jpg",
@@ -117,11 +63,20 @@ const DESTINATIONS = [
     duration: "6N / 7D",
   },
   {
-    name: "Sikkim & Darjeeling",
+    name: "Darjeeling",
+    country: "West Bengal, India",
+    image: "/assets/generated/darjeeling-tea.dim_800x500.jpg",
+    description:
+      "The Queen of Hills — iconic toy train, sunrise over Kangchenjunga, lush tea gardens, and vibrant local culture.",
+    price: "From ₹14,999",
+    duration: "5N / 6D",
+  },
+  {
+    name: "Sikkim",
     country: "India",
     image: "/assets/generated/dest-sikkim.dim_600x400.jpg",
     description:
-      "Tea gardens, Himalayan peaks, monasteries, and the iconic toy train — a perfect blend of nature and culture.",
+      "Enchanting monasteries, the pristine Tsomgo Lake, Nathu La Pass, and the vibrant MG Marg boulevard in Gangtok.",
     price: "From ₹14,999",
     duration: "5N / 6D",
   },
@@ -190,46 +145,6 @@ const WHY_US = [
 
 const DEALS = [
   {
-    badge: "Early Bird Special",
-    destination: "Santorini",
-    country: "Greece",
-    nights: 7,
-    originalPrice: "$1,799",
-    currentPrice: "$1,299",
-    savings: "Save 28%",
-    image: "/assets/generated/dest-santorini.dim_600x400.jpg",
-  },
-  {
-    badge: "Weekend Escape",
-    destination: "Bali",
-    country: "Indonesia",
-    nights: 5,
-    originalPrice: "$1,199",
-    currentPrice: "$899",
-    savings: "Save 25%",
-    image: "/assets/generated/dest-bali.dim_600x400.jpg",
-  },
-  {
-    badge: "Luxury Escape",
-    destination: "Maldives",
-    country: "Maldives",
-    nights: 6,
-    originalPrice: "$3,299",
-    currentPrice: "$2,499",
-    savings: "Save 24%",
-    image: "/assets/generated/dest-maldives.dim_600x400.jpg",
-  },
-  {
-    badge: "Himalayan Special",
-    destination: "Bhutan",
-    country: "Land of Thunder Dragon",
-    nights: 6,
-    originalPrice: "₹34,999",
-    currentPrice: "₹28,999",
-    savings: "Save 17%",
-    image: "/assets/generated/dest-bhutan.dim_600x400.jpg",
-  },
-  {
     badge: "Group Tour Deal",
     destination: "Bhutan Group Tour",
     country: "Bagdogra / NJP Pickup",
@@ -238,6 +153,16 @@ const DEALS = [
     currentPrice: "₹25,000",
     savings: "Save 17%",
     image: "/assets/generated/dest-bhutan.dim_600x400.jpg",
+  },
+  {
+    badge: "Himalayan Special",
+    destination: "Bhutan Private Tour",
+    country: "Land of Thunder Dragon",
+    nights: 6,
+    originalPrice: "₹34,999",
+    currentPrice: "₹28,999",
+    savings: "Save 17%",
+    image: "/assets/generated/bhutan-tigers-nest.dim_800x500.jpg",
   },
   {
     badge: "Hill Station Getaway",
@@ -253,27 +178,6 @@ const DEALS = [
 
 const TESTIMONIALS = [
   {
-    name: "Sarah M.",
-    initials: "SM",
-    rating: 5,
-    text: "Travellers Points made our honeymoon in Santorini absolutely perfect. Every detail was handled beautifully!",
-    destination: "Santorini, Greece",
-  },
-  {
-    name: "James T.",
-    initials: "JT",
-    rating: 5,
-    text: "The Bali tour package exceeded all expectations. Our guide was incredible and the hotels were stunning.",
-    destination: "Bali, Indonesia",
-  },
-  {
-    name: "Priya K.",
-    initials: "PK",
-    rating: 5,
-    text: "Best travel agency I've ever used. The Maldives trip was flawless from start to finish. Highly recommend!",
-    destination: "Maldives",
-  },
-  {
     name: "Rahul S.",
     initials: "RS",
     rating: 5,
@@ -286,6 +190,27 @@ const TESTIMONIALS = [
     rating: 5,
     text: "Sikkim Darjeeling tour was perfectly organized. The sunrise at Tiger Hill was breathtaking. Will book again!",
     destination: "Sikkim & Darjeeling",
+  },
+  {
+    name: "Amit & Kavya R.",
+    initials: "AK",
+    rating: 5,
+    text: "Our Bhutan group tour from Bagdogra pickup was absolutely seamless. Dochula Pass with 108 chortens left us speechless. Highly recommend this tour!",
+    destination: "Bhutan Group Tour",
+  },
+  {
+    name: "Sunita M.",
+    initials: "SM",
+    rating: 5,
+    text: "Darjeeling toy train ride through the misty mountains — a dream come true! The tea garden walk and Tiger Hill sunrise made this the best trip of my life.",
+    destination: "Darjeeling",
+  },
+  {
+    name: "Vikram N.",
+    initials: "VN",
+    rating: 5,
+    text: "Tsomgo Lake and Nathu La Pass were breathtaking. The Gangtok MG Marg food scene was amazing. Travellers Points handled everything perfectly!",
+    destination: "Sikkim",
   },
 ];
 
@@ -472,8 +397,8 @@ const BHUTAN_GROUP_ITINERARY = [
   },
   {
     day: 7,
-    title: "Paro Departure → Bagdogra / NJP",
-    desc: "After breakfast, check-out and drive back to Bagdogra Airport or NJP Railway Station (approx. 6–7 hrs). Group drop at Bagdogra / NJP. Bid farewell to the Land of Happiness carrying memories of monasteries, mountains, and mountain magic.",
+    title: "Paro → Drop at Bagdogra Airport or NJP",
+    desc: "After breakfast, check-out and drive back from Paro/Phuentsholing to Bagdogra Airport or NJP Railway Station (approx. 6–7 hrs). Group drop at Bagdogra Airport or NJP Station as per your onward journey. Bid farewell to the Land of Happiness carrying memories of monasteries, mountains, and mountain magic.",
   },
 ];
 
@@ -1570,7 +1495,7 @@ function DealsSection() {
           whileInView="visible"
           viewport={{ once: true, margin: "-60px" }}
           variants={staggerContainer}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           {DEALS.map((deal, i) => (
             <motion.div
