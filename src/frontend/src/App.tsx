@@ -1,4 +1,10 @@
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Toaster } from "@/components/ui/sonner";
 import { Textarea } from "@/components/ui/textarea";
@@ -89,6 +95,15 @@ const SERVICES = [
     description:
       "Best fares to 200+ destinations worldwide with flexible booking options",
     color: "ocean",
+    details: [
+      "Domestic & international flight bookings at best fares",
+      "Bagdogra Airport (IXB) connections for all our tour packages",
+      "NJP (New Jalpaiguri) railway station pickup & transfer",
+      "Group booking discounts for 10+ passengers",
+      "Flexible date change options with minimal charges",
+      "Round-trip and one-way booking available",
+      "24/7 support for flight-related queries",
+    ],
   },
   {
     icon: Building2,
@@ -96,6 +111,15 @@ const SERVICES = [
     description:
       "Curated accommodations from budget-friendly to ultra-luxury resorts",
     color: "gold",
+    details: [
+      "Partner hotels in Bhutan: Paro, Thimphu, Punakha, Wangdue",
+      "Premium stays in Darjeeling & Gangtok, Sikkim",
+      "Budget guesthouses to luxury 4-star resorts",
+      "Breakfast included in most packages",
+      "Airport/hotel transfer arrangements included",
+      "Special honeymoon and group packages available",
+      "All hotels vetted for hygiene, safety, and service quality",
+    ],
   },
   {
     icon: MapIcon,
@@ -103,6 +127,16 @@ const SERVICES = [
     description:
       "All-inclusive guided tour packages tailored to your interests and budget",
     color: "coral",
+    details: [
+      "Bhutan Group Tour — ₹24,500/person (6N/7D, pickup from Bagdogra/NJP)",
+      "Bhutan Private Tour — ₹43,000/person (customized itinerary)",
+      "Sikkim & Darjeeling package — scenic hill stations & monasteries",
+      "Nepal package — Kathmandu, Pokhara, Lumbini",
+      "Manali & Shimla — Himalayan summer escape",
+      "Kashmir — Dal Lake, Gulmarg, Pahalgam",
+      "Mathura & Vrindavan — spiritual pilgrimage tour",
+      "All packages include accommodation, meals & guided sightseeing",
+    ],
   },
   {
     icon: ShieldCheck,
@@ -110,6 +144,15 @@ const SERVICES = [
     description:
       "Comprehensive coverage so you can explore with complete peace of mind",
     color: "ocean",
+    details: [
+      "Trip cancellation & curtailment coverage",
+      "Medical emergency & hospitalisation abroad",
+      "Baggage loss, theft, and delay protection",
+      "Flight delay and missed connection cover",
+      "Personal accident and liability coverage",
+      "Available for all Travellers Points tour packages",
+      "Hassle-free claim assistance by our team",
+    ],
   },
 ];
 
@@ -1573,6 +1616,10 @@ function TourPackagesSection() {
 // =============================================
 
 function ServicesSection() {
+  const [selectedService, setSelectedService] = useState<
+    (typeof SERVICES)[0] | null
+  >(null);
+
   const colorMap: Record<string, string> = {
     ocean: "bg-ocean text-white",
     gold: "bg-gold text-white",
@@ -1585,77 +1632,148 @@ function ServicesSection() {
     coral: "group-hover:bg-coral",
   };
 
-  return (
-    <section id="services" className="py-24 px-4 md:px-8 lg:px-16 bg-sand">
-      <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={staggerContainer}
-          className="text-center mb-14"
-        >
-          <motion.span
-            variants={fadeUp}
-            className="inline-block text-gold font-semibold text-sm uppercase tracking-widest mb-3"
-          >
-            What We Offer
-          </motion.span>
-          <motion.h2
-            variants={fadeUp}
-            className="font-display text-4xl md:text-5xl font-bold text-foreground"
-          >
-            Our Services
-          </motion.h2>
-          <motion.p
-            variants={fadeUp}
-            className="mt-4 text-muted-foreground text-lg max-w-2xl mx-auto"
-          >
-            Everything you need for a seamless travel experience, all in one
-            place
-          </motion.p>
-        </motion.div>
+  const whatsappText = selectedService
+    ? `Hi%2C%20I%20am%20interested%20in%20your%20${encodeURIComponent(selectedService.title)}%20service.%20Please%20share%20details.`
+    : "";
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-          variants={staggerContainer}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-        >
-          {SERVICES.map((service, i) => {
-            const Icon = service.icon;
-            return (
-              <motion.div
-                key={service.title}
-                variants={fadeUp}
-                data-ocid={`services.item.${i + 1}`}
-                className="group relative p-8 bg-white rounded-2xl border border-sand-dark hover:border-transparent transition-all duration-300 hover:shadow-card-hover hover:-translate-y-2 cursor-default overflow-hidden"
-              >
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-ocean/5 to-gold/5" />
-                <div
-                  className={`relative w-14 h-14 rounded-2xl flex items-center justify-center mb-5 transition-all duration-300 ${colorMap[service.color]} shadow-card`}
+  return (
+    <>
+      <section id="services" className="py-24 px-4 md:px-8 lg:px-16 bg-sand">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-80px" }}
+            variants={staggerContainer}
+            className="text-center mb-14"
+          >
+            <motion.span
+              variants={fadeUp}
+              className="inline-block text-gold font-semibold text-sm uppercase tracking-widest mb-3"
+            >
+              What We Offer
+            </motion.span>
+            <motion.h2
+              variants={fadeUp}
+              className="font-display text-4xl md:text-5xl font-bold text-foreground"
+            >
+              Our Services
+            </motion.h2>
+            <motion.p
+              variants={fadeUp}
+              className="mt-4 text-muted-foreground text-lg max-w-2xl mx-auto"
+            >
+              Everything you need for a seamless travel experience, all in one
+              place
+            </motion.p>
+          </motion.div>
+
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-60px" }}
+            variants={staggerContainer}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          >
+            {SERVICES.map((service, i) => {
+              const Icon = service.icon;
+              return (
+                <motion.div
+                  key={service.title}
+                  variants={fadeUp}
+                  data-ocid={`services.item.${i + 1}`}
+                  onClick={() => setSelectedService(service)}
+                  className="group relative p-8 bg-white rounded-2xl border border-sand-dark hover:border-transparent transition-all duration-300 hover:shadow-card-hover hover:-translate-y-2 cursor-pointer overflow-hidden"
                 >
-                  <Icon className="w-7 h-7" />
-                </div>
-                <h3 className="font-display text-xl font-bold text-foreground mb-2">
-                  {service.title}
-                </h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  {service.description}
-                </p>
-                <div
-                  className={`mt-5 text-sm font-semibold text-ocean flex items-center gap-1 transition-all duration-300 ${bgHoverMap[service.color]} group-hover:text-white px-3 py-1.5 rounded-lg w-fit`}
-                >
-                  Learn More
-                  <ChevronRight className="w-3.5 h-3.5" />
-                </div>
-              </motion.div>
-            );
-          })}
-        </motion.div>
-      </div>
-    </section>
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-ocean/5 to-gold/5" />
+                  <div
+                    className={`relative w-14 h-14 rounded-2xl flex items-center justify-center mb-5 transition-all duration-300 ${colorMap[service.color]} shadow-card`}
+                  >
+                    <Icon className="w-7 h-7" />
+                  </div>
+                  <h3 className="font-display text-xl font-bold text-foreground mb-2">
+                    {service.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {service.description}
+                  </p>
+                  <div
+                    className={`mt-5 text-sm font-semibold text-ocean flex items-center gap-1 transition-all duration-300 ${bgHoverMap[service.color]} group-hover:text-white px-3 py-1.5 rounded-lg w-fit`}
+                  >
+                    Learn More
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </div>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        </div>
+      </section>
+
+      <Dialog
+        open={!!selectedService}
+        onOpenChange={(open) => !open && setSelectedService(null)}
+      >
+        <DialogContent data-ocid="services.dialog" className="max-w-lg">
+          {selectedService &&
+            (() => {
+              const Icon = selectedService.icon;
+              const colorCls = colorMap[selectedService.color];
+              return (
+                <>
+                  <DialogHeader>
+                    <div className="flex items-center gap-4 mb-2">
+                      <div
+                        className={`w-12 h-12 rounded-xl flex items-center justify-center ${colorCls} shadow-md flex-shrink-0`}
+                      >
+                        <Icon className="w-6 h-6" />
+                      </div>
+                      <DialogTitle className="font-display text-2xl font-bold text-foreground">
+                        {selectedService.title}
+                      </DialogTitle>
+                    </div>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      {selectedService.description}
+                    </p>
+                  </DialogHeader>
+                  <ul className="mt-2 space-y-2">
+                    {selectedService.details.map((detail) => (
+                      <li
+                        key={detail}
+                        className="flex items-start gap-2 text-sm text-foreground"
+                      >
+                        <CheckCircle2 className="w-4 h-4 text-ocean mt-0.5 flex-shrink-0" />
+                        <span>{detail}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-4 flex gap-3">
+                    <a
+                      href={`https://wa.me/917319076862?text=${whatsappText}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-ocid="services.whatsapp_button"
+                      className="flex-1"
+                    >
+                      <Button className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold">
+                        Book on WhatsApp
+                      </Button>
+                    </a>
+                    <Button
+                      variant="outline"
+                      data-ocid="services.close_button"
+                      onClick={() => setSelectedService(null)}
+                      className="px-4"
+                    >
+                      Close
+                    </Button>
+                  </div>
+                </>
+              );
+            })()}
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
 
