@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Playfair Display";
+  src: url("/assets/fonts/PlayfairDisplay.woff2") format("woff2");
+  font-weight: 400 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("/assets/fonts/DMSans.woff2") format("woff2");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --background: 96 12% 97%;
+    --foreground: 220 25% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 25% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 25% 10%;
+    --primary: 220 60% 22%;
+    --primary-foreground: 210 40% 97%;
+    --secondary: 45 80% 48%;
+    --secondary-foreground: 220 25% 10%;
+    --muted: 96 8% 92%;
+    --muted-foreground: 220 10% 40%;
+    --accent: 45 80% 48%;
+    --accent-foreground: 220 25% 10%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 10% 85%;
+    --input: 220 10% 85%;
+    --ring: 220 40% 22%;
+    --radius: 0.5rem;
+
+    /* Custom tokens */
+    --navy: 0.22 0.07 250;
+    --navy-dark: 0.15 0.06 250;
+    --navy-light: 0.3 0.08 250;
+    --gold: 0.72 0.14 80;
+    --gold-dark: 0.6 0.13 80;
+    --gold-light: 0.82 0.12 80;
+    --cream: 0.97 0.01 96;
+    --cream-dark: 0.93 0.02 96;
+    --charcoal: 0.15 0.02 150;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-cream text-charcoal font-body;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display;
+    line-height: 1.2;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-navy text-cream px-6 py-3 rounded-lg font-semibold transition-all duration-200 hover:bg-navy-dark hover:scale-105 active:scale-95 inline-flex items-center gap-2;
+  }
+  .btn-gold {
+    @apply bg-gold text-charcoal px-6 py-3 rounded-lg font-semibold transition-all duration-200 hover:bg-gold-dark hover:scale-105 active:scale-95 inline-flex items-center gap-2;
+  }
+  .btn-whatsapp {
+    @apply bg-amber-500 text-white px-5 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200 hover:bg-amber-600 hover:scale-105 active:scale-95 inline-flex items-center gap-2;
+  }
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold text-navy mb-3;
+  }
+  .section-subtitle {
+    @apply text-muted-foreground text-lg max-w-2xl mx-auto;
+  }
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-luxury hover:-translate-y-1;
+  }
+}

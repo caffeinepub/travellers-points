@@ -1,3 +1,4 @@
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -6,2862 +7,1452 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Toaster } from "@/components/ui/sonner";
 import { Textarea } from "@/components/ui/textarea";
 import {
-  AlertCircle,
-  Award,
-  Building2,
-  CalendarDays,
-  CheckCircle2,
+  Car,
   ChevronDown,
-  ChevronRight,
+  ChevronUp,
   Clock,
-  Facebook,
-  Globe,
-  Instagram,
-  Loader2,
-  Mail,
-  Map as MapIcon,
+  Hotel,
   MapPin,
   Menu,
+  MessageCircle,
+  PackageIcon,
   Phone,
   Plane,
-  Play,
-  Search,
-  ShieldCheck,
+  Settings,
+  Shield,
   Star,
-  Tag,
-  Twitter,
-  Users,
-  Video,
   X,
-  Youtube,
 } from "lucide-react";
-import { AnimatePresence, type Variants, motion } from "motion/react";
-import { useEffect, useRef, useState } from "react";
-import { toast } from "sonner";
-import { useActor } from "./hooks/useActor";
+import { useEffect, useState } from "react";
 
-// =============================================
-// DATA
-// =============================================
+// ─── Data ──────────────────────────────────────────────────────────────────────
 
-const NAV_LINKS = [
-  { label: "Home", href: "#home" },
-  { label: "Destinations", href: "#destinations" },
-  { label: "Packages", href: "#packages" },
-  { label: "Services", href: "#services" },
-  { label: "Why Us", href: "#why-us" },
-  { label: "Deals", href: "#deals" },
-  { label: "Reviews", href: "#reviews" },
-  { label: "Contact", href: "#contact" },
+const WHATSAPP = "917319076862";
+
+function waLink(msg: string) {
+  return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+}
+
+const HERO_SLIDES = [
+  {
+    src: "/assets/generated/darjeeling-bg.dim_1920x1080.jpg",
+    label: "Darjeeling",
+  },
+  { src: "/assets/generated/bhutan-bg.dim_1920x1080.jpg", label: "Bhutan" },
+  { src: "/assets/generated/sikkim-bg.dim_1920x1080.jpg", label: "Sikkim" },
+  { src: "/assets/generated/kashmir-bg.dim_1920x1080.jpg", label: "Kashmir" },
 ];
 
-const DESTINATIONS = [
+interface TourPackage {
+  id: string;
+  name: string;
+  destination: string;
+  duration: string;
+  price: string;
+  priceNote: string;
+  pickup: string;
+  highlight: string;
+  itinerary: { day: string; title: string; details: string }[];
+}
+
+const PACKAGES: TourPackage[] = [
   {
-    name: "Bhutan",
-    country: "Land of Thunder Dragon",
-    image: "/assets/generated/dest-bhutan.dim_600x400.jpg",
-    description:
-      "Mystical monasteries, pristine Himalayan landscapes, and a kingdom that measures happiness. Group tours from ₹24,500 with Bagdogra/NJP pickup.",
-    price: "From ₹24,500",
+    id: "bhutan-group",
+    name: "Bhutan Group Tour",
+    destination: "Bhutan",
     duration: "6N / 7D",
+    price: "₹24,500",
+    priceNote: "per person",
+    pickup: "Bagdogra Airport / NJP Station",
+    highlight: "Tiger's Nest Monastery & Punakha Dzong",
+    itinerary: [
+      {
+        day: "Day 1",
+        title: "Pickup → Phuentsholing",
+        details:
+          "Pickup from Bagdogra Airport or NJP Station → drive to Phuentsholing. Check-in, local sightseeing: Zangto Pelri Lhakhang, Karbandi Monastery. Overnight stay.",
+      },
+      {
+        day: "Day 2",
+        title: "Phuentsholing → Thimphu",
+        details:
+          "Drive to Thimphu (capital city). Visit Buddha Dordenma Statue, Takin Preserve, Memorial Chorten, Changangkha Lhakhang, Folk Heritage Museum. Overnight stay in Thimphu.",
+      },
+      {
+        day: "Day 3",
+        title: "Thimphu Sightseeing",
+        details:
+          "Visit Dochula Pass (108 chortens & Himalayan views), National Museum, Tashichho Dzong, Simply Bhutan Museum. Evening: local market. Overnight stay in Thimphu.",
+      },
+      {
+        day: "Day 4",
+        title: "Thimphu → Punakha",
+        details:
+          "Drive to Punakha valley. Visit Punakha Dzong (historical fortress), Chimi Lhakhang Fertility Temple, Suspension Bridge, Mo Chhu River. Overnight stay in Punakha.",
+      },
+      {
+        day: "Day 5",
+        title: "Punakha → Paro",
+        details:
+          "Drive to Paro. Visit Rinpung Dzong, National Museum of Paro, Paro Town Market. Evening stroll along Paro Chhu river. Overnight stay in Paro.",
+      },
+      {
+        day: "Day 6",
+        title: "Tiger's Nest Hike",
+        details:
+          "Early morning hike to Taktsang Palphug Monastery (Tiger's Nest) – one of Bhutan's most iconic sites. Also visit Drukgyel Dzong ruins, Kyichu Lhakhang. Overnight stay in Paro.",
+      },
+      {
+        day: "Day 7",
+        title: "Paro → Drop",
+        details:
+          "After breakfast, drive back to the border. Drop at Bagdogra Airport or NJP Station. Tour ends with wonderful memories.",
+      },
+    ],
   },
   {
-    name: "Darjeeling",
-    country: "West Bengal, India",
-    image: "/assets/generated/darjeeling-tea.dim_800x500.jpg",
-    description:
-      "The Queen of Hills — iconic toy train, sunrise over Kangchenjunga, lush tea gardens, and vibrant local culture.",
-    price: "From ₹14,999",
-    duration: "5N / 6D",
+    id: "bhutan-private",
+    name: "Bhutan Private Tour",
+    destination: "Bhutan",
+    duration: "6N / 7D",
+    price: "₹43,000",
+    priceNote: "per person",
+    pickup: "Bagdogra Airport / NJP Station",
+    highlight: "Private Vehicle & Personalised Service",
+    itinerary: [
+      {
+        day: "Day 1",
+        title: "Pickup → Phuentsholing",
+        details:
+          "Private pickup from Bagdogra Airport or NJP Station → drive to Phuentsholing. Check-in, local sightseeing: Zangto Pelri Lhakhang, Karbandi Monastery. Overnight stay.",
+      },
+      {
+        day: "Day 2",
+        title: "Phuentsholing → Thimphu",
+        details:
+          "Private drive to Thimphu. Visit Buddha Dordenma Statue, Takin Preserve, Memorial Chorten, Changangkha Lhakhang, Folk Heritage Museum. Overnight stay in Thimphu.",
+      },
+      {
+        day: "Day 3",
+        title: "Thimphu Sightseeing",
+        details:
+          "Visit Dochula Pass (108 chortens), National Museum, Tashichho Dzong, Simply Bhutan Museum. Flexible itinerary as per your schedule. Overnight stay in Thimphu.",
+      },
+      {
+        day: "Day 4",
+        title: "Thimphu → Punakha",
+        details:
+          "Private drive to Punakha. Visit Punakha Dzong, Chimi Lhakhang Fertility Temple, Suspension Bridge, Mo Chhu River. Overnight stay in Punakha.",
+      },
+      {
+        day: "Day 5",
+        title: "Punakha → Paro",
+        details:
+          "Private drive to Paro. Visit Rinpung Dzong, National Museum, Paro Town Market. Overnight stay in Paro.",
+      },
+      {
+        day: "Day 6",
+        title: "Tiger's Nest Hike",
+        details:
+          "Hike to Taktsang Palphug Monastery (Tiger's Nest). Visit Drukgyel Dzong ruins, Kyichu Lhakhang. Personalized pace. Overnight stay in Paro.",
+      },
+      {
+        day: "Day 7",
+        title: "Paro → Drop",
+        details:
+          "After breakfast, private vehicle drop at Bagdogra Airport or NJP Station. Tour concludes with exceptional memories.",
+      },
+    ],
   },
   {
-    name: "Sikkim",
-    country: "India",
-    image: "/assets/generated/dest-sikkim.dim_600x400.jpg",
-    description:
-      "Enchanting monasteries, the pristine Tsomgo Lake, Nathu La Pass, and the vibrant MG Marg boulevard in Gangtok.",
-    price: "From ₹14,999",
+    id: "darjeeling",
+    name: "Darjeeling Tour",
+    destination: "Darjeeling",
+    duration: "4N / 5D",
+    price: "₹8,500",
+    priceNote: "per person",
+    pickup: "NJP / Bagdogra Airport",
+    highlight: "Tiger Hill Sunrise & Tea Gardens",
+    itinerary: [
+      {
+        day: "Day 1",
+        title: "Arrival at Darjeeling",
+        details:
+          "Pickup from NJP Station or Bagdogra Airport. Drive to Darjeeling through scenic mountain roads. Check-in and evening leisure. Overnight stay.",
+      },
+      {
+        day: "Day 2",
+        title: "Tiger Hill & Monasteries",
+        details:
+          "Early morning (4am) visit to Tiger Hill for stunning Kanchenjunga & Everest sunrise. Visit Batasia Loop, Ghoom Monastery (oldest in Darjeeling), Peace Pagoda. Overnight stay.",
+      },
+      {
+        day: "Day 3",
+        title: "Tea Gardens & Attractions",
+        details:
+          "Visit Happy Valley Tea Estate, Himalayan Mountaineering Institute, Padmaja Naidu Zoological Park, Ropeway ride for aerial views. Overnight stay.",
+      },
+      {
+        day: "Day 4",
+        title: "Rock Garden & Shopping",
+        details:
+          "Visit Rock Garden (beautiful waterfalls & rock formations), Ganga Maya Park, Chowrasta Mall Road. Local market shopping. Overnight stay.",
+      },
+      {
+        day: "Day 5",
+        title: "Departure",
+        details:
+          "After breakfast, checkout and drive back to NJP Station or Bagdogra Airport. Tour ends.",
+      },
+    ],
+  },
+  {
+    id: "sikkim",
+    name: "Sikkim Tour",
+    destination: "Sikkim",
     duration: "5N / 6D",
+    price: "₹12,000",
+    priceNote: "per person",
+    pickup: "NJP / Bagdogra Airport",
+    highlight: "Tsomgo Lake & Nathula Pass",
+    itinerary: [
+      {
+        day: "Day 1",
+        title: "NJP → Gangtok",
+        details:
+          "Pickup from NJP Station or Bagdogra Airport. Drive to Gangtok, the capital of Sikkim. Check-in and evening visit to MG Marg. Overnight stay.",
+      },
+      {
+        day: "Day 2",
+        title: "Tsomgo & Nathula",
+        details:
+          "Visit Tsomgo Lake (glacial lake at 12,400 ft), Baba Mandir (soldier shrine), Nathula Pass (India-China border, permit required). Overnight stay in Gangtok.",
+      },
+      {
+        day: "Day 3",
+        title: "Gangtok Monasteries",
+        details:
+          "Visit Rumtek Monastery (largest in Sikkim), Enchey Monastery, Do-Drul Chorten stupa. Evening: Lal Bazaar shopping. Overnight stay.",
+      },
+      {
+        day: "Day 4",
+        title: "Gangtok → Pelling",
+        details:
+          "Drive to Pelling. Visit Rabdentse Ruins (ancient Sikkim capital), Pemayangtse Monastery (one of the oldest in Sikkim). Overnight stay in Pelling.",
+      },
+      {
+        day: "Day 5",
+        title: "Khecheopalri & Singshore",
+        details:
+          "Visit Khecheopalri Lake (sacred wish-fulfilling lake), Singshore Bridge (highest bridge in Sikkim, 98m). Overnight stay in Pelling.",
+      },
+      {
+        day: "Day 6",
+        title: "Pelling → NJP",
+        details:
+          "After breakfast, drive back to NJP Station or Bagdogra Airport. Tour concludes.",
+      },
+    ],
+  },
+  {
+    id: "nepal",
+    name: "Nepal Tour",
+    destination: "Nepal",
+    duration: "5N / 6D",
+    price: "₹15,000",
+    priceNote: "per person",
+    pickup: "NJP / Bagdogra / Kathmandu",
+    highlight: "Kathmandu, Pokhara & Fewa Lake",
+    itinerary: [
+      {
+        day: "Day 1",
+        title: "Arrival Kathmandu",
+        details:
+          "Arrival at Kathmandu. Transfer to hotel. Evening visit to Thamel market. Welcome dinner. Overnight stay.",
+      },
+      {
+        day: "Day 2",
+        title: "Kathmandu Temples",
+        details:
+          "Visit Pashupatinath Temple (sacred Hindu temple on Bagmati River), Boudhanath Stupa (largest stupa in Asia), Swayambhunath aka Monkey Temple. Overnight stay.",
+      },
+      {
+        day: "Day 3",
+        title: "Durbar Squares",
+        details:
+          "Visit Patan Durbar Square (UNESCO World Heritage Site with ancient palaces), Bhaktapur Durbar Square (medieval city of devotees). Overnight stay in Kathmandu.",
+      },
+      {
+        day: "Day 4",
+        title: "Kathmandu → Pokhara",
+        details:
+          "Drive or fly to Pokhara (7 hours by road). Arrive and visit Fewa Lake (boating optional), Davis Falls, Gupteshwor Cave. Overnight stay in Pokhara.",
+      },
+      {
+        day: "Day 5",
+        title: "Pokhara Sightseeing",
+        details:
+          "Early morning Sarangkot sunrise viewpoint (Annapurna range). Phewa Lake boating, World Peace Pagoda (Japanese pagoda). Evening in Lakeside market. Overnight stay.",
+      },
+      {
+        day: "Day 6",
+        title: "Departure",
+        details:
+          "Morning leisure. Transfer to airport or bus station for return journey. Tour ends.",
+      },
+    ],
+  },
+  {
+    id: "manali",
+    name: "Manali Tour",
+    destination: "Manali",
+    duration: "5N / 6D",
+    price: "₹13,500",
+    priceNote: "per person",
+    pickup: "Delhi / Chandigarh",
+    highlight: "Rohtang Pass & Solang Valley",
+    itinerary: [
+      {
+        day: "Day 1",
+        title: "Delhi/Chandigarh → Manali",
+        details:
+          "Overnight journey from Delhi or Chandigarh to Manali by Volvo bus or private vehicle. Arrive and check-in. Evening rest.",
+      },
+      {
+        day: "Day 2",
+        title: "Rohtang Pass & Solang Valley",
+        details:
+          "Early morning excursion to Rohtang Pass (13,050 ft) – snow activities, paragliding. Visit Solang Valley for skiing/zorbing. Overnight stay.",
+      },
+      {
+        day: "Day 3",
+        title: "Manali Local Sightseeing",
+        details:
+          "Visit Hadimba Temple (iconic wooden temple), Manu Temple, Old Manali village, Club House (river-side activities), Vashisht Hot Springs. Overnight stay.",
+      },
+      {
+        day: "Day 4",
+        title: "Naggar & Bijli Mahadev",
+        details:
+          "Visit Naggar Castle (heritage hotel & museum), Roerich Art Gallery (famous Russian painter's home), Bijli Mahadev Temple (sacred high-altitude temple, 2-km trek). Overnight stay.",
+      },
+      {
+        day: "Day 5",
+        title: "Adventure & Shopping",
+        details:
+          "River rafting on Beas River, local handicraft shopping, Mall Road Manali. Farewell dinner. Overnight stay.",
+      },
+      {
+        day: "Day 6",
+        title: "Departure",
+        details:
+          "After breakfast, departure from Manali. Drive back to Delhi or Chandigarh. Tour ends.",
+      },
+    ],
+  },
+  {
+    id: "shimla",
+    name: "Shimla Tour",
+    destination: "Shimla",
+    duration: "4N / 5D",
+    price: "₹10,000",
+    priceNote: "per person",
+    pickup: "Delhi / Chandigarh",
+    highlight: "Mall Road & Kufri Snow Point",
+    itinerary: [
+      {
+        day: "Day 1",
+        title: "Delhi/Chandigarh → Shimla",
+        details:
+          "Depart from Delhi or Chandigarh. Arrive Shimla, check-in. Evening walk on Mall Road. Overnight stay.",
+      },
+      {
+        day: "Day 2",
+        title: "Kufri & Chail",
+        details:
+          "Day trip to Kufri (snow activities, Himalayan wildlife park), Fagu viewpoint, Green Valley, Chail (world's highest cricket ground). Overnight stay in Shimla.",
+      },
+      {
+        day: "Day 3",
+        title: "Shimla City Tour",
+        details:
+          "Visit The Ridge (open air space with Himalayan panorama), Mall Road shopping, Christ Church (neo-Gothic architecture), Jakhu Temple (ancient Hanuman temple, 2.5 km trek). Overnight stay.",
+      },
+      {
+        day: "Day 4",
+        title: "Mashobra & Tattapani",
+        details:
+          "Visit Mashobra village (apple orchards), Naldehra Golf Course (one of the oldest in India), Tattapani (hot sulphur springs). Overnight stay.",
+      },
+      {
+        day: "Day 5",
+        title: "Departure",
+        details:
+          "After breakfast, checkout. Drive back to Delhi or Chandigarh. Tour concludes.",
+      },
+    ],
+  },
+  {
+    id: "kashmir",
+    name: "Kashmir Tour",
+    destination: "Kashmir",
+    duration: "6N / 7D",
+    price: "₹18,000",
+    priceNote: "per person",
+    pickup: "Srinagar Airport",
+    highlight: "Dal Lake Houseboat & Gulmarg Gondola",
+    itinerary: [
+      {
+        day: "Day 1",
+        title: "Srinagar Arrival",
+        details:
+          "Arrival at Srinagar Airport. Transfer to houseboat on Dal Lake. Evening Shikara ride on Dal Lake. Overnight stay on houseboat.",
+      },
+      {
+        day: "Day 2",
+        title: "Gulmarg",
+        details:
+          "Day excursion to Gulmarg (Meadow of Flowers). Gondola ride (Phase 1 & 2) up to 14,000 ft. Snow activities, skiing. Return to Srinagar. Overnight stay.",
+      },
+      {
+        day: "Day 3",
+        title: "Pahalgam",
+        details:
+          "Day trip to Pahalgam (Valley of Shepherds). Visit Betaab Valley (Bollywood filming location), Chandanwari, Aru Valley. River-side picnic. Return to Srinagar. Overnight stay.",
+      },
+      {
+        day: "Day 4",
+        title: "Srinagar Local",
+        details:
+          "Visit Shankaracharya Temple (hilltop Hindu shrine), Mughal Gardens (Nishat, Shalimar, Chashme Shahi), local market for Pashmina shawls & dry fruits. Overnight stay.",
+      },
+      {
+        day: "Day 5",
+        title: "Sonmarg",
+        details:
+          "Day excursion to Sonmarg (Meadow of Gold). Visit Thajiwas Glacier (accessible by pony/trek). Panoramic Himalayan views. Return to Srinagar. Overnight stay.",
+      },
+      {
+        day: "Day 6",
+        title: "Srinagar → Jammu",
+        details:
+          "Drive from Srinagar to Jammu via scenic Banihal Pass. Enroute stop at Vaishno Devi (optional). Overnight stay in Jammu.",
+      },
+      {
+        day: "Day 7",
+        title: "Departure",
+        details:
+          "After breakfast, transfer to Jammu Airport/Railway Station. Tour concludes.",
+      },
+    ],
+  },
+  {
+    id: "mathura",
+    name: "Mathura Tour",
+    destination: "Mathura",
+    duration: "2N / 3D",
+    price: "₹7,000",
+    priceNote: "per person",
+    pickup: "Agra / Mathura Region",
+    highlight: "Krishna Janmabhoomi & ISKCON Vrindavan",
+    itinerary: [
+      {
+        day: "Day 1",
+        title: "Arrival at Mathura",
+        details:
+          "Arrive at Mathura. Check-in at hotel. Visit Krishna Janmabhoomi (birthplace of Lord Krishna), Dwarkadhish Temple, Vishram Ghat (evening aarti on Yamuna river). Overnight stay.",
+      },
+      {
+        day: "Day 2",
+        title: "Vrindavan",
+        details:
+          "Full day in Vrindavan (land of Lord Krishna). Visit ISKCON Temple (world-famous, grand architecture), Banke Bihari Temple, Prem Mandir (illuminated at night), Govardhan Hill (parikrama route). Overnight stay.",
+      },
+      {
+        day: "Day 3",
+        title: "Barsana → Departure",
+        details:
+          "Morning visit to Barsana, birthplace of Radha Rani. Visit Radha Rani Temple (hilltop temple). Return to Mathura. Tour ends with divine blessings.",
+      },
+    ],
+  },
+];
+
+const REVIEWS = [
+  {
+    name: "Rahul S.",
+    city: "Kolkata",
+    destination: "Bhutan",
+    text: "Amazing Bhutan trip! Everything was perfectly arranged from pickup at NJP to drop back. Professional guides, comfortable stay, and a truly memorable experience. Highly recommended!",
+    rating: 5,
+  },
+  {
+    name: "Priya M.",
+    city: "Delhi",
+    destination: "Sikkim",
+    text: "The Sikkim tour was breathtaking. Professional service and great value for money. Tsomgo Lake and Nathula Pass were absolutely stunning. Will book again!",
+    rating: 5,
+  },
+  {
+    name: "Amit K.",
+    city: "Mumbai",
+    destination: "Kashmir",
+    text: "Kashmir tour was a dream come true. Dal Lake houseboat was unforgettable. Excellent hospitality and smooth arrangements throughout the trip.",
+    rating: 5,
+  },
+  {
+    name: "Sunita D.",
+    city: "West Bengal",
+    destination: "Darjeeling",
+    text: "Darjeeling package was perfect for a family trip. Kids absolutely loved Tiger Hill sunrise. Tea garden visit was a great experience. Thank you Travellers Points!",
+    rating: 5,
   },
 ];
 
 const SERVICES = [
   {
+    id: "flights",
     icon: Plane,
-    title: "Flights",
-    description:
-      "Best fares to 200+ destinations worldwide with flexible booking options",
-    color: "ocean",
-    details: [
-      "Domestic & international flight bookings at best fares",
-      "Bagdogra Airport (IXB) connections for all our tour packages",
-      "NJP (New Jalpaiguri) railway station pickup & transfer",
-      "Group booking discounts for 10+ passengers",
-      "Flexible date change options with minimal charges",
-      "Round-trip and one-way booking available",
-      "24/7 support for flight-related queries",
-    ],
+    title: "Flight Bookings",
+    short: "Best fares for domestic & international flights",
+    details:
+      "We help you book domestic and international flights at competitive rates. Our team searches multiple airlines to find you the best price and schedule. From Bagdogra to any destination — we handle everything.",
   },
   {
-    icon: Building2,
-    title: "Hotels",
-    description:
-      "Curated accommodations from budget-friendly to ultra-luxury resorts",
-    color: "gold",
-    details: [
-      "Partner hotels in Bhutan: Paro, Thimphu, Punakha, Wangdue",
-      "Premium stays in Darjeeling & Gangtok, Sikkim",
-      "Budget guesthouses to luxury 4-star resorts",
-      "Breakfast included in most packages",
-      "Airport/hotel transfer arrangements included",
-      "Special honeymoon and group packages available",
-      "All hotels vetted for hygiene, safety, and service quality",
-    ],
+    id: "hotels",
+    icon: Hotel,
+    title: "Hotel Bookings",
+    short: "Budget to luxury stay options at every destination",
+    details:
+      "From budget guesthouses to luxury resorts, we book accommodations across all our tour destinations. We ensure comfortable, clean, and well-located stays for every budget and preference.",
   },
   {
-    icon: MapIcon,
-    title: "Tour Packages",
-    description:
-      "All-inclusive guided tour packages tailored to your interests and budget",
-    color: "coral",
-    details: [
-      "Bhutan Group Tour — ₹24,500/person (6N/7D, pickup from Bagdogra/NJP)",
-      "Bhutan Private Tour — ₹43,000/person (customized itinerary)",
-      "Sikkim & Darjeeling package — scenic hill stations & monasteries",
-      "Nepal package — Kathmandu, Pokhara, Lumbini",
-      "Manali & Shimla — Himalayan summer escape",
-      "Kashmir — Dal Lake, Gulmarg, Pahalgam",
-      "Mathura & Vrindavan — spiritual pilgrimage tour",
-      "All packages include accommodation, meals & guided sightseeing",
-    ],
+    id: "packages",
+    icon: PackageIcon,
+    title: "Custom Tour Packages",
+    short: "Tailored group & private tour experiences",
+    details:
+      "Can't find a package that fits? We create fully customized group and private tour packages to match your schedule, budget, and preferences. Tell us where you want to go and we'll design your perfect trip.",
   },
   {
-    icon: ShieldCheck,
+    id: "insurance",
+    icon: Shield,
     title: "Travel Insurance",
-    description:
-      "Comprehensive coverage so you can explore with complete peace of mind",
-    color: "ocean",
-    details: [
-      "Trip cancellation & curtailment coverage",
-      "Medical emergency & hospitalisation abroad",
-      "Baggage loss, theft, and delay protection",
-      "Flight delay and missed connection cover",
-      "Personal accident and liability coverage",
-      "Available for all Travellers Points tour packages",
-      "Hassle-free claim assistance by our team",
-    ],
+    short: "Travel protection for international & domestic trips",
+    details:
+      "We assist with travel insurance for both international and domestic tours. Travel with peace of mind knowing you're covered for medical emergencies, trip cancellations, and lost baggage.",
   },
 ];
 
-const WHY_US = [
+const TAXI_ROUTES = [
   {
-    icon: Tag,
-    title: "Best Price Guarantee",
-    description:
-      "We match any price and ensure you get the best deal every time",
-    stat: "Price Match",
+    from: "Jaigaon",
+    to: "Siliguri",
+    duration: "~2.5 hrs",
+    note: "Convenient and comfortable transfer",
   },
   {
-    icon: Award,
-    title: "Expert Local Guides",
-    description:
-      "Handpicked guides with deep local knowledge for authentic experiences",
-    stat: "500+ Guides",
+    from: "Jaigaon",
+    to: "Darjeeling",
+    duration: "~3.5 hrs",
+    note: "Scenic hill road journey",
   },
   {
-    icon: Clock,
-    title: "24/7 Customer Support",
-    description: "Round-the-clock assistance wherever you are in the world",
-    stat: "Always On",
-  },
-  {
-    icon: Users,
-    title: "Trusted by Thousands",
-    description:
-      "Over 50,000 happy travelers trust us with their dream vacations",
-    stat: "50K+ Trips",
+    from: "Jaigaon",
+    to: "Gangtok (Sikkim)",
+    duration: "~5 hrs",
+    note: "Door-to-door service available",
   },
 ];
 
-const DEALS = [
-  {
-    badge: "Group Tour Deal",
-    destination: "Bhutan Group Tour",
-    country: "Bagdogra / NJP Pickup",
-    nights: 6,
-    originalPrice: "₹30,000",
-    currentPrice: "₹24,500",
-    savings: "Save 17%",
-    image: "/assets/generated/dest-bhutan.dim_600x400.jpg",
-  },
-  {
-    badge: "Himalayan Special",
-    destination: "Bhutan Private Tour",
-    country: "Land of Thunder Dragon",
-    nights: 6,
-    originalPrice: "₹34,999",
-    currentPrice: "₹43,000",
-    savings: "Save 17%",
-    image: "/assets/generated/bhutan-tigers-nest.dim_800x500.jpg",
-  },
-  {
-    badge: "Hill Station Getaway",
-    destination: "Sikkim & Darjeeling",
-    country: "India",
-    nights: 5,
-    originalPrice: "₹18,999",
-    currentPrice: "₹14,999",
-    savings: "Save 21%",
-    image: "/assets/generated/dest-sikkim.dim_600x400.jpg",
-  },
+// ─── Hero Tagline Component ────────────────────────────────────────────────────
+const TAGLINES = [
+  "Your Dream Journey Begins With Us",
+  "Where Every Trip Becomes a Timeless Memory",
+  "Explore the Himalayas, Discover Yourself",
+  "From Jaigaon to the World — We Take You There",
 ];
 
-const TESTIMONIALS = [
-  {
-    name: "Rahul S.",
-    initials: "RS",
-    rating: 5,
-    text: "The Bhutan trip was a life-changing experience. Tiger's Nest, Punakha Dzong — every moment was magical. Thank you Travellers Points!",
-    destination: "Bhutan",
-  },
-  {
-    name: "Anjali D.",
-    initials: "AD",
-    rating: 5,
-    text: "Sikkim Darjeeling tour was perfectly organized. The sunrise at Tiger Hill was breathtaking. Will book again!",
-    destination: "Sikkim & Darjeeling",
-  },
-  {
-    name: "Amit & Kavya R.",
-    initials: "AK",
-    rating: 5,
-    text: "Our Bhutan group tour from Bagdogra pickup was absolutely seamless. Dochula Pass with 108 chortens left us speechless. Highly recommend this tour!",
-    destination: "Bhutan Group Tour",
-  },
-  {
-    name: "Sunita M.",
-    initials: "SM",
-    rating: 5,
-    text: "Darjeeling toy train ride through the misty mountains — a dream come true! The tea garden walk and Tiger Hill sunrise made this the best trip of my life.",
-    destination: "Darjeeling",
-  },
-  {
-    name: "Vikram N.",
-    initials: "VN",
-    rating: 5,
-    text: "Tsomgo Lake and Nathu La Pass were breathtaking. The Gangtok MG Marg food scene was amazing. Travellers Points handled everything perfectly!",
-    destination: "Sikkim",
-  },
-];
-
-// =============================================
-// CLIENT REVIEWS DATA
-// =============================================
-
-const CLIENT_REVIEWS = [
-  {
-    id: 1,
-    name: "Rohit & Priya Sharma",
-    destination: "Bhutan",
-    tag: "Bhutan",
-    photo: "/assets/generated/client-bhutan-1.dim_400x400.jpg",
-    rating: 5,
-    text: "The Tiger's Nest hike was the most magical experience of our lives! Travellers Points handled everything perfectly — from Bagdogra pickup to the farewell dinner with cultural show. Highly recommend this trip!",
-    tripLabel: "Bhutan 6N/7D",
-    videoEmbed: "https://www.youtube.com/embed/8P7RYphq23s",
-    hasVideo: true,
-  },
-  {
-    id: 2,
-    name: "The Mehta Family",
-    destination: "Bhutan",
-    tag: "Bhutan",
-    photo: "/assets/generated/client-bhutan-2.dim_400x400.jpg",
-    rating: 5,
-    text: "We traveled as a family of 5 and Travellers Points made it stress-free. The kids loved the Punakha Dzong, the suspension bridge, and Bhutanese food. Best family trip ever!",
-    tripLabel: "Bhutan Group Tour",
-    hasVideo: false,
-  },
-  {
-    id: 3,
-    name: "Ananya Bose",
-    destination: "Darjeeling",
-    tag: "Darjeeling",
-    photo: "/assets/generated/client-darjeeling-1.dim_400x400.jpg",
-    rating: 5,
-    text: "The tea garden visit and the toy train joy ride in Darjeeling were absolutely dreamy! Everything was well-organized and our guide was so knowledgeable. The hotel views were stunning!",
-    tripLabel: "Sikkim & Darjeeling 5N/6D",
-    videoEmbed: "https://www.youtube.com/embed/5AkVaB8HgC0",
-    hasVideo: true,
-  },
-  {
-    id: 4,
-    name: "Vikram Nair",
-    destination: "Darjeeling",
-    tag: "Darjeeling",
-    photo: "/assets/generated/client-darjeeling-2.dim_400x400.jpg",
-    rating: 5,
-    text: "Waking up at 4am for the Tiger Hill sunrise was 100% worth it — Kanchenjunga glowing pink at dawn is something I'll never forget. Travellers Points made this trip seamless!",
-    tripLabel: "Sikkim & Darjeeling 5N/6D",
-    hasVideo: false,
-  },
-  {
-    id: 5,
-    name: "Delhi Group Tour",
-    destination: "Bhutan",
-    tag: "Bhutan",
-    photo: "/assets/generated/client-bhutan-3.dim_400x400.jpg",
-    rating: 5,
-    text: "Dochula Pass with the 108 chortens backdrop was surreal! Our group of 12 had an amazing time — the guide was fantastic, food was great, and the whole Bhutan experience was life-changing.",
-    tripLabel: "Bhutan Group Tour",
-    hasVideo: false,
-  },
-  {
-    id: 6,
-    name: "Sunita & Raj Kapoor",
-    destination: "Darjeeling",
-    tag: "Darjeeling",
-    photo: "/assets/generated/client-darjeeling-3.dim_400x400.jpg",
-    rating: 5,
-    text: "Riding the Darjeeling Himalayan Railway was a dream come true! The UNESCO toy train through mountain mist and green tea gardens — pure bliss. Thank you Travellers Points for an unforgettable trip!",
-    tripLabel: "Sikkim & Darjeeling 5N/6D",
-    hasVideo: false,
-  },
-];
-
-// =============================================
-// PACKAGE DATA
-// =============================================
-
-const BHUTAN_ITINERARY = [
-  {
-    day: 1,
-    title: "Bagdogra Airport → Phuentsholing",
-    desc: "Pickup from Bagdogra Airport (IXB) at 2:00–2:30 PM or NJP Railway Station at 2:30–3:00 PM (timings indicative, subject to change). Transfer to Phuentsholing by road. Hotel check-in. Evening free for leisure and local exploration. Visit Bhutan Gate and Karbandi Monastery area. Overnight stay at Phuentsholing.",
-  },
-  {
-    day: 2,
-    title: "Phuentsholing → Thimphu",
-    desc: "Breakfast at hotel. Completion of immigration formalities. Drive towards Thimphu. En-route pass through Chukha Waterfall. Visit Chuzom Bridge — the confluence of Thimphu River and Paro River. Continue scenic drive to Thimphu. Arrival and hotel check-in. Evening free for leisure. Overnight stay at Thimphu.",
-  },
-  {
-    day: 3,
-    title: "Thimphu → Dochula → Punakha → Thimphu",
-    desc: "Breakfast at hotel. Drive from Thimphu towards Dochula Pass — enjoy panoramic Himalayan views (weather permitting). Continue drive to Punakha. Visit Punakha Dzong — one of the most beautiful Dzongs in Bhutan, at the confluence of Pho Chhu and Mo Chhu rivers. Leisure time by Punakha river valley. Drive back to Thimphu. Overnight stay at Thimphu.",
-  },
-  {
-    day: 4,
-    title: "Thimphu Sightseeing → Paro",
-    desc: "Breakfast at hotel. Thimphu sightseeing: Visit Buddha Dordenma (the world's largest sitting Buddha), National Memorial Chorten, and Tashichho Dzong (from outside). Drive from Thimphu to Paro. Arrival at Paro and hotel check-in. Evening free for leisure. Overnight stay at Paro.",
-  },
-  {
-    day: 5,
-    title: "Paro – Tiger's Nest Hike",
-    desc: "Early breakfast at hotel. Drive to Tiger's Nest base point. Hike to Paro Taktsang (Tiger's Nest Monastery) — the iconic monastery perched 900m above the Paro Valley. Return hike and drive back to Paro. Evening free for rest and leisure. Overnight stay at Paro.",
-  },
-  {
-    day: 6,
-    title: "Paro Sightseeing → Phuentsholing",
-    desc: "Breakfast at hotel. Visit Rinpung Dzong (Paro Dzong), National Museum of Bhutan, and Kyichu Lhakhang (subject to time). Lunch at Paro town. Drive from Paro to Phuentsholing. Arrival and hotel check-in. Overnight stay at Phuentsholing.",
-  },
-  {
-    day: 7,
-    title: "Phuentsholing → Bagdogra Airport / NJP",
-    desc: "Breakfast at hotel. Check-out from hotel. Drive from Phuentsholing to Bagdogra Airport or NJP Railway Station. Arrival and drop at airport/station. Tour Ends. Carry home memories of monasteries, mountains, and the happiness of Bhutan.",
-  },
-];
-
-const SIKKIM_ITINERARY = [
-  {
-    day: 1,
-    title: "Arrival in Gangtok",
-    desc: "Arrive NJP / Bagdogra, scenic transfer to Gangtok (4 hrs). Check-in and evening stroll on MG Marg — the vibrant pedestrian boulevard.",
-  },
-  {
-    day: 2,
-    title: "Gangtok Sightseeing",
-    desc: "Visit Rumtek Monastery, Enchey Monastery, Namgyal Institute of Tibetology, and Flower Exhibition Centre. Evening at MG Marg with local food.",
-  },
-  {
-    day: 3,
-    title: "Tsomgo Lake & Nathu La Pass",
-    desc: "Excursion to Tsomgo Lake (12,400 ft), Baba Mandir, and Nathu La Pass (14,140 ft) — the India-China border (permit required). Return to Gangtok.",
-  },
-  {
-    day: 4,
-    title: "Gangtok to Darjeeling",
-    desc: "Morning drive to Darjeeling (3.5 hrs). Check-in. Evening visit Batasia Loop with Gorkha War Memorial and tea garden stroll at sunset.",
-  },
-  {
-    day: 5,
-    title: "Tiger Hill Sunrise & Darjeeling Sightseeing",
-    desc: "Pre-dawn drive to Tiger Hill for the legendary sunrise over Kangchenjunga. Visit Ghoom Monastery, Darjeeling Himalayan Railway joy ride, Happy Valley Tea Estate, and Himalayan Mountaineering Institute.",
-  },
-  {
-    day: 6,
-    title: "Departure",
-    desc: "Morning at leisure. Transfer to NJP / Bagdogra for onward journey, carrying the scent of tea and the memory of mountain peaks.",
-  },
-];
-
-const BHUTAN_GROUP_ITINERARY = [
-  {
-    day: 1,
-    title: "Bagdogra Airport → Phuentsholing",
-    desc: "Pickup from Bagdogra Airport (IXB) at 2:00–2:30 PM or NJP Railway Station at 2:30–3:00 PM (timings indicative, subject to change based on group arrivals). Transfer to Phuentsholing by road. Hotel check-in. Evening free for leisure and local exploration. Visit Bhutan Gate and Karbandi Monastery area. Overnight stay at Phuentsholing.",
-  },
-  {
-    day: 2,
-    title: "Phuentsholing → Thimphu",
-    desc: "Breakfast at hotel. Completion of immigration formalities. Drive towards Thimphu. En-route pass through Chukha Waterfall. Visit Chuzom Bridge — the confluence of Thimphu River and Paro River. Continue scenic drive to Thimphu. Arrival and hotel check-in. Evening free for leisure. Overnight stay at Thimphu.",
-  },
-  {
-    day: 3,
-    title: "Thimphu → Dochula → Punakha → Thimphu",
-    desc: "Breakfast at hotel. Drive from Thimphu towards Dochula Pass — enjoy panoramic Himalayan views (weather permitting). Continue drive to Punakha. Visit Punakha Dzong — one of the most beautiful Dzongs in Bhutan, at the confluence of Pho Chhu and Mo Chhu rivers. Leisure time by Punakha river valley. Drive back to Thimphu. Overnight stay at Thimphu.",
-  },
-  {
-    day: 4,
-    title: "Thimphu Sightseeing → Paro",
-    desc: "Breakfast at hotel. Thimphu sightseeing: Visit Buddha Dordenma (the world's largest sitting Buddha), National Memorial Chorten, and Tashichho Dzong (from outside). Drive from Thimphu to Paro. Arrival at Paro and hotel check-in. Evening free for leisure. Overnight stay at Paro.",
-  },
-  {
-    day: 5,
-    title: "Paro – Tiger's Nest Hike",
-    desc: "Early breakfast at hotel. Drive to Tiger's Nest base point. Hike to Paro Taktsang (Tiger's Nest Monastery) — the iconic monastery perched 900m above the Paro Valley. Return hike and drive back to Paro. Evening free for rest and leisure. Overnight stay at Paro.",
-  },
-  {
-    day: 6,
-    title: "Paro Sightseeing → Phuentsholing",
-    desc: "Breakfast at hotel. Visit Rinpung Dzong (Paro Dzong), National Museum of Bhutan, and Kyichu Lhakhang (subject to time). Lunch at Paro town. Drive from Paro to Phuentsholing. Arrival and hotel check-in. Overnight stay at Phuentsholing.",
-  },
-  {
-    day: 7,
-    title: "Phuentsholing → Bagdogra Airport / NJP",
-    desc: "Breakfast at hotel. Check-out from hotel. Drive from Phuentsholing to Bagdogra Airport or NJP Railway Station. Arrival and drop at airport/station. Tour Ends. Carry home memories of monasteries, mountains, and the happiness of Bhutan.",
-  },
-];
-
-const TOUR_PACKAGES = [
-  {
-    id: "bhutan",
-    name: "Bhutan — Land of the Thunder Dragon",
-    tagline: "A kingdom that measures happiness",
-    duration: "6 Nights / 7 Days",
-    price: "₹43,000",
-    priceLabel: "per person",
-    heroImage: "/assets/generated/dest-bhutan.dim_600x400.jpg",
-    galleryImages: [
-      {
-        src: "/assets/generated/bhutan-tigers-nest.dim_800x500.jpg",
-        alt: "Tiger's Nest Monastery",
-      },
-      {
-        src: "/assets/generated/bhutan-punakha.dim_800x500.jpg",
-        alt: "Punakha Dzong",
-      },
-      {
-        src: "/assets/generated/bhutan-thimphu.dim_800x500.jpg",
-        alt: "Thimphu City",
-      },
-    ],
-    highlights: [
-      "Private pickup from Bagdogra Airport (IXB) or NJP Railway Station",
-      "Phuentsholing border crossing with immigration formalities",
-      "Chukha Waterfall & Chuzom Bridge on route to Thimphu",
-      "Dochula Pass with 108 chortens & panoramic Himalayan views",
-      "Punakha Dzong — jewel at the river confluence",
-      "Thimphu sightseeing: Buddha Dordenma, Memorial Chorten, Tashichho Dzong",
-      "Tiger's Nest (Taktsang) Monastery hike",
-      "Paro Dzong & National Museum of Bhutan",
-      "Private vehicle throughout the tour",
-      "SDF, guide & all permits included",
-    ],
-    includes: [
-      "Private pickup & drop: Bagdogra Airport (IXB) or NJP Railway Station",
-      "Accommodation: 2 nights Phuentsholing, 2 nights Thimphu, 2 nights Paro",
-      "Meals on MAP plan (Breakfast & Dinner daily)",
-      "Professional English/Hindi-speaking Bhutanese guide",
-      "Transportation by private vehicle",
-      "Sustainable Development Fee (SDF) included",
-      "All permits & applicable taxes, tolls, parking & driver allowances",
-    ],
-    itinerary: BHUTAN_ITINERARY,
-    accentColor: "from-amber-900/80 to-orange-900/60",
-    badgeColor: "bg-amber-700",
-  },
-  {
-    id: "sikkim",
-    name: "Sikkim & Darjeeling",
-    tagline: "Tea, mountains and the toy train",
-    duration: "5 Nights / 6 Days",
-    price: "₹14,999",
-    priceLabel: "per person",
-    heroImage: "/assets/generated/dest-sikkim.dim_600x400.jpg",
-    galleryImages: [
-      {
-        src: "/assets/generated/sikkim-gangtok.dim_800x500.jpg",
-        alt: "Gangtok City",
-      },
-      {
-        src: "/assets/generated/darjeeling-tea.dim_800x500.jpg",
-        alt: "Darjeeling Tea Garden",
-      },
-      {
-        src: "/assets/generated/sikkim-tsomgo.dim_800x500.jpg",
-        alt: "Tsomgo Lake",
-      },
-    ],
-    highlights: [
-      "Tsomgo (Changu) Lake & Nathu La Pass",
-      "Gangtok city sightseeing — MG Marg, Rumtek Monastery",
-      "Darjeeling toy train (UNESCO heritage)",
-      "Tiger Hill sunrise over Kangchenjunga",
-      "Batasia Loop & War Memorial",
-      "Tea garden visit & tasting",
-    ],
-    includes: [
-      "Accommodation (3-star hotels)",
-      "Breakfast daily",
-      "All transfers by private vehicle",
-      "Licensed guide",
-      "Nathu La permit",
-      "Entry tickets to all monuments",
-    ],
-    itinerary: SIKKIM_ITINERARY,
-    accentColor: "from-emerald-900/80 to-teal-900/60",
-    badgeColor: "bg-emerald-700",
-  },
-  {
-    id: "bhutan-group",
-    name: "Bhutan Group Tour",
-    tagline: "Bagdogra / NJP Pickup — Affordable Group Experience",
-    duration: "6 Nights / 7 Days",
-    price: "₹24,500",
-    priceLabel: "per person (group)",
-    heroImage: "/assets/generated/dest-bhutan.dim_600x400.jpg",
-    galleryImages: [
-      {
-        src: "/assets/generated/bhutan-tigers-nest.dim_800x500.jpg",
-        alt: "Tiger's Nest Monastery",
-      },
-      {
-        src: "/assets/generated/bhutan-punakha.dim_800x500.jpg",
-        alt: "Punakha Dzong",
-      },
-      {
-        src: "/assets/generated/bhutan-thimphu.dim_800x500.jpg",
-        alt: "Thimphu City",
-      },
-    ],
-    highlights: [
-      "Pickup from Bagdogra Airport (IXB) or NJP Railway Station",
-      "Phuentsholing border crossing with immigration formalities",
-      "Chukha Waterfall & Chuzom Bridge on route to Thimphu",
-      "Dochula Pass with 108 chortens & panoramic Himalayan views",
-      "Punakha Dzong — jewel at the river confluence",
-      "Thimphu sightseeing: Buddha Dordenma, Memorial Chorten, Tashichho Dzong",
-      "Tiger's Nest (Taktsang) Monastery hike",
-      "Paro Dzong & National Museum of Bhutan",
-      "3-star hotels with MAP plan (Breakfast & Dinner)",
-      "SDF, guide & all permits included",
-    ],
-    includes: [
-      "Pickup & drop: Bagdogra Airport (IXB) or NJP Railway Station",
-      "Accommodation: 2 nights Phuentsholing, 2 nights Thimphu, 2 nights Paro (3-star hotels)",
-      "Meals on MAP plan (Breakfast & Dinner daily)",
-      "Professional English/Hindi-speaking Bhutanese guide",
-      "Transportation by private group vehicle",
-      "Sustainable Development Fee (SDF) included",
-      "All permits & applicable taxes, tolls, parking & driver allowances",
-    ],
-    itinerary: BHUTAN_GROUP_ITINERARY,
-    accentColor: "from-yellow-900/80 to-amber-800/60",
-    badgeColor: "bg-yellow-700",
-  },
-  {
-    id: "nepal",
-    name: "Nepal Tour",
-    tagline: "Kathmandu, Pokhara & Everest Base Trek",
-    duration: "5 Nights / 6 Days",
-    price: "₹18,000",
-    priceLabel: "per person",
-    heroImage: "/assets/generated/dest-sikkim.dim_600x400.jpg",
-    galleryImages: [],
-    highlights: [
-      "Kathmandu Durbar Square",
-      "Pashupatinath Temple",
-      "Boudhanath Stupa",
-      "Pokhara & Phewa Lake",
-      "Nagarkot Sunrise View",
-      "Bhaktapur Heritage Walk",
-    ],
-    includes: [
-      "Pickup & drop from Tribhuvan Airport",
-      "Accommodation (3-star hotels)",
-      "Daily breakfast",
-      "Private vehicle transfers",
-      "Licensed English-speaking guide",
-      "All monument entry fees",
-    ],
-    itinerary: [
-      {
-        day: 1,
-        title: "Arrival in Kathmandu",
-        desc: "Arrival at Tribhuvan International Airport, Kathmandu. Transfer to hotel. Evening visit to Thamel market. Welcome dinner. Overnight in Kathmandu.",
-      },
-      {
-        day: 2,
-        title: "Kathmandu Sightseeing",
-        desc: "Visit Pashupatinath Temple, Boudhanath Stupa, Swayambhunath (Monkey Temple), and Kathmandu Durbar Square. Evening at leisure. Overnight in Kathmandu.",
-      },
-      {
-        day: 3,
-        title: "Kathmandu to Nagarkot to Bhaktapur",
-        desc: "Early morning drive to Nagarkot for Himalayan sunrise views. Visit Bhaktapur Durbar Square — a UNESCO World Heritage Site. Return to Kathmandu. Overnight in Kathmandu.",
-      },
-      {
-        day: 4,
-        title: "Kathmandu to Pokhara",
-        desc: "Morning drive or fly to Pokhara (6 hrs by road / 25 min by air). Arrival at Pokhara. Boating on Phewa Lake with Annapurna views. Visit Devi's Fall and Gupteshwor Cave. Overnight in Pokhara.",
-      },
-      {
-        day: 5,
-        title: "Pokhara Sightseeing",
-        desc: "Early morning visit to Sarangkot for Himalayan panorama and sunrise. Visit Bindhyabasini Temple and International Mountain Museum. Evening stroll at Lakeside. Overnight in Pokhara.",
-      },
-      {
-        day: 6,
-        title: "Pokhara to Kathmandu to Departure",
-        desc: "Morning at leisure. Drive or fly back to Kathmandu. Transfer to Tribhuvan Airport for your onward journey. Tour ends with memories of the Himalayas.",
-      },
-    ],
-    accentColor: "from-red-900/80 to-orange-800/60",
-    badgeColor: "bg-red-700",
-  },
-  {
-    id: "manali",
-    name: "Manali Tour",
-    tagline: "Snow Peaks, Rohtang Pass & Solang Valley",
-    duration: "4 Nights / 5 Days",
-    price: "₹12,000",
-    priceLabel: "per person",
-    heroImage: "/assets/generated/dest-bhutan.dim_600x400.jpg",
-    galleryImages: [],
-    highlights: [
-      "Rohtang Pass (snow point)",
-      "Solang Valley adventure activities",
-      "Hadimba Devi Temple",
-      "Old Manali & Mall Road",
-      "Beas River rafting",
-      "Vashisht Hot Springs",
-    ],
-    includes: [
-      "Pickup & drop from Manali bus stand",
-      "Accommodation (hotel/resort)",
-      "Daily breakfast",
-      "Private vehicle with driver",
-      "Rohtang Pass permit",
-      "Solang Valley transfer",
-    ],
-    itinerary: [
-      {
-        day: 1,
-        title: "Arrival in Manali",
-        desc: "Arrival at Manali. Check-in at hotel. Visit Mall Road, Tibetan Monastery, and Hadimba Devi Temple. Evening at leisure. Overnight in Manali.",
-      },
-      {
-        day: 2,
-        title: "Rohtang Pass / Snow Point",
-        desc: "Early morning drive to Rohtang Pass (3,978m) for snow activities — skiing, snow scooter, and stunning mountain views. Return to Manali by evening. Overnight in Manali. (Subject to permit availability and weather.)",
-      },
-      {
-        day: 3,
-        title: "Solang Valley & Adventure Activities",
-        desc: "Visit Solang Valley for paragliding, zorbing, and rope activities. Visit Vashisht hot water springs and Vashisht Temple. Evening at Old Manali market. Overnight in Manali.",
-      },
-      {
-        day: 4,
-        title: "Manali Local Sightseeing",
-        desc: "Visit Naggar Castle, Nicholas Roerich Art Gallery, and Jana Waterfall. Beas River riverside leisure time. Shopping at local Kullu shawl market. Overnight in Manali.",
-      },
-      {
-        day: 5,
-        title: "Departure from Manali",
-        desc: "After breakfast, check-out and transfer to Manali bus stand or Bhuntar Airport. Tour ends. Carry memories of snow-capped peaks and mountain adventures.",
-      },
-    ],
-    accentColor: "from-blue-900/80 to-sky-800/60",
-    badgeColor: "bg-blue-700",
-  },
-  {
-    id: "shimla",
-    name: "Shimla Tour",
-    tagline: "Queen of Hills — Colonial Charm & Scenic Beauty",
-    duration: "3 Nights / 4 Days",
-    price: "₹9,500",
-    priceLabel: "per person",
-    heroImage: "/assets/generated/dest-sikkim.dim_600x400.jpg",
-    galleryImages: [],
-    highlights: [
-      "Mall Road & The Ridge",
-      "Jakhu Temple (Hanuman statue)",
-      "Kufri snow point",
-      "Christ Church colonial architecture",
-      "Toy Train ride",
-      "Green Valley viewpoint",
-    ],
-    includes: [
-      "Pickup & drop from Shimla station",
-      "Accommodation (hotel)",
-      "Daily breakfast",
-      "Private vehicle with driver",
-      "Kufri sightseeing transfer",
-      "Guide charges",
-    ],
-    itinerary: [
-      {
-        day: 1,
-        title: "Arrival in Shimla",
-        desc: "Arrival at Shimla railway station or bus stand. Transfer to hotel. Evening walk on Mall Road and The Ridge. Visit Christ Church. Overnight in Shimla.",
-      },
-      {
-        day: 2,
-        title: "Shimla Sightseeing",
-        desc: "Visit Jakhu Temple (famous for the giant Hanuman statue), Prospect Hill, Annandale ground, and Tara Devi Temple. Evening shopping on Mall Road. Overnight in Shimla.",
-      },
-      {
-        day: 3,
-        title: "Kufri & Green Valley",
-        desc: "Day trip to Kufri for snow activities and Himalayan panoramic views. Visit Green Valley viewpoint and Fagu. Return to Shimla. Enjoy Toy Train ride if time permits. Overnight in Shimla.",
-      },
-      {
-        day: 4,
-        title: "Departure from Shimla",
-        desc: "After breakfast, visit Viceregal Lodge (Rashtrapati Niwas) and Indian Institute of Advanced Study. Transfer to station/bus stand. Tour ends.",
-      },
-    ],
-    accentColor: "from-green-900/80 to-emerald-800/60",
-    badgeColor: "bg-green-700",
-  },
-  {
-    id: "kashmir",
-    name: "Kashmir Tour",
-    tagline: "Paradise on Earth — Dal Lake, Gulmarg & Pahalgam",
-    duration: "5 Nights / 6 Days",
-    price: "₹22,000",
-    priceLabel: "per person",
-    heroImage: "/assets/generated/dest-bhutan.dim_600x400.jpg",
-    galleryImages: [],
-    highlights: [
-      "Dal Lake Shikara ride & houseboat",
-      "Gulmarg Gondola cable car",
-      "Pahalgam valley",
-      "Mughal Gardens (Shalimar, Nishat)",
-      "Sonmarg glacier views",
-      "Tulip Garden (seasonal)",
-    ],
-    includes: [
-      "Pickup & drop from Srinagar Airport",
-      "Accommodation (hotel + houseboat)",
-      "Daily breakfast & dinner",
-      "Private vehicle with driver",
-      "Shikara ride on Dal Lake",
-      "Gulmarg cable car (Gondola Phase 1)",
-    ],
-    itinerary: [
-      {
-        day: 1,
-        title: "Arrival in Srinagar",
-        desc: "Arrival at Srinagar Airport. Transfer to houseboat on Dal Lake. Shikara ride on Dal Lake. Evening at leisure enjoying the sunset on the lake. Overnight on houseboat.",
-      },
-      {
-        day: 2,
-        title: "Srinagar Sightseeing",
-        desc: "Visit Mughal Gardens — Shalimar Bagh, Nishat Bagh, and Chashme Shahi. Visit Shankaracharya Temple for panoramic city views. Evening at Lal Chowk market. Overnight in Srinagar.",
-      },
-      {
-        day: 3,
-        title: "Gulmarg Day Trip",
-        desc: "Drive to Gulmarg (2 hrs). Take the Gondola cable car to Apharwat Peak for snow and glacier views. Snow activities at Gulmarg. Return to Srinagar. Overnight in Srinagar.",
-      },
-      {
-        day: 4,
-        title: "Pahalgam Day Trip",
-        desc: "Drive to Pahalgam — the Valley of Shepherds. Visit Betaab Valley, Aru Valley, and Chandanwari. Horse ride or local walks available. Return to Srinagar. Overnight in Srinagar.",
-      },
-      {
-        day: 5,
-        title: "Sonmarg Day Trip",
-        desc: "Drive to Sonmarg — the Meadow of Gold. Enjoy views of Thajiwas Glacier. Pony rides to the glacier available. Return to Srinagar. Evening Shikara ride on Dal Lake. Overnight in Srinagar.",
-      },
-      {
-        day: 6,
-        title: "Departure from Srinagar",
-        desc: "After breakfast, visit Tulip Garden (seasonal, March–April) or local market for Kashmiri handicrafts and saffron shopping. Transfer to Srinagar Airport. Tour ends.",
-      },
-    ],
-    accentColor: "from-purple-900/80 to-violet-800/60",
-    badgeColor: "bg-purple-700",
-  },
-  {
-    id: "mathura",
-    name: "Mathura & Vrindavan Tour",
-    tagline: "Divine Pilgrimage — Birthplace of Lord Krishna",
-    duration: "2 Nights / 3 Days",
-    price: "₹6,500",
-    priceLabel: "per person",
-    heroImage: "/assets/generated/dest-sikkim.dim_600x400.jpg",
-    galleryImages: [],
-    highlights: [
-      "Krishna Janmabhoomi Temple",
-      "Banke Bihari Temple Vrindavan",
-      "ISKCON Temple Vrindavan",
-      "Govardhan Parikrama",
-      "Yamuna Aarti at Vishram Ghat",
-      "Barsana & Nandgaon tour",
-    ],
-    includes: [
-      "Pickup & drop from Mathura station",
-      "Accommodation (hotel)",
-      "Daily breakfast",
-      "Private vehicle with driver",
-      "All temple visit transfers",
-      "Guide charges",
-    ],
-    itinerary: [
-      {
-        day: 1,
-        title: "Arrival in Mathura",
-        desc: "Arrival at Mathura Junction railway station. Check-in at hotel. Visit Krishna Janmabhoomi Temple — the sacred birthplace of Lord Krishna. Evening Yamuna Aarti at Vishram Ghat. Overnight in Mathura.",
-      },
-      {
-        day: 2,
-        title: "Vrindavan & Govardhan",
-        desc: "Morning visit to Vrindavan — visit Banke Bihari Temple, ISKCON Temple, Prem Mandir, and Radha Raman Temple. Afternoon drive to Govardhan for Govardhan Parikrama (partial). Return to Mathura. Overnight in Mathura.",
-      },
-      {
-        day: 3,
-        title: "Barsana, Nandgaon & Departure",
-        desc: "Morning visit to Barsana — birthplace of Radha Rani — and Nandgaon — home of Nand Baba. Visit Ladli Lal Temple and Nand Bhawan. Return to Mathura station for departure. Tour ends with divine blessings.",
-      },
-    ],
-    accentColor: "from-orange-900/80 to-yellow-800/60",
-    badgeColor: "bg-orange-600",
-  },
-];
-
-// =============================================
-// ANIMATION VARIANTS
-// =============================================
-
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 32 },
-  visible: { opacity: 1, y: 0 },
-};
-
-const staggerContainer: Variants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.05,
-    },
-  },
-};
-
-// =============================================
-// WHATSAPP BUTTON
-// =============================================
-
-function WhatsAppButton() {
-  return (
-    <motion.a
-      href="https://wa.me/917319076862"
-      target="_blank"
-      rel="noopener noreferrer"
-      data-ocid="whatsapp.button"
-      aria-label="Chat with us on WhatsApp"
-      initial={{ scale: 0, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      transition={{ delay: 2, type: "spring", stiffness: 260, damping: 20 }}
-      className="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 group"
-    >
-      {/* Label bubble */}
-      <motion.span
-        initial={{ opacity: 0, x: 10 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 2.5 }}
-        className="bg-white text-foreground text-xs font-semibold px-3 py-1.5 rounded-full shadow-lg border border-sand-dark opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap"
-      >
-        Chat with us
-      </motion.span>
-
-      {/* Button */}
-      <motion.div
-        animate={{ scale: [1, 1.08, 1] }}
-        transition={{
-          repeat: Number.POSITIVE_INFINITY,
-          duration: 2,
-          ease: "easeInOut",
-        }}
-        className="w-14 h-14 rounded-full flex items-center justify-center shadow-xl"
-        style={{ backgroundColor: "#25D366" }}
-      >
-        {/* WhatsApp SVG icon */}
-        <svg
-          viewBox="0 0 24 24"
-          className="w-7 h-7 fill-white"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-        >
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-        </svg>
-      </motion.div>
-    </motion.a>
-  );
-}
-
-// =============================================
-// NAVBAR
-// =============================================
-
-function scrollToSection(href: string) {
-  const el = document.querySelector(href);
-  if (el) el.scrollIntoView({ behavior: "smooth" });
-}
-
-function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
+function HeroTagline() {
+  const [idx, setIdx] = useState(0);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 60);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const interval = setInterval(() => {
+      setVisible(false);
+      setTimeout(() => {
+        setIdx((prev) => (prev + 1) % TAGLINES.length);
+        setVisible(true);
+      }, 400);
+    }, 3000);
+    return () => clearInterval(interval);
   }, []);
 
-  const handleNavClick = (href: string) => {
-    setMobileOpen(false);
-    scrollToSection(href);
-  };
-
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "bg-white/96 backdrop-blur-md shadow-md border-b border-sand-dark"
-          : "bg-transparent"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 md:px-8 h-16 md:h-20 flex items-center justify-between">
-        {/* Brand */}
-        <button
-          type="button"
-          onClick={() => handleNavClick("#home")}
-          className="flex items-center gap-2.5 group"
-        >
-          <img
-            src="/assets/uploads/image_b1a1f18a-1.png"
-            alt="Travellers Points Logo"
-            className="h-12 w-auto object-contain"
-          />
-        </button>
-
-        {/* Desktop Nav */}
-        <nav className="hidden lg:flex items-center gap-0.5">
-          {NAV_LINKS.map((link, i) => (
-            <a
-              key={link.href}
-              href={link.href}
-              data-ocid={`nav.link.${i + 1}`}
-              onClick={(e) => {
-                e.preventDefault();
-                handleNavClick(link.href);
-              }}
-              className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                scrolled
-                  ? "text-foreground hover:text-ocean hover:bg-ocean-pale"
-                  : "text-white/90 hover:text-white hover:bg-white/15"
-              }`}
-            >
-              {link.label}
-            </a>
-          ))}
-          <Button
-            onClick={() => handleNavClick("#contact")}
-            className="ml-3 bg-gold text-white hover:bg-gold/90 font-semibold shadow-none border-0 rounded-xl"
-            size="sm"
-          >
-            Book Now
-          </Button>
-        </nav>
-
-        {/* Mobile Hamburger */}
-        <button
-          type="button"
-          data-ocid="nav.toggle"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className={`lg:hidden p-2 rounded-lg transition-colors ${
-            scrolled
-              ? "text-foreground hover:bg-sand-dark"
-              : "text-white hover:bg-white/15"
-          }`}
-          aria-label="Toggle navigation"
-        >
-          {mobileOpen ? (
-            <X className="w-6 h-6" />
-          ) : (
-            <Menu className="w-6 h-6" />
-          )}
-        </button>
-      </div>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="lg:hidden bg-white border-b border-sand-dark overflow-hidden"
-          >
-            <nav className="flex flex-col px-4 py-3 gap-1">
-              {NAV_LINKS.map((link, i) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  data-ocid={`nav.link.${i + 1}`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavClick(link.href);
-                  }}
-                  className="px-4 py-3 rounded-lg text-sm font-medium text-foreground hover:text-ocean hover:bg-ocean-pale transition-colors"
-                >
-                  {link.label}
-                </a>
-              ))}
-              <Button
-                onClick={() => handleNavClick("#contact")}
-                className="mt-2 bg-gold text-white hover:bg-gold/90 rounded-xl"
-              >
-                Book Now
-              </Button>
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </header>
-  );
-}
-
-// =============================================
-// HERO SECTION
-// =============================================
-
-function HeroSection({ onSearch }: { onSearch: (q: string) => void }) {
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const handleSearch = () => {
-    if (searchQuery.trim()) {
-      onSearch(searchQuery.trim());
-      const el = document.getElementById("destinations");
-      if (el) el.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  return (
-    <section
-      id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
-    >
-      {/* Background Image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105"
-        style={{
-          backgroundImage: `url('/assets/generated/hero-bg.dim_1920x1080.jpg')`,
-        }}
-      />
-      {/* Multi-layer gradient for depth */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-black/35 to-black/75" />
-      <div className="absolute inset-0 bg-gradient-to-r from-ocean/30 via-transparent to-transparent" />
-
-      {/* Bottom fade into page bg */}
-      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background to-transparent" />
-
-      <div className="relative z-10 text-center px-4 max-w-5xl mx-auto w-full">
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={staggerContainer}
-          className="space-y-7"
-        >
-          {/* Eyebrow pill */}
-          <motion.div variants={fadeUp}>
-            <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/12 backdrop-blur-md text-white/95 text-sm font-medium border border-white/25 shadow-lg">
-              <Plane className="w-4 h-4 text-gold" />
-              Your Dream Destination Awaits
-            </span>
-          </motion.div>
-
-          {/* Headline */}
-          <motion.h1
-            variants={fadeUp}
-            className="font-display text-5xl sm:text-7xl lg:text-8xl font-bold text-white leading-[0.92] tracking-tight"
-          >
-            Discover Your <span className="text-gold italic">Perfect</span>
-            <br />
-            Journey
-          </motion.h1>
-
-          {/* Subheading */}
-          <motion.p
-            variants={fadeUp}
-            className="text-lg md:text-xl text-white/75 max-w-2xl mx-auto leading-relaxed font-body"
-          >
-            Explore the world with Travellers Points — where every trip is a
-            story worth telling
-          </motion.p>
-
-          {/* Search Bar — polished */}
-          <motion.div variants={fadeUp} className="max-w-2xl mx-auto mt-8">
-            <div className="flex flex-col sm:flex-row gap-3 p-2 bg-white/12 backdrop-blur-xl rounded-2xl border border-white/25 shadow-2xl">
-              <div className="relative flex-1">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                <Input
-                  data-ocid="hero.search_input"
-                  type="text"
-                  placeholder="Where do you want to go?"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-                  className="pl-12 h-13 bg-white border-0 text-foreground placeholder:text-muted-foreground text-base rounded-xl shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 h-12"
-                />
-              </div>
-              <Button
-                data-ocid="hero.primary_button"
-                onClick={handleSearch}
-                className="h-12 px-8 bg-gold hover:bg-gold/90 text-white font-bold text-base rounded-xl transition-all hover:scale-[1.02] border-0 shadow-md"
-              >
-                <Search className="w-4 h-4 mr-2" />
-                Search
-              </Button>
-            </div>
-            <p className="text-white/45 text-xs mt-2.5 text-center">
-              Try: Bhutan, Darjeeling, Santorini, Bali…
-            </p>
-          </motion.div>
-
-          {/* Stats Row */}
-          <motion.div
-            variants={fadeUp}
-            className="flex flex-wrap justify-center gap-10 mt-10 text-white"
-          >
-            {[
-              { value: "200+", label: "Destinations" },
-              { value: "50K+", label: "Happy Travelers" },
-              { value: "15+", label: "Years Experience" },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <div className="font-display text-3xl font-bold text-gold">
-                  {stat.value}
-                </div>
-                <div className="text-sm text-white/65 mt-0.5">{stat.label}</div>
-              </div>
-            ))}
-          </motion.div>
-        </motion.div>
-      </div>
-
-      {/* Scroll Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.8, duration: 0.6 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+    <div className="mb-10 h-8 flex items-center justify-center">
+      <p
+        className="text-gold font-display text-lg md:text-xl font-semibold italic transition-opacity duration-400"
+        style={{ opacity: visible ? 1 : 0, transition: "opacity 0.4s ease" }}
       >
-        <span className="text-white/40 text-xs uppercase tracking-widest">
-          Scroll
-        </span>
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{
-            repeat: Number.POSITIVE_INFINITY,
-            duration: 1.5,
-            ease: "easeInOut",
-          }}
-          className="w-5 h-8 border-2 border-white/25 rounded-full flex justify-center pt-1.5"
-        >
-          <div className="w-1 h-2 bg-white/50 rounded-full" />
-        </motion.div>
-      </motion.div>
-    </section>
+        ✦ {TAGLINES[idx]} ✦
+      </p>
+    </div>
   );
 }
 
-// =============================================
-// DESTINATIONS SECTION
-// =============================================
-
-function DestinationsSection({ filter }: { filter: string }) {
-  const filtered = filter
-    ? DESTINATIONS.filter(
-        (d) =>
-          d.name.toLowerCase().includes(filter.toLowerCase()) ||
-          d.country.toLowerCase().includes(filter.toLowerCase()),
-      )
-    : DESTINATIONS;
-
-  const displayed = filtered.length > 0 ? filtered : DESTINATIONS;
-
-  return (
-    <section id="destinations" className="py-24 px-4 md:px-8 lg:px-16 bg-sand">
-      <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={staggerContainer}
-          className="text-center mb-14"
-        >
-          <motion.span
-            variants={fadeUp}
-            className="inline-block text-gold font-semibold text-sm uppercase tracking-widest mb-3"
-          >
-            Explore the World
-          </motion.span>
-          <motion.h2
-            variants={fadeUp}
-            className="font-display text-4xl md:text-5xl font-bold text-foreground"
-          >
-            Popular Destinations
-          </motion.h2>
-          <motion.p
-            variants={fadeUp}
-            className="mt-4 text-muted-foreground text-lg max-w-2xl mx-auto"
-          >
-            Handpicked destinations that promise unforgettable memories
-          </motion.p>
-          {filter && filtered.length > 0 && (
-            <motion.p variants={fadeUp} className="mt-2 text-ocean font-medium">
-              Showing results for "{filter}"
-            </motion.p>
-          )}
-          {filter && filtered.length === 0 && (
-            <motion.p variants={fadeUp} className="mt-2 text-coral font-medium">
-              No exact matches — showing all destinations
-            </motion.p>
-          )}
-        </motion.div>
-
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-          variants={staggerContainer}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-        >
-          {displayed.map((dest, i) => (
-            <motion.div
-              key={dest.name}
-              variants={fadeUp}
-              data-ocid={`destinations.item.${i + 1}`}
-              className="group relative bg-card rounded-2xl overflow-hidden shadow-card card-hover cursor-pointer"
-            >
-              {/* Image */}
-              <div className="relative h-56 overflow-hidden">
-                <img
-                  src={dest.image}
-                  alt={`${dest.name}, ${dest.country}`}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                <div className="absolute top-3 left-3 flex gap-2 flex-wrap">
-                  <span className="px-2.5 py-1 bg-white/20 backdrop-blur-sm text-white text-xs font-semibold rounded-full border border-white/30">
-                    {dest.country}
-                  </span>
-                  {dest.duration && (
-                    <span className="px-2.5 py-1 bg-gold/90 text-white text-xs font-bold rounded-full">
-                      {dest.duration}
-                    </span>
-                  )}
-                </div>
-                <div className="absolute bottom-3 left-4 right-4">
-                  <h3 className="font-display text-lg font-bold text-white leading-tight">
-                    {dest.name}
-                  </h3>
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="p-4">
-                <p className="text-muted-foreground text-xs leading-relaxed line-clamp-2 mb-3">
-                  {dest.description}
-                </p>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <span className="text-xs text-muted-foreground block">
-                      Starting
-                    </span>
-                    <div className="font-display text-lg font-bold text-ocean">
-                      {dest.price}
-                    </div>
-                  </div>
-                  <Button
-                    data-ocid={`destinations.button.${i + 1}`}
-                    size="sm"
-                    className="bg-ocean text-white hover:bg-ocean/90 rounded-xl text-xs px-3 group/btn"
-                    onClick={() => scrollToSection("#packages")}
-                  >
-                    Explore
-                    <ChevronRight className="w-3.5 h-3.5 ml-0.5 transition-transform group-hover/btn:translate-x-1" />
-                  </Button>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-// =============================================
-// TOUR PACKAGES SECTION
-// =============================================
-
-function PackageCard({ pkg }: { pkg: (typeof TOUR_PACKAGES)[0] }) {
-  const [itineraryOpen, setItineraryOpen] = useState(false);
-  const [activeGalleryIndex, setActiveGalleryIndex] = useState(0);
-
-  return (
-    <motion.div
-      variants={fadeUp}
-      className="bg-card rounded-3xl overflow-hidden shadow-card border border-sand-dark"
-    >
-      {/* Hero Image with gallery thumbnails */}
-      <div className="relative h-72 overflow-hidden">
-        <img
-          src={pkg.galleryImages[activeGalleryIndex].src}
-          alt={pkg.galleryImages[activeGalleryIndex].alt}
-          className="w-full h-full object-cover transition-all duration-700"
-          loading="lazy"
-        />
-        <div
-          className={`absolute inset-0 bg-gradient-to-t ${pkg.accentColor}`}
-        />
-
-        {/* Duration badge */}
-        <div className="absolute top-5 left-5 flex flex-col gap-2">
-          <span
-            className={`${pkg.badgeColor} text-white text-sm font-bold px-4 py-1.5 rounded-full shadow-md flex items-center gap-1.5`}
-          >
-            <CalendarDays className="w-3.5 h-3.5" />
-            {pkg.duration}
-          </span>
-          {pkg.id === "bhutan-group" && (
-            <span className="bg-coral text-white text-xs font-bold px-3 py-1 rounded-full shadow-md flex items-center gap-1.5">
-              <Users className="w-3 h-3" />
-              Group Tour
-            </span>
-          )}
-        </div>
-
-        {/* Price badge */}
-        <div className="absolute top-5 right-5 text-right">
-          <div className="bg-black/40 backdrop-blur-sm rounded-xl px-4 py-2 border border-white/20">
-            <div className="text-white/70 text-xs">{pkg.priceLabel}</div>
-            <div className="font-display text-2xl font-bold text-gold leading-tight">
-              {pkg.price}
-            </div>
-          </div>
-        </div>
-
-        {/* Package title over image */}
-        <div className="absolute bottom-0 left-0 right-0 p-6">
-          <p className="text-white/70 text-xs uppercase tracking-widest mb-1">
-            {pkg.tagline}
-          </p>
-          <h3 className="font-display text-2xl font-bold text-white">
-            {pkg.name}
-          </h3>
-        </div>
-
-        {/* Gallery thumbnails */}
-        <div className="absolute bottom-5 right-5 flex gap-2">
-          {pkg.galleryImages.map((img, idx) => (
-            <button
-              key={img.alt}
-              type="button"
-              onClick={() => setActiveGalleryIndex(idx)}
-              className={`w-10 h-10 rounded-lg overflow-hidden border-2 transition-all duration-200 ${
-                activeGalleryIndex === idx
-                  ? "border-gold scale-110"
-                  : "border-white/40 hover:border-white/80"
-              }`}
-              aria-label={`View ${img.alt}`}
-            >
-              <img
-                src={img.src}
-                alt={img.alt}
-                className="w-full h-full object-cover"
-              />
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Card body */}
-      <div className="p-7">
-        {/* Two-column: highlights + includes */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          {/* Highlights */}
-          <div>
-            <h4 className="font-display font-bold text-foreground text-base mb-3 flex items-center gap-2">
-              <Star className="w-4 h-4 text-gold fill-gold" />
-              Trip Highlights
-            </h4>
-            <ul className="space-y-2">
-              {pkg.highlights.map((h) => (
-                <li
-                  key={h}
-                  className="flex items-start gap-2 text-sm text-foreground/80"
-                >
-                  <CheckCircle2 className="w-4 h-4 text-ocean shrink-0 mt-0.5" />
-                  {h}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Includes */}
-          <div>
-            <h4 className="font-display font-bold text-foreground text-base mb-3 flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-gold" />
-              Package Includes
-            </h4>
-            <ul className="space-y-2">
-              {pkg.includes.map((inc) => (
-                <li
-                  key={inc}
-                  className="flex items-start gap-2 text-sm text-foreground/80"
-                >
-                  <div className="w-1.5 h-1.5 rounded-full bg-gold mt-2 shrink-0" />
-                  {inc}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        {/* Itinerary accordion */}
-        <div className="border border-sand-dark rounded-2xl overflow-hidden">
-          <button
-            type="button"
-            onClick={() => setItineraryOpen(!itineraryOpen)}
-            className="w-full flex items-center justify-between px-5 py-4 bg-sand hover:bg-sand-dark transition-colors"
-          >
-            <span className="font-display font-bold text-foreground flex items-center gap-2">
-              <MapIcon className="w-4 h-4 text-ocean" />
-              View Day-by-Day Itinerary
-            </span>
-            <motion.div
-              animate={{ rotate: itineraryOpen ? 180 : 0 }}
-              transition={{ duration: 0.25 }}
-            >
-              <ChevronDown className="w-5 h-5 text-muted-foreground" />
-            </motion.div>
-          </button>
-
-          <AnimatePresence>
-            {itineraryOpen && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.35, ease: "easeInOut" }}
-                className="overflow-hidden"
-              >
-                <div className="px-5 py-4 space-y-0 divide-y divide-sand-dark">
-                  {pkg.itinerary.map((day) => (
-                    <div key={day.day} className="py-4 flex gap-4">
-                      <div className="shrink-0">
-                        <div className="w-10 h-10 rounded-xl bg-ocean flex items-center justify-center">
-                          <span className="text-white text-xs font-bold">
-                            D{day.day}
-                          </span>
-                        </div>
-                      </div>
-                      <div>
-                        <h5 className="font-semibold text-foreground text-sm mb-1">
-                          Day {day.day} — {day.title}
-                        </h5>
-                        <p className="text-muted-foreground text-sm leading-relaxed">
-                          {day.desc}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                  <div className="pt-5 pb-2">
-                    <a
-                      href={`https://wa.me/917319076862?text=Hi%2C%20I%20am%20interested%20in%20the%20${encodeURIComponent(pkg.name)}%20package.%20Please%20share%20details.`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      data-ocid="package.whatsapp_button"
-                      className="flex items-center justify-center gap-2 w-full h-12 rounded-xl font-bold text-white text-sm transition-all hover:opacity-90 hover:scale-[1.02] active:scale-[0.98]"
-                      style={{ backgroundColor: "#25D366" }}
-                    >
-                      <svg
-                        viewBox="0 0 24 24"
-                        className="w-5 h-5 fill-white shrink-0"
-                        aria-hidden="true"
-                      >
-                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                      </svg>
-                      Book on Request — WhatsApp Us
-                    </a>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-
-        {/* CTA row */}
-        <div className="flex flex-col sm:flex-row gap-3 mt-6">
-          <Button
-            className="flex-1 h-12 bg-ocean text-white hover:bg-ocean/90 font-bold rounded-xl text-base"
-            onClick={() => scrollToSection("#contact")}
-          >
-            Book This Package
-            <ChevronRight className="w-4 h-4 ml-1" />
-          </Button>
-          <a
-            href="https://wa.me/917319076862"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 h-12 px-6 rounded-xl font-semibold text-white text-sm transition-all hover:opacity-90 hover:scale-[1.02]"
-            style={{ backgroundColor: "#25D366" }}
-          >
-            <svg
-              viewBox="0 0 24 24"
-              className="w-5 h-5 fill-white shrink-0"
-              aria-hidden="true"
-            >
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-            </svg>
-            WhatsApp Us
-          </a>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
-
-function TourPackagesSection() {
-  return (
-    <section id="packages" className="py-24 px-4 md:px-8 lg:px-16 bg-white">
-      <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={staggerContainer}
-          className="text-center mb-14"
-        >
-          <motion.span
-            variants={fadeUp}
-            className="inline-block text-gold font-semibold text-sm uppercase tracking-widest mb-3"
-          >
-            Signature Experiences
-          </motion.span>
-          <motion.h2
-            variants={fadeUp}
-            className="font-display text-4xl md:text-5xl font-bold text-foreground"
-          >
-            Our Tour Packages
-          </motion.h2>
-          <motion.p
-            variants={fadeUp}
-            className="mt-4 text-muted-foreground text-lg max-w-2xl mx-auto"
-          >
-            Meticulously crafted journeys with day-by-day itineraries — every
-            detail taken care of
-          </motion.p>
-        </motion.div>
-
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-          variants={staggerContainer}
-          className="grid grid-cols-1 xl:grid-cols-2 gap-10"
-        >
-          {TOUR_PACKAGES.map((pkg) => (
-            <PackageCard key={pkg.id} pkg={pkg} />
-          ))}
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-// =============================================
-// SERVICES SECTION
-// =============================================
-
-function ServicesSection() {
-  const [selectedService, setSelectedService] = useState<
-    (typeof SERVICES)[0] | null
-  >(null);
-
-  const colorMap: Record<string, string> = {
-    ocean: "bg-ocean text-white",
-    gold: "bg-gold text-white",
-    coral: "bg-coral text-white",
-  };
-
-  const bgHoverMap: Record<string, string> = {
-    ocean: "group-hover:bg-ocean",
-    gold: "group-hover:bg-gold",
-    coral: "group-hover:bg-coral",
-  };
-
-  const whatsappText = selectedService
-    ? `Hi%2C%20I%20am%20interested%20in%20your%20${encodeURIComponent(selectedService.title)}%20service.%20Please%20share%20details.`
-    : "";
-
-  return (
-    <>
-      <section id="services" className="py-24 px-4 md:px-8 lg:px-16 bg-sand">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-80px" }}
-            variants={staggerContainer}
-            className="text-center mb-14"
-          >
-            <motion.span
-              variants={fadeUp}
-              className="inline-block text-gold font-semibold text-sm uppercase tracking-widest mb-3"
-            >
-              What We Offer
-            </motion.span>
-            <motion.h2
-              variants={fadeUp}
-              className="font-display text-4xl md:text-5xl font-bold text-foreground"
-            >
-              Our Services
-            </motion.h2>
-            <motion.p
-              variants={fadeUp}
-              className="mt-4 text-muted-foreground text-lg max-w-2xl mx-auto"
-            >
-              Everything you need for a seamless travel experience, all in one
-              place
-            </motion.p>
-          </motion.div>
-
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-60px" }}
-            variants={staggerContainer}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-          >
-            {SERVICES.map((service, i) => {
-              const Icon = service.icon;
-              return (
-                <motion.div
-                  key={service.title}
-                  variants={fadeUp}
-                  data-ocid={`services.item.${i + 1}`}
-                  onClick={() => setSelectedService(service)}
-                  className="group relative p-8 bg-white rounded-2xl border border-sand-dark hover:border-transparent transition-all duration-300 hover:shadow-card-hover hover:-translate-y-2 cursor-pointer overflow-hidden"
-                >
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-ocean/5 to-gold/5" />
-                  <div
-                    className={`relative w-14 h-14 rounded-2xl flex items-center justify-center mb-5 transition-all duration-300 ${colorMap[service.color]} shadow-card`}
-                  >
-                    <Icon className="w-7 h-7" />
-                  </div>
-                  <h3 className="font-display text-xl font-bold text-foreground mb-2">
-                    {service.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {service.description}
-                  </p>
-                  <div
-                    className={`mt-5 text-sm font-semibold text-ocean flex items-center gap-1 transition-all duration-300 ${bgHoverMap[service.color]} group-hover:text-white px-3 py-1.5 rounded-lg w-fit`}
-                  >
-                    Learn More
-                    <ChevronRight className="w-3.5 h-3.5" />
-                  </div>
-                </motion.div>
-              );
-            })}
-          </motion.div>
-        </div>
-      </section>
-
-      <Dialog
-        open={!!selectedService}
-        onOpenChange={(open) => !open && setSelectedService(null)}
-      >
-        <DialogContent data-ocid="services.dialog" className="max-w-lg">
-          {selectedService &&
-            (() => {
-              const Icon = selectedService.icon;
-              const colorCls = colorMap[selectedService.color];
-              return (
-                <>
-                  <DialogHeader>
-                    <div className="flex items-center gap-4 mb-2">
-                      <div
-                        className={`w-12 h-12 rounded-xl flex items-center justify-center ${colorCls} shadow-md flex-shrink-0`}
-                      >
-                        <Icon className="w-6 h-6" />
-                      </div>
-                      <DialogTitle className="font-display text-2xl font-bold text-foreground">
-                        {selectedService.title}
-                      </DialogTitle>
-                    </div>
-                    <p className="text-muted-foreground text-sm leading-relaxed">
-                      {selectedService.description}
-                    </p>
-                  </DialogHeader>
-                  <ul className="mt-2 space-y-2">
-                    {selectedService.details.map((detail) => (
-                      <li
-                        key={detail}
-                        className="flex items-start gap-2 text-sm text-foreground"
-                      >
-                        <CheckCircle2 className="w-4 h-4 text-ocean mt-0.5 flex-shrink-0" />
-                        <span>{detail}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-4 flex gap-3">
-                    <a
-                      href={`https://wa.me/917319076862?text=${whatsappText}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      data-ocid="services.whatsapp_button"
-                      className="flex-1"
-                    >
-                      <Button className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold">
-                        Book on WhatsApp
-                      </Button>
-                    </a>
-                    <Button
-                      variant="outline"
-                      data-ocid="services.close_button"
-                      onClick={() => setSelectedService(null)}
-                      className="px-4"
-                    >
-                      Close
-                    </Button>
-                  </div>
-                </>
-              );
-            })()}
-        </DialogContent>
-      </Dialog>
-    </>
-  );
-}
-
-// =============================================
-// WHY CHOOSE US
-// =============================================
-
-function WhyUsSection() {
-  return (
-    <section
-      id="why-us"
-      className="py-24 px-4 md:px-8 lg:px-16 relative overflow-hidden"
-      style={{
-        background:
-          "linear-gradient(135deg, oklch(0.32 0.1 248) 0%, oklch(0.22 0.08 260) 100%)",
-      }}
-    >
-      {/* Decorative circles */}
-      <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-white/5 -translate-y-1/2 translate-x-1/3" />
-      <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full bg-white/5 translate-y-1/3 -translate-x-1/4" />
-
-      <div className="relative max-w-7xl mx-auto">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={staggerContainer}
-          className="text-center mb-14"
-        >
-          <motion.span
-            variants={fadeUp}
-            className="inline-block text-gold font-semibold text-sm uppercase tracking-widest mb-3"
-          >
-            Our Advantage
-          </motion.span>
-          <motion.h2
-            variants={fadeUp}
-            className="font-display text-4xl md:text-5xl font-bold text-white"
-          >
-            Why Choose Travellers Points
-          </motion.h2>
-          <motion.p
-            variants={fadeUp}
-            className="mt-4 text-white/70 text-lg max-w-2xl mx-auto"
-          >
-            We go beyond booking — we craft experiences that stay with you
-            forever
-          </motion.p>
-        </motion.div>
-
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-          variants={staggerContainer}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-        >
-          {WHY_US.map((item, i) => {
-            const Icon = item.icon;
-            return (
-              <motion.div
-                key={item.title}
-                variants={fadeUp}
-                data-ocid={`why-us.item.${i + 1}`}
-                className="group relative p-8 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300 hover:-translate-y-2 text-center"
-              >
-                <div className="w-16 h-16 rounded-2xl bg-gold/20 flex items-center justify-center mx-auto mb-5 group-hover:bg-gold/30 transition-colors duration-300">
-                  <Icon className="w-8 h-8 text-gold" />
-                </div>
-                <div className="font-display text-2xl font-bold text-gold mb-1">
-                  {item.stat}
-                </div>
-                <h3 className="font-display text-lg font-bold text-white mb-2">
-                  {item.title}
-                </h3>
-                <p className="text-white/65 text-sm leading-relaxed">
-                  {item.description}
-                </p>
-              </motion.div>
-            );
-          })}
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-// =============================================
-// DEALS SECTION
-// =============================================
-
-function DealsSection() {
-  return (
-    <section id="deals" className="py-24 px-4 md:px-8 lg:px-16 bg-sand">
-      <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={staggerContainer}
-          className="text-center mb-14"
-        >
-          <motion.span
-            variants={fadeUp}
-            className="inline-block text-gold font-semibold text-sm uppercase tracking-widest mb-3"
-          >
-            Limited Time
-          </motion.span>
-          <motion.h2
-            variants={fadeUp}
-            className="font-display text-4xl md:text-5xl font-bold text-foreground"
-          >
-            Hot Deals & Offers
-          </motion.h2>
-          <motion.p
-            variants={fadeUp}
-            className="mt-4 text-muted-foreground text-lg max-w-2xl mx-auto"
-          >
-            Grab these incredible deals before they're gone — limited
-            availability
-          </motion.p>
-        </motion.div>
-
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-          variants={staggerContainer}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          {DEALS.map((deal, i) => (
-            <motion.div
-              key={deal.destination}
-              variants={fadeUp}
-              data-ocid={`deals.item.${i + 1}`}
-              className="group relative bg-card rounded-2xl overflow-hidden shadow-card card-hover"
-            >
-              {/* Deal Badge Ribbon */}
-              <div className="absolute top-4 left-0 z-10">
-                <div className="bg-coral text-white text-xs font-bold px-3 py-1.5 rounded-r-full shadow-md">
-                  {deal.badge}
-                </div>
-              </div>
-
-              {/* Savings Badge */}
-              <div className="absolute top-4 right-3 z-10">
-                <div className="bg-gold text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-md">
-                  {deal.savings}
-                </div>
-              </div>
-
-              {/* Image */}
-              <div className="relative h-48 overflow-hidden">
-                <img
-                  src={deal.image}
-                  alt={deal.destination}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                <div className="absolute bottom-3 left-4">
-                  <h3 className="font-display text-base font-bold text-white leading-tight">
-                    {deal.destination}
-                  </h3>
-                  <p className="text-white/75 text-xs">{deal.country}</p>
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="p-4">
-                <div className="flex items-center gap-1.5 mb-3">
-                  <Globe className="w-3.5 h-3.5 text-ocean" />
-                  <span className="text-muted-foreground text-xs">
-                    {deal.nights} nights
-                  </span>
-                </div>
-
-                <div className="flex items-end gap-2 mb-4">
-                  <div className="font-display text-2xl font-bold text-foreground">
-                    {deal.currentPrice}
-                  </div>
-                  <div className="text-muted-foreground text-xs line-through pb-1">
-                    {deal.originalPrice}
-                  </div>
-                </div>
-
-                <Button
-                  data-ocid={`deals.button.${i + 1}`}
-                  className="w-full bg-ocean text-white hover:bg-ocean/90 rounded-xl font-semibold h-10 text-sm group/btn transition-all duration-200"
-                  onClick={() => scrollToSection("#contact")}
-                >
-                  Book Now
-                  <ChevronRight className="w-3.5 h-3.5 ml-1 transition-transform group-hover/btn:translate-x-1" />
-                </Button>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-// =============================================
-// TESTIMONIALS SECTION
-// =============================================
-
-function TestimonialsSection() {
-  return (
-    <section className="py-24 px-4 md:px-8 lg:px-16 bg-white">
-      <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={staggerContainer}
-          className="text-center mb-14"
-        >
-          <motion.span
-            variants={fadeUp}
-            className="inline-block text-gold font-semibold text-sm uppercase tracking-widest mb-3"
-          >
-            Stories from the Road
-          </motion.span>
-          <motion.h2
-            variants={fadeUp}
-            className="font-display text-4xl md:text-5xl font-bold text-foreground"
-          >
-            What Our Travelers Say
-          </motion.h2>
-          <motion.p
-            variants={fadeUp}
-            className="mt-4 text-muted-foreground text-lg max-w-2xl mx-auto"
-          >
-            Real journeys, real memories — hear from those who've traveled with
-            us
-          </motion.p>
-        </motion.div>
-
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-          variants={staggerContainer}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          {TESTIMONIALS.map((t, i) => (
-            <motion.div
-              key={t.name}
-              variants={fadeUp}
-              data-ocid={`testimonials.item.${i + 1}`}
-              className="relative p-7 bg-sand rounded-2xl border border-sand-dark hover:border-gold/30 hover:shadow-card transition-all duration-300 group"
-            >
-              {/* Quote mark decoration */}
-              <div className="absolute top-5 right-5 font-display text-6xl text-gold/12 leading-none select-none">
-                "
-              </div>
-
-              {/* Stars */}
-              <div className="flex gap-1 mb-4">
-                {Array.from({ length: t.rating }, (_, j) => (
-                  <Star
-                    key={`star-${t.name}-${j}`}
-                    className="w-4 h-4 text-gold"
-                    fill="currentColor"
-                  />
-                ))}
-              </div>
-
-              {/* Text */}
-              <p className="text-foreground/80 leading-relaxed text-sm mb-5 relative z-10">
-                "{t.text}"
-              </p>
-
-              {/* Author */}
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-ocean flex items-center justify-center text-white font-bold font-body text-xs shrink-0">
-                  {t.initials}
-                </div>
-                <div>
-                  <div className="font-semibold text-foreground text-sm">
-                    {t.name}
-                  </div>
-                  <div className="text-muted-foreground text-xs">
-                    {t.destination}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-// =============================================
-// CLIENT REVIEWS SECTION
-// =============================================
-
-function ClientReviewsSection() {
-  const [activeFilter, setActiveFilter] = useState<
-    "All" | "Bhutan" | "Darjeeling"
-  >("All");
-  const filtered =
-    activeFilter === "All"
-      ? CLIENT_REVIEWS
-      : CLIENT_REVIEWS.filter((r) => r.tag === activeFilter);
-
-  const filters = ["All", "Bhutan", "Darjeeling"] as const;
-
-  return (
-    <section id="reviews" className="py-24 px-4 md:px-8 lg:px-16 bg-sand">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={staggerContainer}
-          className="text-center mb-12"
-        >
-          <motion.span
-            variants={fadeUp}
-            className="inline-block text-gold font-semibold text-sm uppercase tracking-widest mb-3"
-          >
-            Real Experiences
-          </motion.span>
-          <motion.h2
-            variants={fadeUp}
-            className="font-display text-4xl md:text-5xl font-bold text-foreground"
-          >
-            Client Reviews & Stories
-          </motion.h2>
-          <motion.p
-            variants={fadeUp}
-            className="mt-4 text-muted-foreground text-lg max-w-2xl mx-auto"
-          >
-            Photos and videos from our happy travelers in Bhutan and Darjeeling
-          </motion.p>
-
-          {/* Filter Tabs */}
-          <motion.div
-            variants={fadeUp}
-            className="flex justify-center gap-2 mt-8"
-          >
-            {filters.map((f) => (
-              <button
-                key={f}
-                type="button"
-                data-ocid={`reviews.tab.${f.toLowerCase()}`}
-                onClick={() => setActiveFilter(f)}
-                className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 ${
-                  activeFilter === f
-                    ? "bg-ocean text-white shadow-md"
-                    : "bg-white text-foreground border border-sand-dark hover:border-ocean hover:text-ocean"
-                }`}
-              >
-                {f}
-              </button>
-            ))}
-          </motion.div>
-        </motion.div>
-
-        {/* Review Cards Grid */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-          variants={staggerContainer}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7"
-        >
-          {filtered.map((review, i) => (
-            <motion.div
-              key={review.id}
-              variants={fadeUp}
-              data-ocid={`reviews.item.${i + 1}`}
-              className="bg-white rounded-2xl border border-sand-dark shadow-card overflow-hidden group hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300"
-            >
-              {/* Card Body */}
-              <div className="p-5">
-                {/* Trip label badge */}
-                <div className="mb-3">
-                  <span
-                    className={`px-3 py-1 text-xs font-bold rounded-full text-white shadow-sm ${
-                      review.tag === "Bhutan"
-                        ? "bg-amber-600"
-                        : "bg-emerald-600"
-                    }`}
-                  >
-                    {review.tripLabel}
-                  </span>
-                </div>
-                {/* Stars */}
-                <div className="flex gap-1 mb-3">
-                  {Array.from({ length: review.rating }, (_, j) => (
-                    <Star
-                      key={`rstar-${review.id}-${j}`}
-                      className="w-4 h-4 text-gold"
-                      fill="currentColor"
-                    />
-                  ))}
-                </div>
-
-                {/* Review Text */}
-                <p className="text-foreground/75 text-sm leading-relaxed mb-4">
-                  "{review.text}"
-                </p>
-
-                {/* Reviewer Name */}
-                <p className="font-display font-bold text-foreground text-sm">
-                  — {review.name}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Bottom CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-center mt-12"
-        >
-          <p className="text-muted-foreground text-sm mb-4">
-            Want to share your travel story with us?
-          </p>
-          <a
-            href="https://wa.me/917319076862?text=Hi%2C%20I%20want%20to%20share%20my%20travel%20experience%20with%20Travellers%20Points!"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-white font-semibold text-sm transition-all hover:opacity-90 hover:scale-[1.02] shadow-md"
-            style={{ backgroundColor: "#25D366" }}
-          >
-            <svg
-              viewBox="0 0 24 24"
-              className="w-4 h-4 fill-white shrink-0"
-              aria-hidden="true"
-            >
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-            </svg>
-            Share Your Story on WhatsApp
-          </a>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-// =============================================
-// CONTACT SECTION
-// =============================================
-
-type FormState = "idle" | "loading" | "success" | "error";
-
-function TaxiServiceSection() {
-  const services = [
-    {
-      from: "Jaigaon",
-      to: "Siliguri",
-      icon: "🚗",
-      desc: "Comfortable taxi transfers to Siliguri city — quick and reliable.",
-      duration: "~2.5 hrs",
-    },
-    {
-      from: "Jaigaon",
-      to: "Darjeeling",
-      icon: "🏔️",
-      desc: "Scenic mountain route through the misty hills to Darjeeling hill station.",
-      duration: "~4.5 hrs",
-    },
-    {
-      from: "Jaigaon",
-      to: "Sikkim",
-      icon: "🌄",
-      desc: "Gateway transfers to Gangtok and Sikkim — comfortably and safely.",
-      duration: "~5.5 hrs",
-    },
-  ];
-
-  return (
-    <section className="py-20 bg-gradient-to-br from-amber-50 to-orange-50">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="text-center mb-12">
-          <span className="inline-block px-4 py-1 bg-amber-100 text-amber-800 rounded-full text-sm font-semibold mb-4 uppercase tracking-wider">
-            Local Transfers
-          </span>
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Taxi Service
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Comfortable &amp; Reliable Local Transfers — Book comfortable taxi
-            service from Jaigaon for all your local travel needs.
-          </p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-          {services.map((svc) => (
-            <div
-              key={svc.to}
-              className="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-shadow border border-amber-100"
-            >
-              <div className="text-4xl mb-4">{svc.icon}</div>
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-sm font-semibold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full">
-                  {svc.from}
-                </span>
-                <span className="text-gray-400">→</span>
-                <span className="text-sm font-semibold text-orange-700 bg-orange-50 px-2 py-0.5 rounded-full">
-                  {svc.to}
-                </span>
-              </div>
-              <p className="text-gray-600 text-sm mb-3">{svc.desc}</p>
-              <div className="flex items-center gap-1 text-xs text-gray-500">
-                <span>⏱</span>
-                <span>{svc.duration}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="text-center">
-          <a
-            href="https://wa.me/917319076862?text=Hi%2C%20I%20need%20taxi%20service%20from%20Jaigaon"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-ocid="taxi.whatsapp_button"
-            className="inline-flex items-center gap-3 bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-8 rounded-full text-lg shadow-lg hover:shadow-xl transition-all"
-          >
-            <svg
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-6 h-6"
-              aria-label="WhatsApp"
-              role="img"
-            >
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
-            </svg>
-            Book Taxi via WhatsApp
-          </a>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function ContactSection() {
-  const { actor } = useActor();
-  const [formState, setFormState] = useState<FormState>("idle");
-  const [form, setForm] = useState({
+// ─── App Component ─────────────────────────────────────────────────────────────
+export default function App() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [expandedPackage, setExpandedPackage] = useState<string | null>(null);
+  const [serviceModal, setServiceModal] = useState<string | null>(null);
+  const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phone: "",
     message: "",
   });
-  const [errors, setErrors] = useState<Partial<typeof form>>({});
+  const [formSent, setFormSent] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [heroSlide, setHeroSlide] = useState(0);
 
-  const validate = () => {
-    const errs: Partial<typeof form> = {};
-    if (!form.name.trim()) errs.name = "Name is required";
-    if (!form.email.trim()) errs.email = "Email is required";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
-      errs.email = "Enter a valid email";
-    if (!form.message.trim()) errs.message = "Message is required";
-    return errs;
+  useEffect(() => {
+    const handler = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handler);
+    return () => window.removeEventListener("scroll", handler);
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setHeroSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const toggleItinerary = (id: string) => {
+    setExpandedPackage((prev) => (prev === id ? null : id));
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-    if (errors[name as keyof typeof errors]) {
-      setErrors((prev) => ({ ...prev, [name]: undefined }));
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const errs = validate();
-    if (Object.keys(errs).length > 0) {
-      setErrors(errs);
-      return;
-    }
-
-    setFormState("loading");
-    try {
-      if (!actor) throw new Error("Actor not ready");
-      await actor.submitContactForm(
-        form.name,
-        form.email,
-        form.phone,
-        form.message,
-      );
-      setFormState("success");
-      setForm({ name: "", email: "", phone: "", message: "" });
-      toast.success("Message sent! We'll be in touch soon.");
-    } catch {
-      setFormState("error");
-      toast.error("Something went wrong. Please try again.");
-    }
+    const msg = `Hi Travellers Points! I am ${formData.name} (${formData.email}). ${formData.message}`;
+    window.open(waLink(msg), "_blank");
+    setFormSent(true);
+    setTimeout(() => setFormSent(false), 3000);
+    setFormData({ name: "", email: "", message: "" });
   };
 
-  return (
-    <section id="contact" className="py-24 px-4 md:px-8 lg:px-16 bg-sand">
-      <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={staggerContainer}
-          className="text-center mb-14"
-        >
-          <motion.span
-            variants={fadeUp}
-            className="inline-block text-gold font-semibold text-sm uppercase tracking-widest mb-3"
-          >
-            Start Planning
-          </motion.span>
-          <motion.h2
-            variants={fadeUp}
-            className="font-display text-4xl md:text-5xl font-bold text-foreground"
-          >
-            Get in Touch
-          </motion.h2>
-          <motion.p
-            variants={fadeUp}
-            className="mt-4 text-muted-foreground text-lg max-w-2xl mx-auto"
-          >
-            Ready to plan your next adventure? Our travel experts are here to
-            help
-          </motion.p>
-        </motion.div>
+  const activeService = SERVICES.find((s) => s.id === serviceModal);
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-start">
-          {/* Left: Contact Info */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-60px" }}
-            variants={staggerContainer}
-            className="lg:col-span-2 space-y-6"
-          >
-            <motion.div variants={fadeUp}>
-              <h3 className="font-display text-2xl font-bold text-foreground mb-3">
-                We'd Love to Hear From You
-              </h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Whether you're dreaming of Bhutan monasteries, Darjeeling tea
-                gardens, or exotic beaches — our team is ready to craft your
-                perfect journey.
-              </p>
-            </motion.div>
-
-            {/* WhatsApp CTA highlight */}
-            <motion.a
-              variants={fadeUp}
-              href="https://wa.me/917319076862"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-4 p-5 rounded-xl text-white transition-all hover:opacity-90 hover:shadow-lg"
-              style={{ backgroundColor: "#25D366" }}
-            >
-              <div className="w-11 h-11 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
-                <svg
-                  viewBox="0 0 24 24"
-                  className="w-6 h-6 fill-white"
-                  aria-hidden="true"
-                >
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                </svg>
-              </div>
-              <div>
-                <div className="font-bold text-sm">Chat on WhatsApp</div>
-                <div className="text-white/85 text-xs">
-                  +91 73190 76862 — Quick replies!
-                </div>
-              </div>
-            </motion.a>
-
-            {[
-              {
-                icon: MapPin,
-                label: "Our Office",
-                value: "Jaigaon, Alipurduar\nWest Bengal, India",
-              },
-              {
-                icon: Phone,
-                label: "Call Us",
-                value: "+91 73190 76862\nMon–Sat, 9am–7pm IST",
-              },
-              {
-                icon: Mail,
-                label: "Email Us",
-                value: "hello@travellerspoints.com\nWe reply within 24 hours",
-              },
-            ].map((info) => {
-              const Icon = info.icon;
-              return (
-                <motion.div
-                  key={info.label}
-                  variants={fadeUp}
-                  className="flex gap-4 p-4 bg-white rounded-xl border border-sand-dark"
-                >
-                  <div className="w-10 h-10 rounded-xl bg-ocean flex items-center justify-center shrink-0">
-                    <Icon className="w-4.5 h-4.5 text-white" />
-                  </div>
-                  <div>
-                    <div className="font-semibold text-foreground text-sm mb-0.5">
-                      {info.label}
-                    </div>
-                    <div className="text-muted-foreground text-xs whitespace-pre-line">
-                      {info.value}
-                    </div>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </motion.div>
-
-          {/* Right: Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 32 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="lg:col-span-3 bg-white rounded-2xl p-8 md:p-10 shadow-card border border-sand-dark"
-          >
-            <AnimatePresence mode="wait">
-              {formState === "success" ? (
-                <motion.div
-                  key="success"
-                  data-ocid="contact.success_state"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  className="text-center py-12"
-                >
-                  <div className="w-20 h-20 rounded-full bg-green-50 flex items-center justify-center mx-auto mb-5">
-                    <CheckCircle2 className="w-10 h-10 text-green-500" />
-                  </div>
-                  <h3 className="font-display text-2xl font-bold text-foreground mb-2">
-                    Message Sent!
-                  </h3>
-                  <p className="text-muted-foreground mb-6">
-                    Thank you for reaching out. We'll get back to you within 24
-                    hours.
-                  </p>
-                  <Button
-                    onClick={() => setFormState("idle")}
-                    className="bg-ocean text-white hover:bg-ocean/90"
-                  >
-                    Send Another Message
-                  </Button>
-                </motion.div>
-              ) : (
-                <motion.form
-                  key="form"
-                  onSubmit={handleSubmit}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="space-y-5"
-                >
-                  <h4 className="font-display text-xl font-bold text-foreground mb-1">
-                    Send Us a Message
-                  </h4>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    <div>
-                      <label
-                        htmlFor="contact-name"
-                        className="block text-sm font-medium text-foreground mb-1.5"
-                      >
-                        Full Name <span className="text-coral">*</span>
-                      </label>
-                      <Input
-                        id="contact-name"
-                        data-ocid="contact.input"
-                        name="name"
-                        value={form.name}
-                        onChange={handleChange}
-                        placeholder="Rahul Sharma"
-                        className={`h-11 ${errors.name ? "border-coral focus-visible:ring-coral" : ""}`}
-                      />
-                      {errors.name && (
-                        <p className="mt-1 text-xs text-coral">{errors.name}</p>
-                      )}
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="contact-email"
-                        className="block text-sm font-medium text-foreground mb-1.5"
-                      >
-                        Email Address <span className="text-coral">*</span>
-                      </label>
-                      <Input
-                        id="contact-email"
-                        data-ocid="contact.email.input"
-                        name="email"
-                        type="email"
-                        value={form.email}
-                        onChange={handleChange}
-                        placeholder="rahul@example.com"
-                        className={`h-11 ${errors.email ? "border-coral focus-visible:ring-coral" : ""}`}
-                      />
-                      {errors.email && (
-                        <p className="mt-1 text-xs text-coral">
-                          {errors.email}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="contact-phone"
-                      className="block text-sm font-medium text-foreground mb-1.5"
-                    >
-                      Phone Number{" "}
-                      <span className="text-muted-foreground text-xs">
-                        (optional)
-                      </span>
-                    </label>
-                    <Input
-                      id="contact-phone"
-                      data-ocid="contact.phone.input"
-                      name="phone"
-                      type="tel"
-                      value={form.phone}
-                      onChange={handleChange}
-                      placeholder="+91 98765 43210"
-                      className="h-11"
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="contact-message"
-                      className="block text-sm font-medium text-foreground mb-1.5"
-                    >
-                      Message <span className="text-coral">*</span>
-                    </label>
-                    <Textarea
-                      id="contact-message"
-                      data-ocid="contact.textarea"
-                      name="message"
-                      value={form.message}
-                      onChange={handleChange}
-                      placeholder="Tell us about your dream trip — destinations, dates, group size, and any special requests..."
-                      rows={5}
-                      className={`resize-none ${errors.message ? "border-coral focus-visible:ring-coral" : ""}`}
-                    />
-                    {errors.message && (
-                      <p className="mt-1 text-xs text-coral">
-                        {errors.message}
-                      </p>
-                    )}
-                  </div>
-
-                  {formState === "error" && (
-                    <div
-                      data-ocid="contact.error_state"
-                      className="flex items-center gap-2 p-3 bg-red-50 rounded-lg text-sm text-red-600 border border-red-100"
-                    >
-                      <AlertCircle className="w-4 h-4 shrink-0" />
-                      Something went wrong. Please try again.
-                    </div>
-                  )}
-
-                  <Button
-                    data-ocid="contact.submit_button"
-                    type="submit"
-                    disabled={formState === "loading"}
-                    className="w-full h-12 bg-ocean text-white hover:bg-ocean/90 font-semibold text-base rounded-xl transition-all duration-200 disabled:opacity-70"
-                  >
-                    {formState === "loading" ? (
-                      <>
-                        <Loader2
-                          data-ocid="contact.loading_state"
-                          className="w-4 h-4 mr-2 animate-spin"
-                        />
-                        Sending...
-                      </>
-                    ) : (
-                      <>
-                        Send Message
-                        <ChevronRight className="w-4 h-4 ml-1" />
-                      </>
-                    )}
-                  </Button>
-                </motion.form>
-              )}
-            </AnimatePresence>
-          </motion.div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// =============================================
-// FOOTER
-// =============================================
-
-function Footer() {
-  const currentYear = new Date().getFullYear();
-
-  const footerLinks = [
+  const navLinks = [
     { label: "Home", href: "#home" },
-    { label: "Destinations", href: "#destinations" },
     { label: "Packages", href: "#packages" },
-    { label: "Deals", href: "#deals" },
+    { label: "Services", href: "#services" },
+    { label: "Taxi", href: "#taxi" },
+    { label: "Reviews", href: "#reviews" },
     { label: "Contact", href: "#contact" },
   ];
 
-  const socialLinks = [
-    { icon: Facebook, href: "#", label: "Facebook" },
-    { icon: Instagram, href: "#", label: "Instagram" },
-    { icon: Twitter, href: "#", label: "Twitter" },
-    { icon: Youtube, href: "#", label: "YouTube" },
-  ];
-
   return (
-    <footer
-      className="text-white"
-      style={{
-        background:
-          "linear-gradient(180deg, oklch(0.18 0.06 252) 0%, oklch(0.12 0.04 255) 100%)",
-      }}
-    >
-      <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 pt-16 pb-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pb-12 border-b border-white/10">
-          {/* Brand */}
-          <div>
-            <div className="flex items-center gap-2.5 mb-4">
+    <div className="min-h-screen bg-cream font-body">
+      {/* SEO Meta */}
+      <title>
+        Travellers Points – Best Tour Packages from Jaigaon | Bhutan,
+        Darjeeling, Sikkim, Kashmir
+      </title>
+
+      {/* ── Navbar ── */}
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          scrolled ? "bg-navy shadow-luxury" : "bg-navy/95"
+        }`}
+      >
+        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16 md:h-20">
+            {/* Logo */}
+            <a
+              href="#home"
+              className="flex items-center gap-3"
+              data-ocid="nav.link"
+            >
               <img
                 src="/assets/uploads/image_b1a1f18a-1.png"
                 alt="Travellers Points Logo"
-                className="h-14 w-auto object-contain"
+                className="h-10 w-auto"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = "none";
+                }}
               />
-            </div>
-            <p className="text-white/60 text-sm leading-relaxed mb-4">
-              Specializing in Bhutan, Sikkim, Darjeeling, and exotic
-              international destinations. We craft journeys that become stories.
-            </p>
-            <div className="flex items-start gap-2 text-white/60 text-sm mb-4">
-              <MapPin className="w-4 h-4 text-gold shrink-0 mt-0.5" />
-              <span>Jaigaon, Alipurduar, West Bengal, India</span>
-            </div>
-            <p className="text-gold/80 font-display text-lg italic">
-              Your journey begins here.
-            </p>
-          </div>
+              <span className="text-cream font-display text-lg font-bold leading-tight hidden sm:block">
+                Travellers Points
+              </span>
+            </a>
 
-          {/* Quick Links */}
-          <div>
-            <h4 className="font-display font-bold text-white text-lg mb-5">
-              Quick Links
-            </h4>
-            <nav className="flex flex-col gap-2.5">
-              {footerLinks.map((link, i) => (
+            {/* Desktop Nav */}
+            <div className="hidden md:flex items-center gap-6">
+              {navLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
-                  data-ocid={`footer.link.${i + 1}`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection(link.href);
-                  }}
-                  className="text-white/60 hover:text-gold transition-colors text-sm flex items-center gap-1.5 group w-fit"
+                  className="text-cream/90 hover:text-gold transition-colors duration-200 font-medium text-sm"
+                  data-ocid="nav.link"
                 >
-                  <ChevronRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
                   {link.label}
                 </a>
               ))}
-            </nav>
-          </div>
-
-          {/* Social & Contact */}
-          <div>
-            <h4 className="font-display font-bold text-white text-lg mb-5">
-              Stay Connected
-            </h4>
-            <p className="text-white/60 text-sm mb-4">
-              Follow us for travel inspiration, exclusive deals, and destination
-              guides.
-            </p>
-            <div className="flex gap-3 mb-5">
-              {socialLinks.map((social, i) => {
-                const Icon = social.icon;
-                return (
-                  <a
-                    key={social.label}
-                    href={social.href}
-                    data-ocid={`footer.social.${i + 1}`}
-                    aria-label={social.label}
-                    className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center hover:bg-gold transition-all duration-300 hover:scale-110"
-                  >
-                    <Icon className="w-4 h-4 text-white" />
-                  </a>
-                );
-              })}
-            </div>
-            {/* WhatsApp in footer */}
-            <a
-              href="https://wa.me/917319076862"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2.5 text-sm text-white/70 hover:text-white transition-colors"
-            >
-              <div
-                className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
-                style={{ backgroundColor: "#25D366" }}
+              <a
+                href={waLink(
+                  "Hi Travellers Points! I would like to enquire about your tour packages.",
+                )}
+                target="_blank"
+                rel="noreferrer"
+                className="btn-gold text-sm px-4 py-2"
+                data-ocid="nav.primary_button"
               >
-                <svg
-                  viewBox="0 0 24 24"
-                  className="w-4 h-4 fill-white"
-                  aria-hidden="true"
-                >
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                </svg>
+                <MessageCircle className="w-4 h-4" /> WhatsApp
+              </a>
+            </div>
+
+            {/* Mobile menu button */}
+            <button
+              className="md:hidden text-cream p-2 rounded-md"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              type="button"
+              aria-label="Toggle menu"
+              data-ocid="nav.toggle"
+            >
+              {mobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
+            </button>
+          </div>
+
+          {/* Mobile Menu */}
+          {mobileMenuOpen && (
+            <div className="md:hidden pb-4 border-t border-navy-light/30">
+              <div className="flex flex-col gap-2 pt-3">
+                {navLinks.map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    className="text-cream/90 hover:text-gold px-2 py-2 font-medium transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                    data-ocid="nav.link"
+                  >
+                    {link.label}
+                  </a>
+                ))}
               </div>
-              +91 73190 76862
-            </a>
+            </div>
+          )}
+        </nav>
+      </header>
+
+      <main>
+        {/* ── Hero with Slideshow ── */}
+        <section
+          id="home"
+          className="relative min-h-screen flex items-center justify-center overflow-hidden"
+          style={{
+            background:
+              "linear-gradient(135deg, oklch(0.18 0.09 150) 0%, oklch(0.25 0.09 150) 40%, oklch(0.28 0.10 170) 70%, oklch(0.22 0.09 160) 100%)",
+          }}
+        >
+          {/* Sliding background images */}
+          {HERO_SLIDES.map((slide, i) => (
+            <img
+              key={slide.src}
+              src={slide.src}
+              alt={slide.label}
+              loading={i === 0 ? "eager" : "lazy"}
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+                i === heroSlide ? "opacity-100" : "opacity-0"
+              }`}
+            />
+          ))}
+
+          {/* Dark overlay */}
+          <div className="absolute inset-0 bg-black/55" />
+
+          {/* Decorative pattern */}
+          <div
+            className="absolute inset-0 opacity-5"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle at 2px 2px, white 1px, transparent 0)",
+              backgroundSize: "40px 40px",
+            }}
+          />
+
+          {/* Gold accent line */}
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-gold to-transparent" />
+
+          {/* Slide label badge */}
+          <div className="absolute top-24 right-6 z-20">
+            <div className="bg-gold/90 text-white text-sm font-bold px-4 py-1.5 rounded-full shadow-lg backdrop-blur-sm flex items-center gap-2">
+              <MapPin className="w-3.5 h-3.5" />
+              {HERO_SLIDES[heroSlide].label}
+            </div>
+          </div>
+
+          <div className="relative z-10 text-center px-4 max-w-5xl mx-auto pt-24">
+            <div className="inline-flex items-center gap-2 bg-gold/25 border border-gold/40 text-gold px-4 py-1.5 rounded-full text-sm font-medium mb-6 backdrop-blur-sm">
+              <MapPin className="w-4 h-4" />
+              Based in Jaigaon, West Bengal
+            </div>
+
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold text-white mb-6 leading-tight">
+              Explore the World with
+              <span className="block text-gold mt-1">Travellers Points</span>
+            </h1>
+
+            <p className="text-white/90 text-lg md:text-xl mb-6 max-w-2xl mx-auto">
+              Premium Tour Packages from Jaigaon, West Bengal — crafting
+              extraordinary Himalayan journeys.
+            </p>
+
+            {/* Rotating taglines */}
+            <HeroTagline />
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a
+                href="#packages"
+                className="btn-gold text-base px-8 py-4"
+                data-ocid="hero.primary_button"
+              >
+                <PackageIcon className="w-5 h-5" /> View Packages
+              </a>
+            </div>
+
+            {/* Stats */}
+            <div className="grid grid-cols-3 gap-6 mt-16 max-w-lg mx-auto">
+              {[
+                { label: "Tour Packages", value: "9+" },
+                { label: "Happy Clients", value: "500+" },
+                { label: "Destinations", value: "8+" },
+              ].map((stat) => (
+                <div key={stat.label} className="text-center">
+                  <div className="text-gold font-display text-3xl font-bold">
+                    {stat.value}
+                  </div>
+                  <div className="text-white/80 text-sm mt-1">{stat.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Slide dot indicators */}
+          <div className="absolute bottom-16 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+            {HERO_SLIDES.map((slide, i) => (
+              <button
+                key={slide.label}
+                type="button"
+                onClick={() => setHeroSlide(i)}
+                className={`rounded-full transition-all duration-300 ${
+                  i === heroSlide
+                    ? "bg-gold w-8 h-3"
+                    : "bg-white/50 w-3 h-3 hover:bg-white/80"
+                }`}
+                aria-label={`Go to slide ${slide.label}`}
+                data-ocid="hero.toggle"
+              />
+            ))}
+          </div>
+
+          {/* Scroll indicator */}
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/50 animate-bounce">
+            <ChevronDown className="w-6 h-6" />
+          </div>
+        </section>
+
+        {/* ── Packages ── */}
+        <section id="packages" className="py-20 bg-cream">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-14">
+              <h2 className="section-title">Our Tour Packages</h2>
+              <p className="section-subtitle">
+                Expertly curated packages for unforgettable journeys across the
+                Himalayas
+              </p>
+            </div>
+
+            <div
+              className="grid gap-6 md:grid-cols-2 xl:grid-cols-3"
+              data-ocid="packages.list"
+            >
+              {PACKAGES.map((pkg, idx) => (
+                <div
+                  key={pkg.id}
+                  className="bg-white rounded-2xl shadow-card overflow-hidden card-hover flex flex-col"
+                  data-ocid={`packages.item.${idx + 1}`}
+                >
+                  {/* Card Header */}
+                  <div className="bg-gradient-to-br from-navy to-navy-light p-6">
+                    <div className="flex items-start justify-between gap-2 mb-3">
+                      <Badge className="bg-gold text-white text-xs font-semibold border-0">
+                        {pkg.destination}
+                      </Badge>
+                      <Badge className="bg-gold text-white text-xs font-bold border-0 px-2 py-1">
+                        <Clock className="w-3 h-3 mr-1" />
+                        {pkg.duration}
+                      </Badge>
+                    </div>
+                    <h3 className="font-display text-xl font-bold text-white mb-1">
+                      {pkg.name}
+                    </h3>
+                    <p className="text-white/80 text-xs">{pkg.highlight}</p>
+                  </div>
+
+                  {/* Card Body */}
+                  <div className="p-5 flex flex-col flex-1">
+                    <div className="flex items-center justify-between mb-4">
+                      <div>
+                        <span className="text-2xl font-display font-bold text-navy">
+                          {pkg.price}
+                        </span>
+                        <span className="text-slate-600 text-sm ml-1">
+                          {pkg.priceNote}
+                        </span>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-xs text-slate-500">Pickup</div>
+                        <div className="text-xs font-medium text-charcoal">
+                          {pkg.pickup}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Expand Itinerary */}
+                    <button
+                      type="button"
+                      onClick={() => toggleItinerary(pkg.id)}
+                      className="w-full flex items-center justify-between text-sm font-semibold text-navy border border-navy/20 rounded-lg px-4 py-2.5 hover:bg-navy/5 transition-colors mb-4"
+                      data-ocid={`packages.item.${idx + 1}.toggle`}
+                    >
+                      <span>View Itinerary</span>
+                      {expandedPackage === pkg.id ? (
+                        <ChevronUp className="w-4 h-4" />
+                      ) : (
+                        <ChevronDown className="w-4 h-4" />
+                      )}
+                    </button>
+
+                    {/* Itinerary Details */}
+                    {expandedPackage === pkg.id && (
+                      <div className="mb-4 space-y-3 max-h-72 overflow-y-auto pr-1">
+                        {pkg.itinerary.map((day) => (
+                          <div
+                            key={day.day}
+                            className="border-l-2 border-gold pl-3"
+                          >
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className="text-xs bg-gold/20 text-gold-dark font-bold px-2 py-0.5 rounded-full">
+                                {day.day}
+                              </span>
+                              <span className="text-sm font-semibold text-charcoal">
+                                {day.title}
+                              </span>
+                            </div>
+                            <p className="text-xs text-slate-600 leading-relaxed">
+                              {day.details}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Book Button */}
+                    <div className="mt-auto space-y-2">
+                      <a
+                        href={waLink(
+                          `Hi, I am interested in the ${pkg.name} (${pkg.duration}). Please share details and availability.`,
+                        )}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="btn-whatsapp w-full justify-center text-sm py-3"
+                        data-ocid={`packages.item.${idx + 1}.primary_button`}
+                      >
+                        <MessageCircle className="w-4 h-4" /> Book on Request
+                      </a>
+                      <a
+                        href={waLink(
+                          `Hi, I would like to customize the ${pkg.name}. Please help me create a custom itinerary.`,
+                        )}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="w-full justify-center text-sm py-2.5 border-2 border-gold/50 text-gold-dark rounded-lg font-semibold inline-flex items-center gap-2 hover:bg-gold/10 transition-colors"
+                        data-ocid={`packages.item.${idx + 1}.secondary_button`}
+                      >
+                        <Settings className="w-4 h-4" /> Customize Package on
+                        Request
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── Taxi Service ── */}
+        <section id="taxi" className="py-20 bg-cream-dark">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-14">
+              <h2 className="section-title">Local Taxi Services</h2>
+              <p className="section-subtitle">
+                Reliable transfers from Jaigaon to nearby destinations
+              </p>
+            </div>
+
+            <div className="grid gap-6 sm:grid-cols-3" data-ocid="taxi.list">
+              {TAXI_ROUTES.map((route, idx) => (
+                <div
+                  key={route.to}
+                  className="bg-white rounded-2xl shadow-card p-6 text-center card-hover"
+                  data-ocid={`taxi.item.${idx + 1}`}
+                >
+                  <div className="w-14 h-14 bg-navy/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Car className="w-7 h-7 text-navy" />
+                  </div>
+                  <div className="text-sm text-slate-600 mb-1">
+                    From {route.from}
+                  </div>
+                  <h3 className="font-display text-xl font-bold text-navy mb-2">
+                    → {route.to}
+                  </h3>
+                  <div className="flex items-center justify-center gap-2 text-sm text-slate-600 mb-1">
+                    <Clock className="w-4 h-4" /> {route.duration}
+                  </div>
+                  <p className="text-sm text-slate-600 mb-5">{route.note}</p>
+                  <a
+                    href={waLink(
+                      `Hi, I need a taxi from ${route.from} to ${route.to}. Please share details.`,
+                    )}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn-whatsapp w-full justify-center text-sm"
+                    data-ocid={`taxi.item.${idx + 1}.primary_button`}
+                  >
+                    <MessageCircle className="w-4 h-4" /> Book Taxi on WhatsApp
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── Services ── */}
+        <section id="services" className="py-20 bg-cream">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-14">
+              <h2 className="section-title">Our Services</h2>
+              <p className="section-subtitle">
+                End-to-end travel solutions for your perfect journey
+              </p>
+            </div>
+
+            <div
+              className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
+              data-ocid="services.list"
+            >
+              {SERVICES.map((svc, idx) => (
+                <button
+                  key={svc.id}
+                  type="button"
+                  onClick={() => setServiceModal(svc.id)}
+                  className="bg-white rounded-2xl shadow-card p-6 text-left card-hover group focus:outline-none focus:ring-2 focus:ring-navy/40"
+                  data-ocid={`services.item.${idx + 1}.button`}
+                >
+                  <div className="w-14 h-14 bg-navy/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-navy group-hover:text-cream transition-colors">
+                    <svc.icon className="w-7 h-7 text-navy group-hover:text-cream transition-colors" />
+                  </div>
+                  <h3 className="font-display text-lg font-bold text-charcoal mb-2">
+                    {svc.title}
+                  </h3>
+                  <p className="text-sm text-slate-600">{svc.short}</p>
+                  <div className="mt-4 text-xs font-semibold text-navy flex items-center gap-1">
+                    Click for details{" "}
+                    <ChevronDown className="w-3 h-3 rotate-[-90deg]" />
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Service Modal */}
+        <Dialog
+          open={!!serviceModal}
+          onOpenChange={(o) => !o && setServiceModal(null)}
+        >
+          <DialogContent className="max-w-md" data-ocid="services.dialog">
+            {activeService && (
+              <>
+                <DialogHeader>
+                  <DialogTitle className="font-display text-xl flex items-center gap-3">
+                    <div className="w-10 h-10 bg-navy/10 rounded-lg flex items-center justify-center">
+                      <activeService.icon className="w-5 h-5 text-navy" />
+                    </div>
+                    {activeService.title}
+                  </DialogTitle>
+                </DialogHeader>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  {activeService.details}
+                </p>
+                <div className="flex gap-3 mt-2">
+                  <a
+                    href={waLink(
+                      `Hi, I want to enquire about your ${activeService.title} service.`,
+                    )}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn-whatsapp flex-1 justify-center"
+                    data-ocid="services.dialog.primary_button"
+                  >
+                    <MessageCircle className="w-4 h-4" /> Enquire on WhatsApp
+                  </a>
+                  <Button
+                    variant="outline"
+                    onClick={() => setServiceModal(null)}
+                    data-ocid="services.dialog.close_button"
+                  >
+                    Close
+                  </Button>
+                </div>
+              </>
+            )}
+          </DialogContent>
+        </Dialog>
+
+        {/* ── Reviews ── */}
+        <section id="reviews" className="py-20 bg-navy">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-14">
+              <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-3">
+                Client Reviews
+              </h2>
+              <p className="text-white/80 text-lg">
+                What our travellers say about us
+              </p>
+            </div>
+
+            <div
+              className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
+              data-ocid="reviews.list"
+            >
+              {REVIEWS.map((review, reviewIdx) => (
+                <div
+                  key={review.name}
+                  className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6 card-hover"
+                  data-ocid={`reviews.item.${reviewIdx + 1}`}
+                >
+                  <div className="flex items-center gap-1 mb-3">
+                    <Star className="w-4 h-4 fill-gold text-gold" />
+                    <Star className="w-4 h-4 fill-gold text-gold" />
+                    <Star className="w-4 h-4 fill-gold text-gold" />
+                    <Star className="w-4 h-4 fill-gold text-gold" />
+                    <Star className="w-4 h-4 fill-gold text-gold" />
+                  </div>
+                  <p className="text-white/90 text-sm leading-relaxed mb-4">
+                    &ldquo;{review.text}&rdquo;
+                  </p>
+                  <div className="border-t border-white/20 pt-3">
+                    <div className="font-semibold text-white text-sm">
+                      {review.name}
+                    </div>
+                    <div className="text-white/70 text-xs">
+                      {review.city} • {review.destination}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── Contact ── */}
+        <section id="contact" className="py-20 bg-cream-dark">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-14">
+              <h2 className="section-title">Contact Us</h2>
+              <p className="section-subtitle">
+                Get in touch to plan your dream trip
+              </p>
+            </div>
+
+            <div className="grid gap-10 lg:grid-cols-2 max-w-5xl mx-auto">
+              {/* Info */}
+              <div className="space-y-8">
+                <div>
+                  <h3 className="font-display text-2xl font-bold text-navy mb-6">
+                    Get in Touch
+                  </h3>
+                  <div className="space-y-5">
+                    <div className="flex items-start gap-4">
+                      <div className="w-11 h-11 bg-navy/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <MapPin className="w-5 h-5 text-navy" />
+                      </div>
+                      <div>
+                        <div className="font-semibold text-charcoal">
+                          Address
+                        </div>
+                        <div className="text-slate-600 text-sm">
+                          Jaigaon, Alipurduar, West Bengal, India
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-4">
+                      <div className="w-11 h-11 bg-navy/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <Phone className="w-5 h-5 text-navy" />
+                      </div>
+                      <div>
+                        <div className="font-semibold text-charcoal">
+                          WhatsApp / Phone
+                        </div>
+                        <a
+                          href={waLink("Hi Travellers Points!")}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-navy hover:text-gold transition-colors text-sm font-medium"
+                        >
+                          +91 7319076862
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-navy rounded-2xl p-6 text-white">
+                  <h4 className="font-display text-lg font-bold mb-2 text-white">
+                    Quick WhatsApp Enquiry
+                  </h4>
+                  <p className="text-white/80 text-sm mb-4">
+                    For fastest response, message us directly on WhatsApp
+                  </p>
+                  <a
+                    href={waLink(
+                      "Hi Travellers Points! I would like to enquire about a tour package.",
+                    )}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn-whatsapp w-full justify-center bg-amber-500 hover:bg-amber-600"
+                    data-ocid="contact.primary_button"
+                  >
+                    <MessageCircle className="w-5 h-5" /> Chat on WhatsApp
+                  </a>
+                </div>
+              </div>
+
+              {/* Form */}
+              <form
+                onSubmit={handleFormSubmit}
+                className="bg-white rounded-2xl shadow-card p-8 space-y-5"
+              >
+                <h3 className="font-display text-xl font-bold text-charcoal">
+                  Send a Message
+                </h3>
+                <div className="space-y-1">
+                  <label
+                    className="text-sm font-medium text-charcoal"
+                    htmlFor="contact-name"
+                  >
+                    Your Name
+                  </label>
+                  <Input
+                    id="contact-name"
+                    value={formData.name}
+                    onChange={(e) =>
+                      setFormData((p) => ({ ...p, name: e.target.value }))
+                    }
+                    placeholder="Full name"
+                    required
+                    className="border-border focus:ring-navy"
+                    data-ocid="contact.input"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label
+                    className="text-sm font-medium text-charcoal"
+                    htmlFor="contact-email"
+                  >
+                    Email Address
+                  </label>
+                  <Input
+                    id="contact-email"
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) =>
+                      setFormData((p) => ({ ...p, email: e.target.value }))
+                    }
+                    placeholder="your@email.com"
+                    required
+                    className="border-border focus:ring-navy"
+                    data-ocid="contact.input"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label
+                    className="text-sm font-medium text-charcoal"
+                    htmlFor="contact-message"
+                  >
+                    Message
+                  </label>
+                  <Textarea
+                    id="contact-message"
+                    value={formData.message}
+                    onChange={(e) =>
+                      setFormData((p) => ({ ...p, message: e.target.value }))
+                    }
+                    placeholder="Tell us about your travel plans..."
+                    required
+                    rows={4}
+                    className="border-border focus:ring-navy resize-none"
+                    data-ocid="contact.textarea"
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  className="w-full bg-navy hover:bg-navy-dark text-white py-3"
+                  data-ocid="contact.submit_button"
+                >
+                  {formSent ? (
+                    <span data-ocid="contact.success_state">
+                      ✓ Message Sent via WhatsApp!
+                    </span>
+                  ) : (
+                    <>
+                      <MessageCircle className="w-4 h-4 mr-2" /> Send via
+                      WhatsApp
+                    </>
+                  )}
+                </Button>
+              </form>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      {/* ── Footer ── */}
+      <footer className="bg-charcoal text-white/70">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 mb-10">
+            {/* Brand */}
+            <div className="lg:col-span-2">
+              <div className="flex items-center gap-3 mb-4">
+                <img
+                  src="/assets/uploads/image_b1a1f18a-1.png"
+                  alt="Travellers Points"
+                  className="h-10 w-auto"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).style.display = "none";
+                  }}
+                />
+                <span className="font-display text-xl font-bold text-white">
+                  Travellers Points
+                </span>
+              </div>
+              <p className="text-sm leading-relaxed mb-4 max-w-xs text-white/70">
+                Premium tour packages from Jaigaon, West Bengal. Bhutan,
+                Darjeeling, Sikkim, Nepal & more.
+              </p>
+              <div className="flex items-center gap-2 text-sm">
+                <MapPin className="w-4 h-4 text-gold" />
+                Jaigaon, Alipurduar, West Bengal
+              </div>
+              <div className="flex items-center gap-2 text-sm mt-1">
+                <Phone className="w-4 h-4 text-gold" />
+                +91 7319076862
+              </div>
+            </div>
+
+            {/* Quick Links */}
+            <div>
+              <h4 className="text-white font-semibold mb-4">Quick Links</h4>
+              <ul className="space-y-2 text-sm">
+                {[
+                  ["#home", "Home"],
+                  ["#packages", "Packages"],
+                  ["#services", "Services"],
+                  ["#taxi", "Taxi"],
+                  ["#reviews", "Reviews"],
+                  ["#contact", "Contact"],
+                ].map(([href, label]) => (
+                  <li key={href}>
+                    <a
+                      href={href}
+                      className="hover:text-gold transition-colors"
+                      data-ocid="footer.link"
+                    >
+                      {label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Destinations */}
+            <div>
+              <h4 className="text-white font-semibold mb-4">Destinations</h4>
+              <ul className="space-y-2 text-sm">
+                {[
+                  "Bhutan",
+                  "Darjeeling",
+                  "Sikkim",
+                  "Nepal",
+                  "Manali",
+                  "Shimla",
+                  "Kashmir",
+                  "Mathura",
+                ].map((d) => (
+                  <li key={d}>
+                    <a
+                      href="#packages"
+                      className="hover:text-gold transition-colors"
+                      data-ocid="footer.link"
+                    >
+                      {d}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+            <p className="text-white/60">
+              © {new Date().getFullYear()} Travellers Points. All rights
+              reserved.
+            </p>
+            <p className="text-white/50">
+              Built with ❤️ using{" "}
+              <a
+                href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(window.location.hostname)}`}
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-gold transition-colors"
+              >
+                caffeine.ai
+              </a>
+            </p>
           </div>
         </div>
+      </footer>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-white/40 text-sm">
-            © {currentYear} Travellers Points. All rights reserved.
-          </p>
-          <p className="text-white/40 text-xs">
-            Built with <span className="text-coral">♥</span> using{" "}
-            <a
-              href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(window.location.hostname)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gold/70 hover:text-gold transition-colors"
-            >
-              caffeine.ai
-            </a>
-          </p>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
-// =============================================
-// APP ROOT
-// =============================================
-
-export default function App() {
-  const [searchFilter, setSearchFilter] = useState("");
-  const filterTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const handleSearch = (query: string) => {
-    setSearchFilter(query);
-    if (filterTimeoutRef.current) clearTimeout(filterTimeoutRef.current);
-    filterTimeoutRef.current = setTimeout(() => setSearchFilter(""), 10000);
-  };
-
-  useEffect(() => {
-    return () => {
-      if (filterTimeoutRef.current) clearTimeout(filterTimeoutRef.current);
-    };
-  }, []);
-
-  return (
-    <>
-      <Toaster position="top-right" richColors />
-      <Navbar />
-      <main>
-        <HeroSection onSearch={handleSearch} />
-        <DestinationsSection filter={searchFilter} />
-        <TourPackagesSection />
-        <ServicesSection />
-        <WhyUsSection />
-        <DealsSection />
-        <TestimonialsSection />
-        <ClientReviewsSection />
-        <TaxiServiceSection />
-        <ContactSection />
-      </main>
-      <Footer />
-      <WhatsAppButton />
-    </>
+      {/* Floating WhatsApp Button */}
+      <a
+        href={waLink(
+          "Hi Travellers Points! I would like to enquire about your tour packages.",
+        )}
+        target="_blank"
+        rel="noreferrer"
+        className="fixed bottom-6 right-6 z-50 bg-amber-500 hover:bg-amber-600 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-luxury transition-all duration-200 hover:scale-110"
+        aria-label="Chat on WhatsApp"
+        data-ocid="nav.primary_button"
+      >
+        <MessageCircle className="w-7 h-7" />
+      </a>
+    </div>
   );
 }
