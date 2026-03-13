@@ -58,8 +58,8 @@ const DESTINATIONS = [
     country: "Land of Thunder Dragon",
     image: "/assets/generated/dest-bhutan.dim_600x400.jpg",
     description:
-      "Mystical monasteries, pristine Himalayan landscapes, and a kingdom that measures happiness. Group tours from ₹25,000 with Bagdogra/NJP pickup.",
-    price: "From ₹25,000",
+      "Mystical monasteries, pristine Himalayan landscapes, and a kingdom that measures happiness. Group tours from ₹24,500 with Bagdogra/NJP pickup.",
+    price: "From ₹24,500",
     duration: "6N / 7D",
   },
   {
@@ -150,7 +150,7 @@ const DEALS = [
     country: "Bagdogra / NJP Pickup",
     nights: 6,
     originalPrice: "₹30,000",
-    currentPrice: "₹25,000",
+    currentPrice: "₹24,500",
     savings: "Save 17%",
     image: "/assets/generated/dest-bhutan.dim_600x400.jpg",
   },
@@ -160,7 +160,7 @@ const DEALS = [
     country: "Land of Thunder Dragon",
     nights: 6,
     originalPrice: "₹34,999",
-    currentPrice: "₹28,999",
+    currentPrice: "₹43,000",
     savings: "Save 17%",
     image: "/assets/generated/bhutan-tigers-nest.dim_800x500.jpg",
   },
@@ -296,38 +296,38 @@ const CLIENT_REVIEWS = [
 const BHUTAN_ITINERARY = [
   {
     day: 1,
-    title: "Arrival in Paro",
-    desc: "Arrive at Paro International Airport, transfer to hotel. Evening walk to Paro town. Welcome dinner with traditional Bhutanese cuisine.",
+    title: "Bagdogra Airport → Phuentsholing",
+    desc: "Pickup from Bagdogra Airport (IXB) at 2:00–2:30 PM or NJP Railway Station at 2:30–3:00 PM (timings indicative, subject to change). Transfer to Phuentsholing by road. Hotel check-in. Evening free for leisure and local exploration. Visit Bhutan Gate and Karbandi Monastery area. Overnight stay at Phuentsholing.",
   },
   {
     day: 2,
-    title: "Paro Sightseeing",
-    desc: "Visit Rinpung Dzong, Drukgyal Dzong ruins, National Museum of Bhutan. Evening stroll along Paro Chhu river at leisure.",
+    title: "Phuentsholing → Thimphu",
+    desc: "Breakfast at hotel. Completion of immigration formalities. Drive towards Thimphu. En-route pass through Chukha Waterfall. Visit Chuzom Bridge — the confluence of Thimphu River and Paro River. Continue scenic drive to Thimphu. Arrival and hotel check-in. Evening free for leisure. Overnight stay at Thimphu.",
   },
   {
     day: 3,
-    title: "Tiger's Nest Hike",
-    desc: "Morning hike to Paro Taktsang (Tiger's Nest) Monastery — one of Bhutan's most iconic sites perched 900m above the valley. Lunch at hillside café.",
+    title: "Thimphu → Dochula → Punakha → Thimphu",
+    desc: "Breakfast at hotel. Drive from Thimphu towards Dochula Pass — enjoy panoramic Himalayan views (weather permitting). Continue drive to Punakha. Visit Punakha Dzong — one of the most beautiful Dzongs in Bhutan, at the confluence of Pho Chhu and Mo Chhu rivers. Leisure time by Punakha river valley. Drive back to Thimphu. Overnight stay at Thimphu.",
   },
   {
     day: 4,
-    title: "Paro to Thimphu",
-    desc: "Drive to Thimphu (1 hr). Visit Buddha Dordenma statue, Tashichho Dzong, Folk Heritage Museum. Evening explore Thimphu night market.",
+    title: "Thimphu Sightseeing → Paro",
+    desc: "Breakfast at hotel. Thimphu sightseeing: Visit Buddha Dordenma (the world's largest sitting Buddha), National Memorial Chorten, and Tashichho Dzong (from outside). Drive from Thimphu to Paro. Arrival at Paro and hotel check-in. Evening free for leisure. Overnight stay at Paro.",
   },
   {
     day: 5,
-    title: "Thimphu to Punakha",
-    desc: "Cross the scenic Dochula Pass (3,100m) with 108 memorial chortens — stunning Himalayan panorama. Visit Punakha Dzong and suspension bridge.",
+    title: "Paro – Tiger's Nest Hike",
+    desc: "Early breakfast at hotel. Drive to Tiger's Nest base point. Hike to Paro Taktsang (Tiger's Nest Monastery) — the iconic monastery perched 900m above the Paro Valley. Return hike and drive back to Paro. Evening free for rest and leisure. Overnight stay at Paro.",
   },
   {
     day: 6,
-    title: "Punakha to Paro",
-    desc: "Drive back through Dochula Pass. Traditional hot stone bath experience. Cultural show and farewell dinner with Bhutanese folk performances.",
+    title: "Paro Sightseeing → Phuentsholing",
+    desc: "Breakfast at hotel. Visit Rinpung Dzong (Paro Dzong), National Museum of Bhutan, and Kyichu Lhakhang (subject to time). Lunch at Paro town. Drive from Paro to Phuentsholing. Arrival and hotel check-in. Overnight stay at Phuentsholing.",
   },
   {
     day: 7,
-    title: "Departure",
-    desc: "Morning transfer to Paro Airport. Bid farewell to the Land of Happiness with memories that last a lifetime.",
+    title: "Phuentsholing → Bagdogra Airport / NJP",
+    desc: "Breakfast at hotel. Check-out from hotel. Drive from Phuentsholing to Bagdogra Airport or NJP Railway Station. Arrival and drop at airport/station. Tour Ends. Carry home memories of monasteries, mountains, and the happiness of Bhutan.",
   },
 ];
 
@@ -367,38 +367,38 @@ const SIKKIM_ITINERARY = [
 const BHUTAN_GROUP_ITINERARY = [
   {
     day: 1,
-    title: "Bagdogra / NJP Pickup → Phuentsholing",
-    desc: "Pick up from Bagdogra Airport or NJP Railway Station. Drive to Phuentsholing (approx. 4 hrs) — the gateway town on the India-Bhutan border. Check-in at hotel. Evening walk along the border town. Overnight at Phuentsholing.",
+    title: "Bagdogra Airport → Phuentsholing",
+    desc: "Pickup from Bagdogra Airport (IXB) at 2:00–2:30 PM or NJP Railway Station at 2:30–3:00 PM (timings indicative, subject to change based on group arrivals). Transfer to Phuentsholing by road. Hotel check-in. Evening free for leisure and local exploration. Visit Bhutan Gate and Karbandi Monastery area. Overnight stay at Phuentsholing.",
   },
   {
     day: 2,
     title: "Phuentsholing → Thimphu",
-    desc: "Complete border immigration and permits. Drive to Thimphu (5–6 hrs) through scenic Himalayan valleys and Chuzom confluence. Check-in at Thimphu hotel. Evening stroll at Thimphu clock tower and local market. Dinner together.",
+    desc: "Breakfast at hotel. Completion of immigration formalities. Drive towards Thimphu. En-route pass through Chukha Waterfall. Visit Chuzom Bridge — the confluence of Thimphu River and Paro River. Continue scenic drive to Thimphu. Arrival and hotel check-in. Evening free for leisure. Overnight stay at Thimphu.",
   },
   {
     day: 3,
-    title: "Thimphu Full Day Sightseeing",
-    desc: "Visit Buddha Dordenma statue (the world's largest sitting Buddha), Tashichho Dzong, Folk Heritage Museum, Changangkha Lhakhang, National Memorial Chorten, and Takin Preserve. Evening at Thimphu Night Market with street food.",
+    title: "Thimphu → Dochula → Punakha → Thimphu",
+    desc: "Breakfast at hotel. Drive from Thimphu towards Dochula Pass — enjoy panoramic Himalayan views (weather permitting). Continue drive to Punakha. Visit Punakha Dzong — one of the most beautiful Dzongs in Bhutan, at the confluence of Pho Chhu and Mo Chhu rivers. Leisure time by Punakha river valley. Drive back to Thimphu. Overnight stay at Thimphu.",
   },
   {
     day: 4,
-    title: "Thimphu → Punakha via Dochula Pass",
-    desc: "Drive over the scenic Dochula Pass (3,100m) featuring 108 memorial chortens and panoramic Himalayan views on clear days. Visit Punakha Dzong — the most beautiful Dzong in Bhutan, where the Pho Chhu and Mo Chhu rivers meet. Explore the famous Punakha suspension bridge.",
+    title: "Thimphu Sightseeing → Paro",
+    desc: "Breakfast at hotel. Thimphu sightseeing: Visit Buddha Dordenma (the world's largest sitting Buddha), National Memorial Chorten, and Tashichho Dzong (from outside). Drive from Thimphu to Paro. Arrival at Paro and hotel check-in. Evening free for leisure. Overnight stay at Paro.",
   },
   {
     day: 5,
-    title: "Punakha → Paro",
-    desc: "Morning at leisure in Punakha. Drive to Paro (4 hrs) through mountain roads. Visit Rinpung Dzong and National Museum of Bhutan (Ta Dzong). Evening walk along Paro Chhu river. Traditional Bhutanese hot stone bath experience (optional). Overnight in Paro.",
+    title: "Paro – Tiger's Nest Hike",
+    desc: "Early breakfast at hotel. Drive to Tiger's Nest base point. Hike to Paro Taktsang (Tiger's Nest Monastery) — the iconic monastery perched 900m above the Paro Valley. Return hike and drive back to Paro. Evening free for rest and leisure. Overnight stay at Paro.",
   },
   {
     day: 6,
-    title: "Paro — Tiger's Nest Monastery Hike",
-    desc: "Early morning hike to Paro Taktsang (Tiger's Nest) — the iconic monastery perched 900m above the Paro Valley. The 4-5 hour round-trip hike is one of Bhutan's most rewarding adventures. Lunch at hillside café with valley views. Evening cultural show with farewell dinner and Bhutanese folk performances.",
+    title: "Paro Sightseeing → Phuentsholing",
+    desc: "Breakfast at hotel. Visit Rinpung Dzong (Paro Dzong), National Museum of Bhutan, and Kyichu Lhakhang (subject to time). Lunch at Paro town. Drive from Paro to Phuentsholing. Arrival and hotel check-in. Overnight stay at Phuentsholing.",
   },
   {
     day: 7,
-    title: "Paro → Drop at Bagdogra Airport or NJP",
-    desc: "After breakfast, check-out and drive back from Paro/Phuentsholing to Bagdogra Airport or NJP Railway Station (approx. 6–7 hrs). Group drop at Bagdogra Airport or NJP Station as per your onward journey. Bid farewell to the Land of Happiness carrying memories of monasteries, mountains, and mountain magic.",
+    title: "Phuentsholing → Bagdogra Airport / NJP",
+    desc: "Breakfast at hotel. Check-out from hotel. Drive from Phuentsholing to Bagdogra Airport or NJP Railway Station. Arrival and drop at airport/station. Tour Ends. Carry home memories of monasteries, mountains, and the happiness of Bhutan.",
   },
 ];
 
@@ -408,7 +408,7 @@ const TOUR_PACKAGES = [
     name: "Bhutan — Land of the Thunder Dragon",
     tagline: "A kingdom that measures happiness",
     duration: "6 Nights / 7 Days",
-    price: "₹28,999",
+    price: "₹43,000",
     priceLabel: "per person",
     heroImage: "/assets/generated/dest-bhutan.dim_600x400.jpg",
     galleryImages: [
@@ -426,20 +426,25 @@ const TOUR_PACKAGES = [
       },
     ],
     highlights: [
-      "Paro Taktsang (Tiger's Nest) Monastery hike",
-      "Punakha Dzong & suspension bridge",
-      "Thimphu city tour — Buddha Dordenma, Tashichho Dzong",
-      "Traditional Bhutanese dinner with cultural show",
-      "Hot stone bath experience",
-      "Dochula Pass with 108 chortens",
+      "Private pickup from Bagdogra Airport (IXB) or NJP Railway Station",
+      "Phuentsholing border crossing with immigration formalities",
+      "Chukha Waterfall & Chuzom Bridge on route to Thimphu",
+      "Dochula Pass with 108 chortens & panoramic Himalayan views",
+      "Punakha Dzong — jewel at the river confluence",
+      "Thimphu sightseeing: Buddha Dordenma, Memorial Chorten, Tashichho Dzong",
+      "Tiger's Nest (Taktsang) Monastery hike",
+      "Paro Dzong & National Museum of Bhutan",
+      "Private vehicle throughout the tour",
+      "SDF, guide & all permits included",
     ],
     includes: [
-      "Accommodation (3-star hotels)",
-      "All meals (breakfast & dinner)",
-      "Licensed English-speaking guide",
-      "All transfers by private vehicle",
-      "Bhutan SDF (Sustainable Development Fee)",
-      "Entry tickets to all monuments",
+      "Private pickup & drop: Bagdogra Airport (IXB) or NJP Railway Station",
+      "Accommodation: 2 nights Phuentsholing, 2 nights Thimphu, 2 nights Paro",
+      "Meals on MAP plan (Breakfast & Dinner daily)",
+      "Professional English/Hindi-speaking Bhutanese guide",
+      "Transportation by private vehicle",
+      "Sustainable Development Fee (SDF) included",
+      "All permits & applicable taxes, tolls, parking & driver allowances",
     ],
     itinerary: BHUTAN_ITINERARY,
     accentColor: "from-amber-900/80 to-orange-900/60",
@@ -492,7 +497,7 @@ const TOUR_PACKAGES = [
     name: "Bhutan Group Tour",
     tagline: "Bagdogra / NJP Pickup — Affordable Group Experience",
     duration: "6 Nights / 7 Days",
-    price: "₹25,000",
+    price: "₹24,500",
     priceLabel: "per person (group)",
     heroImage: "/assets/generated/dest-bhutan.dim_600x400.jpg",
     galleryImages: [
@@ -510,25 +515,299 @@ const TOUR_PACKAGES = [
       },
     ],
     highlights: [
-      "Pickup & drop from Bagdogra Airport or NJP Railway Station",
-      "Tiger's Nest (Taktsang) Monastery hike — Day 6",
-      "Punakha Dzong & suspension bridge via Dochula Pass",
-      "Thimphu full-day sightseeing — Buddha Dordenma, Tashichho Dzong",
-      "Phuentsholing border crossing with permits",
-      "Farewell cultural show & Bhutanese dinner",
+      "Pickup from Bagdogra Airport (IXB) or NJP Railway Station",
+      "Phuentsholing border crossing with immigration formalities",
+      "Chukha Waterfall & Chuzom Bridge on route to Thimphu",
+      "Dochula Pass with 108 chortens & panoramic Himalayan views",
+      "Punakha Dzong — jewel at the river confluence",
+      "Thimphu sightseeing: Buddha Dordenma, Memorial Chorten, Tashichho Dzong",
+      "Tiger's Nest (Taktsang) Monastery hike",
+      "Paro Dzong & National Museum of Bhutan",
+      "3-star hotels with MAP plan (Breakfast & Dinner)",
+      "SDF, guide & all permits included",
     ],
     includes: [
-      "Pickup & drop: Bagdogra Airport or NJP Station",
-      "Accommodation (3-star hotels)",
-      "All meals (breakfast & dinner daily)",
-      "Licensed English-speaking group guide",
-      "All transfers by shared group vehicle",
-      "Bhutan SDF & entry tickets to all monuments",
-      "Bhutan visa & border permits",
+      "Pickup & drop: Bagdogra Airport (IXB) or NJP Railway Station",
+      "Accommodation: 2 nights Phuentsholing, 2 nights Thimphu, 2 nights Paro (3-star hotels)",
+      "Meals on MAP plan (Breakfast & Dinner daily)",
+      "Professional English/Hindi-speaking Bhutanese guide",
+      "Transportation by private group vehicle",
+      "Sustainable Development Fee (SDF) included",
+      "All permits & applicable taxes, tolls, parking & driver allowances",
     ],
     itinerary: BHUTAN_GROUP_ITINERARY,
     accentColor: "from-yellow-900/80 to-amber-800/60",
     badgeColor: "bg-yellow-700",
+  },
+  {
+    id: "nepal",
+    name: "Nepal Tour",
+    tagline: "Kathmandu, Pokhara & Everest Base Trek",
+    duration: "5 Nights / 6 Days",
+    price: "₹18,000",
+    priceLabel: "per person",
+    heroImage: "/assets/generated/dest-sikkim.dim_600x400.jpg",
+    galleryImages: [],
+    highlights: [
+      "Kathmandu Durbar Square",
+      "Pashupatinath Temple",
+      "Boudhanath Stupa",
+      "Pokhara & Phewa Lake",
+      "Nagarkot Sunrise View",
+      "Bhaktapur Heritage Walk",
+    ],
+    includes: [
+      "Pickup & drop from Tribhuvan Airport",
+      "Accommodation (3-star hotels)",
+      "Daily breakfast",
+      "Private vehicle transfers",
+      "Licensed English-speaking guide",
+      "All monument entry fees",
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: "Arrival in Kathmandu",
+        desc: "Arrival at Tribhuvan International Airport, Kathmandu. Transfer to hotel. Evening visit to Thamel market. Welcome dinner. Overnight in Kathmandu.",
+      },
+      {
+        day: 2,
+        title: "Kathmandu Sightseeing",
+        desc: "Visit Pashupatinath Temple, Boudhanath Stupa, Swayambhunath (Monkey Temple), and Kathmandu Durbar Square. Evening at leisure. Overnight in Kathmandu.",
+      },
+      {
+        day: 3,
+        title: "Kathmandu to Nagarkot to Bhaktapur",
+        desc: "Early morning drive to Nagarkot for Himalayan sunrise views. Visit Bhaktapur Durbar Square — a UNESCO World Heritage Site. Return to Kathmandu. Overnight in Kathmandu.",
+      },
+      {
+        day: 4,
+        title: "Kathmandu to Pokhara",
+        desc: "Morning drive or fly to Pokhara (6 hrs by road / 25 min by air). Arrival at Pokhara. Boating on Phewa Lake with Annapurna views. Visit Devi's Fall and Gupteshwor Cave. Overnight in Pokhara.",
+      },
+      {
+        day: 5,
+        title: "Pokhara Sightseeing",
+        desc: "Early morning visit to Sarangkot for Himalayan panorama and sunrise. Visit Bindhyabasini Temple and International Mountain Museum. Evening stroll at Lakeside. Overnight in Pokhara.",
+      },
+      {
+        day: 6,
+        title: "Pokhara to Kathmandu to Departure",
+        desc: "Morning at leisure. Drive or fly back to Kathmandu. Transfer to Tribhuvan Airport for your onward journey. Tour ends with memories of the Himalayas.",
+      },
+    ],
+    accentColor: "from-red-900/80 to-orange-800/60",
+    badgeColor: "bg-red-700",
+  },
+  {
+    id: "manali",
+    name: "Manali Tour",
+    tagline: "Snow Peaks, Rohtang Pass & Solang Valley",
+    duration: "4 Nights / 5 Days",
+    price: "₹12,000",
+    priceLabel: "per person",
+    heroImage: "/assets/generated/dest-bhutan.dim_600x400.jpg",
+    galleryImages: [],
+    highlights: [
+      "Rohtang Pass (snow point)",
+      "Solang Valley adventure activities",
+      "Hadimba Devi Temple",
+      "Old Manali & Mall Road",
+      "Beas River rafting",
+      "Vashisht Hot Springs",
+    ],
+    includes: [
+      "Pickup & drop from Manali bus stand",
+      "Accommodation (hotel/resort)",
+      "Daily breakfast",
+      "Private vehicle with driver",
+      "Rohtang Pass permit",
+      "Solang Valley transfer",
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: "Arrival in Manali",
+        desc: "Arrival at Manali. Check-in at hotel. Visit Mall Road, Tibetan Monastery, and Hadimba Devi Temple. Evening at leisure. Overnight in Manali.",
+      },
+      {
+        day: 2,
+        title: "Rohtang Pass / Snow Point",
+        desc: "Early morning drive to Rohtang Pass (3,978m) for snow activities — skiing, snow scooter, and stunning mountain views. Return to Manali by evening. Overnight in Manali. (Subject to permit availability and weather.)",
+      },
+      {
+        day: 3,
+        title: "Solang Valley & Adventure Activities",
+        desc: "Visit Solang Valley for paragliding, zorbing, and rope activities. Visit Vashisht hot water springs and Vashisht Temple. Evening at Old Manali market. Overnight in Manali.",
+      },
+      {
+        day: 4,
+        title: "Manali Local Sightseeing",
+        desc: "Visit Naggar Castle, Nicholas Roerich Art Gallery, and Jana Waterfall. Beas River riverside leisure time. Shopping at local Kullu shawl market. Overnight in Manali.",
+      },
+      {
+        day: 5,
+        title: "Departure from Manali",
+        desc: "After breakfast, check-out and transfer to Manali bus stand or Bhuntar Airport. Tour ends. Carry memories of snow-capped peaks and mountain adventures.",
+      },
+    ],
+    accentColor: "from-blue-900/80 to-sky-800/60",
+    badgeColor: "bg-blue-700",
+  },
+  {
+    id: "shimla",
+    name: "Shimla Tour",
+    tagline: "Queen of Hills — Colonial Charm & Scenic Beauty",
+    duration: "3 Nights / 4 Days",
+    price: "₹9,500",
+    priceLabel: "per person",
+    heroImage: "/assets/generated/dest-sikkim.dim_600x400.jpg",
+    galleryImages: [],
+    highlights: [
+      "Mall Road & The Ridge",
+      "Jakhu Temple (Hanuman statue)",
+      "Kufri snow point",
+      "Christ Church colonial architecture",
+      "Toy Train ride",
+      "Green Valley viewpoint",
+    ],
+    includes: [
+      "Pickup & drop from Shimla station",
+      "Accommodation (hotel)",
+      "Daily breakfast",
+      "Private vehicle with driver",
+      "Kufri sightseeing transfer",
+      "Guide charges",
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: "Arrival in Shimla",
+        desc: "Arrival at Shimla railway station or bus stand. Transfer to hotel. Evening walk on Mall Road and The Ridge. Visit Christ Church. Overnight in Shimla.",
+      },
+      {
+        day: 2,
+        title: "Shimla Sightseeing",
+        desc: "Visit Jakhu Temple (famous for the giant Hanuman statue), Prospect Hill, Annandale ground, and Tara Devi Temple. Evening shopping on Mall Road. Overnight in Shimla.",
+      },
+      {
+        day: 3,
+        title: "Kufri & Green Valley",
+        desc: "Day trip to Kufri for snow activities and Himalayan panoramic views. Visit Green Valley viewpoint and Fagu. Return to Shimla. Enjoy Toy Train ride if time permits. Overnight in Shimla.",
+      },
+      {
+        day: 4,
+        title: "Departure from Shimla",
+        desc: "After breakfast, visit Viceregal Lodge (Rashtrapati Niwas) and Indian Institute of Advanced Study. Transfer to station/bus stand. Tour ends.",
+      },
+    ],
+    accentColor: "from-green-900/80 to-emerald-800/60",
+    badgeColor: "bg-green-700",
+  },
+  {
+    id: "kashmir",
+    name: "Kashmir Tour",
+    tagline: "Paradise on Earth — Dal Lake, Gulmarg & Pahalgam",
+    duration: "5 Nights / 6 Days",
+    price: "₹22,000",
+    priceLabel: "per person",
+    heroImage: "/assets/generated/dest-bhutan.dim_600x400.jpg",
+    galleryImages: [],
+    highlights: [
+      "Dal Lake Shikara ride & houseboat",
+      "Gulmarg Gondola cable car",
+      "Pahalgam valley",
+      "Mughal Gardens (Shalimar, Nishat)",
+      "Sonmarg glacier views",
+      "Tulip Garden (seasonal)",
+    ],
+    includes: [
+      "Pickup & drop from Srinagar Airport",
+      "Accommodation (hotel + houseboat)",
+      "Daily breakfast & dinner",
+      "Private vehicle with driver",
+      "Shikara ride on Dal Lake",
+      "Gulmarg cable car (Gondola Phase 1)",
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: "Arrival in Srinagar",
+        desc: "Arrival at Srinagar Airport. Transfer to houseboat on Dal Lake. Shikara ride on Dal Lake. Evening at leisure enjoying the sunset on the lake. Overnight on houseboat.",
+      },
+      {
+        day: 2,
+        title: "Srinagar Sightseeing",
+        desc: "Visit Mughal Gardens — Shalimar Bagh, Nishat Bagh, and Chashme Shahi. Visit Shankaracharya Temple for panoramic city views. Evening at Lal Chowk market. Overnight in Srinagar.",
+      },
+      {
+        day: 3,
+        title: "Gulmarg Day Trip",
+        desc: "Drive to Gulmarg (2 hrs). Take the Gondola cable car to Apharwat Peak for snow and glacier views. Snow activities at Gulmarg. Return to Srinagar. Overnight in Srinagar.",
+      },
+      {
+        day: 4,
+        title: "Pahalgam Day Trip",
+        desc: "Drive to Pahalgam — the Valley of Shepherds. Visit Betaab Valley, Aru Valley, and Chandanwari. Horse ride or local walks available. Return to Srinagar. Overnight in Srinagar.",
+      },
+      {
+        day: 5,
+        title: "Sonmarg Day Trip",
+        desc: "Drive to Sonmarg — the Meadow of Gold. Enjoy views of Thajiwas Glacier. Pony rides to the glacier available. Return to Srinagar. Evening Shikara ride on Dal Lake. Overnight in Srinagar.",
+      },
+      {
+        day: 6,
+        title: "Departure from Srinagar",
+        desc: "After breakfast, visit Tulip Garden (seasonal, March–April) or local market for Kashmiri handicrafts and saffron shopping. Transfer to Srinagar Airport. Tour ends.",
+      },
+    ],
+    accentColor: "from-purple-900/80 to-violet-800/60",
+    badgeColor: "bg-purple-700",
+  },
+  {
+    id: "mathura",
+    name: "Mathura & Vrindavan Tour",
+    tagline: "Divine Pilgrimage — Birthplace of Lord Krishna",
+    duration: "2 Nights / 3 Days",
+    price: "₹6,500",
+    priceLabel: "per person",
+    heroImage: "/assets/generated/dest-sikkim.dim_600x400.jpg",
+    galleryImages: [],
+    highlights: [
+      "Krishna Janmabhoomi Temple",
+      "Banke Bihari Temple Vrindavan",
+      "ISKCON Temple Vrindavan",
+      "Govardhan Parikrama",
+      "Yamuna Aarti at Vishram Ghat",
+      "Barsana & Nandgaon tour",
+    ],
+    includes: [
+      "Pickup & drop from Mathura station",
+      "Accommodation (hotel)",
+      "Daily breakfast",
+      "Private vehicle with driver",
+      "All temple visit transfers",
+      "Guide charges",
+    ],
+    itinerary: [
+      {
+        day: 1,
+        title: "Arrival in Mathura",
+        desc: "Arrival at Mathura Junction railway station. Check-in at hotel. Visit Krishna Janmabhoomi Temple — the sacred birthplace of Lord Krishna. Evening Yamuna Aarti at Vishram Ghat. Overnight in Mathura.",
+      },
+      {
+        day: 2,
+        title: "Vrindavan & Govardhan",
+        desc: "Morning visit to Vrindavan — visit Banke Bihari Temple, ISKCON Temple, Prem Mandir, and Radha Raman Temple. Afternoon drive to Govardhan for Govardhan Parikrama (partial). Return to Mathura. Overnight in Mathura.",
+      },
+      {
+        day: 3,
+        title: "Barsana, Nandgaon & Departure",
+        desc: "Morning visit to Barsana — birthplace of Radha Rani — and Nandgaon — home of Nand Baba. Visit Ladli Lal Temple and Nand Bhawan. Return to Mathura station for departure. Tour ends with divine blessings.",
+      },
+    ],
+    accentColor: "from-orange-900/80 to-yellow-800/60",
+    badgeColor: "bg-orange-600",
   },
 ];
 
@@ -1185,6 +1464,25 @@ function PackageCard({ pkg }: { pkg: (typeof TOUR_PACKAGES)[0] }) {
                       </div>
                     </div>
                   ))}
+                  <div className="pt-5 pb-2">
+                    <a
+                      href={`https://wa.me/917319076862?text=Hi%2C%20I%20am%20interested%20in%20the%20${encodeURIComponent(pkg.name)}%20package.%20Please%20share%20details.`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-ocid="package.whatsapp_button"
+                      className="flex items-center justify-center gap-2 w-full h-12 rounded-xl font-bold text-white text-sm transition-all hover:opacity-90 hover:scale-[1.02] active:scale-[0.98]"
+                      style={{ backgroundColor: "#25D366" }}
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        className="w-5 h-5 fill-white shrink-0"
+                        aria-hidden="true"
+                      >
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                      </svg>
+                      Book on Request — WhatsApp Us
+                    </a>
+                  </div>
                 </div>
               </motion.div>
             )}
@@ -1662,8 +1960,6 @@ function ClientReviewsSection() {
   const [activeFilter, setActiveFilter] = useState<
     "All" | "Bhutan" | "Darjeeling"
   >("All");
-  const [activeVideo, setActiveVideo] = useState<number | null>(null);
-
   const filtered =
     activeFilter === "All"
       ? CLIENT_REVIEWS
@@ -1739,19 +2035,12 @@ function ClientReviewsSection() {
               data-ocid={`reviews.item.${i + 1}`}
               className="bg-white rounded-2xl border border-sand-dark shadow-card overflow-hidden group hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300"
             >
-              {/* Client Photo Banner */}
-              <div className="relative h-52 overflow-hidden bg-sand">
-                <img
-                  src={review.photo}
-                  alt={`${review.name} at ${review.destination}`}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                {/* Destination badge */}
-                <div className="absolute top-3 left-3">
+              {/* Card Body */}
+              <div className="p-5">
+                {/* Trip label badge */}
+                <div className="mb-3">
                   <span
-                    className={`px-3 py-1 text-xs font-bold rounded-full text-white shadow-md ${
+                    className={`px-3 py-1 text-xs font-bold rounded-full text-white shadow-sm ${
                       review.tag === "Bhutan"
                         ? "bg-amber-600"
                         : "bg-emerald-600"
@@ -1760,25 +2049,6 @@ function ClientReviewsSection() {
                     {review.tripLabel}
                   </span>
                 </div>
-                {/* Video indicator */}
-                {review.hasVideo && (
-                  <div className="absolute top-3 right-3">
-                    <span className="flex items-center gap-1 px-2.5 py-1 bg-coral/90 text-white text-xs font-bold rounded-full shadow-md backdrop-blur-sm">
-                      <Video className="w-3 h-3" />
-                      Video
-                    </span>
-                  </div>
-                )}
-                {/* Client name over photo */}
-                <div className="absolute bottom-3 left-4">
-                  <p className="font-display font-bold text-white text-sm">
-                    {review.name}
-                  </p>
-                </div>
-              </div>
-
-              {/* Card Body */}
-              <div className="p-5">
                 {/* Stars */}
                 <div className="flex gap-1 mb-3">
                   {Array.from({ length: review.rating }, (_, j) => (
@@ -1791,41 +2061,14 @@ function ClientReviewsSection() {
                 </div>
 
                 {/* Review Text */}
-                <p className="text-foreground/75 text-sm leading-relaxed line-clamp-3 mb-4">
+                <p className="text-foreground/75 text-sm leading-relaxed mb-4">
                   "{review.text}"
                 </p>
 
-                {/* Video embed button */}
-                {review.hasVideo && (
-                  <div className="mt-1">
-                    {activeVideo === review.id ? (
-                      <div
-                        className="relative rounded-xl overflow-hidden"
-                        style={{ paddingTop: "56.25%" }}
-                      >
-                        <iframe
-                          src={`${review.videoEmbed}?autoplay=1`}
-                          title={`Review video by ${review.name}`}
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                          className="absolute inset-0 w-full h-full rounded-xl"
-                        />
-                      </div>
-                    ) : (
-                      <button
-                        type="button"
-                        data-ocid={`reviews.video.button.${i + 1}`}
-                        onClick={() => setActiveVideo(review.id)}
-                        className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-coral/10 hover:bg-coral/20 text-coral border border-coral/30 hover:border-coral/60 rounded-xl font-semibold text-sm transition-all duration-200 group/btn"
-                      >
-                        <div className="w-8 h-8 rounded-full bg-coral flex items-center justify-center shrink-0 group-hover/btn:scale-110 transition-transform">
-                          <Play className="w-4 h-4 text-white fill-white ml-0.5" />
-                        </div>
-                        Watch Video Review
-                      </button>
-                    )}
-                  </div>
-                )}
+                {/* Reviewer Name */}
+                <p className="font-display font-bold text-foreground text-sm">
+                  — {review.name}
+                </p>
               </div>
             </motion.div>
           ))}
@@ -1869,6 +2112,95 @@ function ClientReviewsSection() {
 // =============================================
 
 type FormState = "idle" | "loading" | "success" | "error";
+
+function TaxiServiceSection() {
+  const services = [
+    {
+      from: "Jaigaon",
+      to: "Siliguri",
+      icon: "🚗",
+      desc: "Comfortable taxi transfers to Siliguri city — quick and reliable.",
+      duration: "~2.5 hrs",
+    },
+    {
+      from: "Jaigaon",
+      to: "Darjeeling",
+      icon: "🏔️",
+      desc: "Scenic mountain route through the misty hills to Darjeeling hill station.",
+      duration: "~4.5 hrs",
+    },
+    {
+      from: "Jaigaon",
+      to: "Sikkim",
+      icon: "🌄",
+      desc: "Gateway transfers to Gangtok and Sikkim — comfortably and safely.",
+      duration: "~5.5 hrs",
+    },
+  ];
+
+  return (
+    <section className="py-20 bg-gradient-to-br from-amber-50 to-orange-50">
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="text-center mb-12">
+          <span className="inline-block px-4 py-1 bg-amber-100 text-amber-800 rounded-full text-sm font-semibold mb-4 uppercase tracking-wider">
+            Local Transfers
+          </span>
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            Taxi Service
+          </h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Comfortable &amp; Reliable Local Transfers — Book comfortable taxi
+            service from Jaigaon for all your local travel needs.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+          {services.map((svc) => (
+            <div
+              key={svc.to}
+              className="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-shadow border border-amber-100"
+            >
+              <div className="text-4xl mb-4">{svc.icon}</div>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-sm font-semibold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full">
+                  {svc.from}
+                </span>
+                <span className="text-gray-400">→</span>
+                <span className="text-sm font-semibold text-orange-700 bg-orange-50 px-2 py-0.5 rounded-full">
+                  {svc.to}
+                </span>
+              </div>
+              <p className="text-gray-600 text-sm mb-3">{svc.desc}</p>
+              <div className="flex items-center gap-1 text-xs text-gray-500">
+                <span>⏱</span>
+                <span>{svc.duration}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="text-center">
+          <a
+            href="https://wa.me/917319076862?text=Hi%2C%20I%20need%20taxi%20service%20from%20Jaigaon"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-ocid="taxi.whatsapp_button"
+            className="inline-flex items-center gap-3 bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-8 rounded-full text-lg shadow-lg hover:shadow-xl transition-all"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="w-6 h-6"
+              aria-label="WhatsApp"
+              role="img"
+            >
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+            </svg>
+            Book Taxi via WhatsApp
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 function ContactSection() {
   const { actor } = useActor();
@@ -2407,6 +2739,7 @@ export default function App() {
         <DealsSection />
         <TestimonialsSection />
         <ClientReviewsSection />
+        <TaxiServiceSection />
         <ContactSection />
       </main>
       <Footer />
