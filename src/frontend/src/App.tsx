@@ -1036,12 +1036,6 @@ export default function App() {
                             key={day.day}
                             className="border-l-2 border-gold pl-3"
                           >
-                            <img
-                              src={`${day.photo}?w=400&q=80`}
-                              alt={day.title}
-                              className="w-full h-24 object-cover rounded-lg mb-2"
-                              loading="lazy"
-                            />
                             <div className="flex items-center gap-2 mb-1">
                               <span className="text-xs bg-gold/20 text-gold-dark font-bold px-2 py-0.5 rounded-full">
                                 {day.day}
