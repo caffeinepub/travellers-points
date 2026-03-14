@@ -29,7 +29,7 @@ import { useEffect, useState } from "react";
 
 // ─── Data ──────────────────────────────────────────────────────────────────────
 
-const WHATSAPP = "917319076862";
+const WHATSAPP = "917719264029";
 
 function waLink(msg: string) {
   return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
@@ -54,7 +54,7 @@ interface TourPackage {
   priceNote: string;
   pickup: string;
   highlight: string;
-  itinerary: { day: string; title: string; details: string }[];
+  itinerary: { day: string; title: string; details: string; photo: string }[];
 }
 
 const PACKAGES: TourPackage[] = [
@@ -73,42 +73,56 @@ const PACKAGES: TourPackage[] = [
         title: "Pickup → Phuentsholing",
         details:
           "Pickup from Bagdogra Airport or NJP Station → drive to Phuentsholing. Check-in, local sightseeing: Zangto Pelri Lhakhang, Karbandi Monastery. Overnight stay.",
+        photo:
+          "https://images.unsplash.com/photo-1553856622-d1b352e9a211?w=600&q=80",
       },
       {
         day: "Day 2",
         title: "Phuentsholing → Thimphu",
         details:
           "Drive to Thimphu (capital city). Visit Buddha Dordenma Statue, Takin Preserve, Memorial Chorten, Changangkha Lhakhang, Folk Heritage Museum. Overnight stay in Thimphu.",
+        photo:
+          "https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?w=600&q=80",
       },
       {
         day: "Day 3",
         title: "Thimphu Sightseeing",
         details:
           "Visit Dochula Pass (108 chortens & Himalayan views), National Museum, Tashichho Dzong, Simply Bhutan Museum. Evening: local market. Overnight stay in Thimphu.",
+        photo:
+          "https://images.unsplash.com/photo-1551918120-9739cb430c6d?w=600&q=80",
       },
       {
         day: "Day 4",
         title: "Thimphu → Punakha",
         details:
           "Drive to Punakha valley. Visit Punakha Dzong (historical fortress), Chimi Lhakhang Fertility Temple, Suspension Bridge, Mo Chhu River. Overnight stay in Punakha.",
+        photo:
+          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
       },
       {
         day: "Day 5",
         title: "Punakha → Paro",
         details:
           "Drive to Paro. Visit Rinpung Dzong, National Museum of Paro, Paro Town Market. Evening stroll along Paro Chhu river. Overnight stay in Paro.",
+        photo:
+          "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80",
       },
       {
         day: "Day 6",
         title: "Tiger's Nest Hike",
         details:
           "Early morning hike to Taktsang Palphug Monastery (Tiger's Nest) – one of Bhutan's most iconic sites. Also visit Drukgyel Dzong ruins, Kyichu Lhakhang. Overnight stay in Paro.",
+        photo:
+          "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600&q=80",
       },
       {
         day: "Day 7",
         title: "Paro → Drop",
         details:
           "After breakfast, drive back to the border. Drop at Bagdogra Airport or NJP Station. Tour ends with wonderful memories.",
+        photo:
+          "https://images.unsplash.com/photo-1488085061387-422e29b40080?w=600&q=80",
       },
     ],
   },
@@ -127,42 +141,56 @@ const PACKAGES: TourPackage[] = [
         title: "Pickup → Phuentsholing",
         details:
           "Private pickup from Bagdogra Airport or NJP Station → drive to Phuentsholing. Check-in, local sightseeing: Zangto Pelri Lhakhang, Karbandi Monastery. Overnight stay.",
+        photo:
+          "https://images.unsplash.com/photo-1553856622-d1b352e9a211?w=600&q=80",
       },
       {
         day: "Day 2",
         title: "Phuentsholing → Thimphu",
         details:
-          "Private drive to Thimphu. Visit Buddha Dordenma Statue, Takin Preserve, Memorial Chorten, Changangkha Lhakhang, Folk Heritage Museum. Overnight stay in Thimphu.",
+          "Drive to Thimphu (capital city). Visit Buddha Dordenma Statue, Takin Preserve, Memorial Chorten, Changangkha Lhakhang, Folk Heritage Museum. Overnight stay in Thimphu.",
+        photo:
+          "https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?w=600&q=80",
       },
       {
         day: "Day 3",
         title: "Thimphu Sightseeing",
         details:
-          "Visit Dochula Pass (108 chortens), National Museum, Tashichho Dzong, Simply Bhutan Museum. Flexible itinerary as per your schedule. Overnight stay in Thimphu.",
+          "Visit Dochula Pass (108 chortens & Himalayan views), National Museum, Tashichho Dzong, Simply Bhutan Museum. Evening: local market. Overnight stay in Thimphu.",
+        photo:
+          "https://images.unsplash.com/photo-1551918120-9739cb430c6d?w=600&q=80",
       },
       {
         day: "Day 4",
         title: "Thimphu → Punakha",
         details:
-          "Private drive to Punakha. Visit Punakha Dzong, Chimi Lhakhang Fertility Temple, Suspension Bridge, Mo Chhu River. Overnight stay in Punakha.",
+          "Drive to Punakha valley. Visit Punakha Dzong (historical fortress), Chimi Lhakhang Fertility Temple, Suspension Bridge, Mo Chhu River. Overnight stay in Punakha.",
+        photo:
+          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
       },
       {
         day: "Day 5",
         title: "Punakha → Paro",
         details:
-          "Private drive to Paro. Visit Rinpung Dzong, National Museum, Paro Town Market. Overnight stay in Paro.",
+          "Drive to Paro. Visit Rinpung Dzong, National Museum of Paro, Paro Town Market. Evening stroll along Paro Chhu river. Overnight stay in Paro.",
+        photo:
+          "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80",
       },
       {
         day: "Day 6",
         title: "Tiger's Nest Hike",
         details:
-          "Hike to Taktsang Palphug Monastery (Tiger's Nest). Visit Drukgyel Dzong ruins, Kyichu Lhakhang. Personalized pace. Overnight stay in Paro.",
+          "Early morning hike to Taktsang Palphug Monastery (Tiger's Nest) – one of Bhutan's most iconic sites. Also visit Drukgyel Dzong ruins, Kyichu Lhakhang. Overnight stay in Paro.",
+        photo:
+          "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600&q=80",
       },
       {
         day: "Day 7",
         title: "Paro → Drop",
         details:
-          "After breakfast, private vehicle drop at Bagdogra Airport or NJP Station. Tour concludes with exceptional memories.",
+          "After breakfast, drive back to the border. Drop at Bagdogra Airport or NJP Station. Tour ends with wonderful memories.",
+        photo:
+          "https://images.unsplash.com/photo-1488085061387-422e29b40080?w=600&q=80",
       },
     ],
   },
@@ -178,33 +206,43 @@ const PACKAGES: TourPackage[] = [
     itinerary: [
       {
         day: "Day 1",
-        title: "Arrival at Darjeeling",
+        title: "NJP → Darjeeling",
         details:
-          "Pickup from NJP Station or Bagdogra Airport. Drive to Darjeeling through scenic mountain roads. Check-in and evening leisure. Overnight stay.",
+          "Pickup from NJP Station or Bagdogra Airport. Drive to Darjeeling, check-in. Evening visit to Mall Road and Chowrasta. Overnight stay.",
+        photo:
+          "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&q=80",
       },
       {
         day: "Day 2",
         title: "Tiger Hill & Monasteries",
         details:
-          "Early morning (4am) visit to Tiger Hill for stunning Kanchenjunga & Everest sunrise. Visit Batasia Loop, Ghoom Monastery (oldest in Darjeeling), Peace Pagoda. Overnight stay.",
+          "Early morning (4 AM) drive to Tiger Hill for sunrise over Kanchenjunga. Visit Ghoom Monastery (oldest Buddhist monastery), Batasia Loop (spiral railway track), Peace Pagoda. Overnight stay.",
+        photo:
+          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
       },
       {
         day: "Day 3",
-        title: "Tea Gardens & Attractions",
+        title: "Tea Gardens & Zoo",
         details:
-          "Visit Happy Valley Tea Estate, Himalayan Mountaineering Institute, Padmaja Naidu Zoological Park, Ropeway ride for aerial views. Overnight stay.",
+          "Visit Happy Valley Tea Estate (tour & tasting), Himalayan Mountaineering Institute & Padmaja Naidu Himalayan Zoo (snow leopards, red pandas), Tenzing Rock. Overnight stay.",
+        photo:
+          "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       },
       {
         day: "Day 4",
-        title: "Rock Garden & Shopping",
+        title: "Mirik & Toy Train",
         details:
-          "Visit Rock Garden (beautiful waterfalls & rock formations), Ganga Maya Park, Chowrasta Mall Road. Local market shopping. Overnight stay.",
+          "Day trip to Mirik (serene lake & orange orchards). Return for a joyride on the famous Darjeeling Himalayan Railway Toy Train (UNESCO Heritage). Overnight stay.",
+        photo:
+          "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80",
       },
       {
         day: "Day 5",
         title: "Departure",
         details:
           "After breakfast, checkout and drive back to NJP Station or Bagdogra Airport. Tour ends.",
+        photo:
+          "https://images.unsplash.com/photo-1488085061387-422e29b40080?w=600&q=80",
       },
     ],
   },
@@ -223,36 +261,48 @@ const PACKAGES: TourPackage[] = [
         title: "NJP → Gangtok",
         details:
           "Pickup from NJP Station or Bagdogra Airport. Drive to Gangtok, the capital of Sikkim. Check-in and evening visit to MG Marg. Overnight stay.",
+        photo:
+          "https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?w=600&q=80",
       },
       {
         day: "Day 2",
         title: "Tsomgo & Nathula",
         details:
           "Visit Tsomgo Lake (glacial lake at 12,400 ft), Baba Mandir (soldier shrine), Nathula Pass (India-China border, permit required). Overnight stay in Gangtok.",
+        photo:
+          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
       },
       {
         day: "Day 3",
         title: "Gangtok Monasteries",
         details:
           "Visit Rumtek Monastery (largest in Sikkim), Enchey Monastery, Do-Drul Chorten stupa. Evening: Lal Bazaar shopping. Overnight stay.",
+        photo:
+          "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&q=80",
       },
       {
         day: "Day 4",
         title: "Gangtok → Pelling",
         details:
           "Drive to Pelling. Visit Rabdentse Ruins (ancient Sikkim capital), Pemayangtse Monastery (one of the oldest in Sikkim). Overnight stay in Pelling.",
+        photo:
+          "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80",
       },
       {
         day: "Day 5",
         title: "Khecheopalri & Singshore",
         details:
           "Visit Khecheopalri Lake (sacred wish-fulfilling lake), Singshore Bridge (highest bridge in Sikkim, 98m). Overnight stay in Pelling.",
+        photo:
+          "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80",
       },
       {
         day: "Day 6",
         title: "Pelling → NJP",
         details:
           "After breakfast, drive back to NJP Station or Bagdogra Airport. Tour concludes.",
+        photo:
+          "https://images.unsplash.com/photo-1488085061387-422e29b40080?w=600&q=80",
       },
     ],
   },
@@ -271,36 +321,48 @@ const PACKAGES: TourPackage[] = [
         title: "Arrival Kathmandu",
         details:
           "Arrival at Kathmandu. Transfer to hotel. Evening visit to Thamel market. Welcome dinner. Overnight stay.",
+        photo:
+          "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&q=80",
       },
       {
         day: "Day 2",
         title: "Kathmandu Temples",
         details:
           "Visit Pashupatinath Temple (sacred Hindu temple on Bagmati River), Boudhanath Stupa (largest stupa in Asia), Swayambhunath aka Monkey Temple. Overnight stay.",
+        photo:
+          "https://images.unsplash.com/photo-1469521669194-babb45599def?w=600&q=80",
       },
       {
         day: "Day 3",
         title: "Durbar Squares",
         details:
           "Visit Patan Durbar Square (UNESCO World Heritage Site with ancient palaces), Bhaktapur Durbar Square (medieval city of devotees). Overnight stay in Kathmandu.",
+        photo:
+          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
       },
       {
         day: "Day 4",
         title: "Kathmandu → Pokhara",
         details:
           "Drive or fly to Pokhara (7 hours by road). Arrive and visit Fewa Lake (boating optional), Davis Falls, Gupteshwor Cave. Overnight stay in Pokhara.",
+        photo:
+          "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80",
       },
       {
         day: "Day 5",
         title: "Pokhara Sightseeing",
         details:
           "Early morning Sarangkot sunrise viewpoint (Annapurna range). Phewa Lake boating, World Peace Pagoda (Japanese pagoda). Evening in Lakeside market. Overnight stay.",
+        photo:
+          "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80",
       },
       {
         day: "Day 6",
         title: "Departure",
         details:
           "Morning leisure. Transfer to airport or bus station for return journey. Tour ends.",
+        photo:
+          "https://images.unsplash.com/photo-1488085061387-422e29b40080?w=600&q=80",
       },
     ],
   },
@@ -319,36 +381,48 @@ const PACKAGES: TourPackage[] = [
         title: "Delhi/Chandigarh → Manali",
         details:
           "Overnight journey from Delhi or Chandigarh to Manali by Volvo bus or private vehicle. Arrive and check-in. Evening rest.",
+        photo:
+          "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&q=80",
       },
       {
         day: "Day 2",
         title: "Rohtang Pass & Solang Valley",
         details:
           "Early morning excursion to Rohtang Pass (13,050 ft) – snow activities, paragliding. Visit Solang Valley for skiing/zorbing. Overnight stay.",
+        photo:
+          "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80",
       },
       {
         day: "Day 3",
         title: "Manali Local Sightseeing",
         details:
           "Visit Hadimba Temple (iconic wooden temple), Manu Temple, Old Manali village, Club House (river-side activities), Vashisht Hot Springs. Overnight stay.",
+        photo:
+          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
       },
       {
         day: "Day 4",
         title: "Naggar & Bijli Mahadev",
         details:
           "Visit Naggar Castle (heritage hotel & museum), Roerich Art Gallery (famous Russian painter's home), Bijli Mahadev Temple (sacred high-altitude temple, 2-km trek). Overnight stay.",
+        photo:
+          "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80",
       },
       {
         day: "Day 5",
         title: "Adventure & Shopping",
         details:
           "River rafting on Beas River, local handicraft shopping, Mall Road Manali. Farewell dinner. Overnight stay.",
+        photo:
+          "https://images.unsplash.com/photo-1488085061387-422e29b40080?w=600&q=80",
       },
       {
         day: "Day 6",
         title: "Departure",
         details:
           "After breakfast, departure from Manali. Drive back to Delhi or Chandigarh. Tour ends.",
+        photo:
+          "https://images.unsplash.com/photo-1488085061387-422e29b40080?w=600&q=80",
       },
     ],
   },
@@ -367,30 +441,40 @@ const PACKAGES: TourPackage[] = [
         title: "Delhi/Chandigarh → Shimla",
         details:
           "Depart from Delhi or Chandigarh. Arrive Shimla, check-in. Evening walk on Mall Road. Overnight stay.",
+        photo:
+          "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80",
       },
       {
         day: "Day 2",
         title: "Kufri & Chail",
         details:
           "Day trip to Kufri (snow activities, Himalayan wildlife park), Fagu viewpoint, Green Valley, Chail (world's highest cricket ground). Overnight stay in Shimla.",
+        photo:
+          "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80",
       },
       {
         day: "Day 3",
         title: "Shimla City Tour",
         details:
           "Visit The Ridge (open air space with Himalayan panorama), Mall Road shopping, Christ Church (neo-Gothic architecture), Jakhu Temple (ancient Hanuman temple, 2.5 km trek). Overnight stay.",
+        photo:
+          "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&q=80",
       },
       {
         day: "Day 4",
         title: "Mashobra & Tattapani",
         details:
           "Visit Mashobra village (apple orchards), Naldehra Golf Course (one of the oldest in India), Tattapani (hot sulphur springs). Overnight stay.",
+        photo:
+          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
       },
       {
         day: "Day 5",
         title: "Departure",
         details:
           "After breakfast, checkout. Drive back to Delhi or Chandigarh. Tour concludes.",
+        photo:
+          "https://images.unsplash.com/photo-1488085061387-422e29b40080?w=600&q=80",
       },
     ],
   },
@@ -409,42 +493,56 @@ const PACKAGES: TourPackage[] = [
         title: "Srinagar Arrival",
         details:
           "Arrival at Srinagar Airport. Transfer to houseboat on Dal Lake. Evening Shikara ride on Dal Lake. Overnight stay on houseboat.",
+        photo:
+          "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
       },
       {
         day: "Day 2",
         title: "Gulmarg",
         details:
           "Day excursion to Gulmarg (Meadow of Flowers). Gondola ride (Phase 1 & 2) up to 14,000 ft. Snow activities, skiing. Return to Srinagar. Overnight stay.",
+        photo:
+          "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80",
       },
       {
         day: "Day 3",
         title: "Pahalgam",
         details:
           "Day trip to Pahalgam (Valley of Shepherds). Visit Betaab Valley (Bollywood filming location), Chandanwari, Aru Valley. River-side picnic. Return to Srinagar. Overnight stay.",
+        photo:
+          "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80",
       },
       {
         day: "Day 4",
         title: "Srinagar Local",
         details:
           "Visit Shankaracharya Temple (hilltop Hindu shrine), Mughal Gardens (Nishat, Shalimar, Chashme Shahi), local market for Pashmina shawls & dry fruits. Overnight stay.",
+        photo:
+          "https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?w=600&q=80",
       },
       {
         day: "Day 5",
         title: "Sonmarg",
         details:
           "Day excursion to Sonmarg (Meadow of Gold). Visit Thajiwas Glacier (accessible by pony/trek). Panoramic Himalayan views. Return to Srinagar. Overnight stay.",
+        photo:
+          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
       },
       {
         day: "Day 6",
         title: "Srinagar → Jammu",
         details:
           "Drive from Srinagar to Jammu via scenic Banihal Pass. Enroute stop at Vaishno Devi (optional). Overnight stay in Jammu.",
+        photo:
+          "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&q=80",
       },
       {
         day: "Day 7",
         title: "Departure",
         details:
           "After breakfast, transfer to Jammu Airport/Railway Station. Tour concludes.",
+        photo:
+          "https://images.unsplash.com/photo-1488085061387-422e29b40080?w=600&q=80",
       },
     ],
   },
@@ -463,18 +561,24 @@ const PACKAGES: TourPackage[] = [
         title: "Arrival at Mathura",
         details:
           "Arrive at Mathura. Check-in at hotel. Visit Krishna Janmabhoomi (birthplace of Lord Krishna), Dwarkadhish Temple, Vishram Ghat (evening aarti on Yamuna river). Overnight stay.",
+        photo:
+          "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&q=80",
       },
       {
         day: "Day 2",
         title: "Vrindavan",
         details:
           "Full day in Vrindavan (land of Lord Krishna). Visit ISKCON Temple (world-famous, grand architecture), Banke Bihari Temple, Prem Mandir (illuminated at night), Govardhan Hill (parikrama route). Overnight stay.",
+        photo:
+          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
       },
       {
         day: "Day 3",
         title: "Barsana → Departure",
         details:
           "Morning visit to Barsana, birthplace of Radha Rani. Visit Radha Rani Temple (hilltop temple). Return to Mathura. Tour ends with divine blessings.",
+        photo:
+          "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80",
       },
     ],
   },
@@ -515,34 +619,34 @@ const SERVICES = [
   {
     id: "flights",
     icon: Plane,
-    title: "Flight Bookings",
-    short: "Best fares for domestic & international flights",
+    title: "Flight Booking",
+    short: "Domestic & international flight reservations at best prices.",
     details:
-      "We help you book domestic and international flights at competitive rates. Our team searches multiple airlines to find you the best price and schedule. From Bagdogra to any destination — we handle everything.",
+      "We assist with domestic and international flight bookings for all major airlines. Get competitive fares, flexible dates, and seat preferences. We handle group bookings, last-minute tickets, and special assistance requests.",
   },
   {
     id: "hotels",
     icon: Hotel,
-    title: "Hotel Bookings",
-    short: "Budget to luxury stay options at every destination",
+    title: "Hotel Booking",
+    short: "Comfortable stays at budget to luxury properties.",
     details:
-      "From budget guesthouses to luxury resorts, we book accommodations across all our tour destinations. We ensure comfortable, clean, and well-located stays for every budget and preference.",
+      "From budget guesthouses to luxury resorts, we book accommodations across all our tour destinations. Options include government-approved hotels, heritage properties, home-stays, and eco-lodges.",
   },
   {
     id: "packages",
     icon: PackageIcon,
-    title: "Custom Tour Packages",
-    short: "Tailored group & private tour experiences",
+    title: "Tour Packages",
+    short: "All-inclusive packages with transport, stay & sightseeing.",
     details:
-      "Can't find a package that fits? We create fully customized group and private tour packages to match your schedule, budget, and preferences. Tell us where you want to go and we'll design your perfect trip.",
+      "Our tour packages include transportation, accommodation, meals (as specified), sightseeing, and local guides. We offer both group and private tours with customisation options for families, honeymooners, and corporate groups.",
   },
   {
     id: "insurance",
     icon: Shield,
     title: "Travel Insurance",
-    short: "Travel protection for international & domestic trips",
+    short: "Comprehensive travel cover for worry-free journeys.",
     details:
-      "We assist with travel insurance for both international and domestic tours. Travel with peace of mind knowing you're covered for medical emergencies, trip cancellations, and lost baggage.",
+      "We provide travel insurance covering medical emergencies, trip cancellation, baggage loss, and flight delays. Coverage available for domestic and international travel with 24/7 assistance helpline.",
   },
 ];
 
@@ -572,7 +676,7 @@ const TAGLINES = [
   "Your Dream Journey Begins With Us",
   "Where Every Trip Becomes a Timeless Memory",
   "Explore the Himalayas, Discover Yourself",
-  "From Jaigaon to the World — We Take You There",
+  "From Your Dream to the World — We Take You There",
 ];
 
 function HeroTagline() {
@@ -664,7 +768,7 @@ export default function App() {
       {/* ── Navbar ── */}
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled ? "bg-navy shadow-luxury" : "bg-navy/95"
+          scrolled ? "bg-orange-600 shadow-md" : "bg-orange-600/95"
         }`}
       >
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -683,7 +787,7 @@ export default function App() {
                   (e.target as HTMLImageElement).style.display = "none";
                 }}
               />
-              <span className="text-cream font-display text-lg font-bold leading-tight hidden sm:block">
+              <span className="text-white font-display text-lg font-bold leading-tight hidden sm:block">
                 Travellers Points
               </span>
             </a>
@@ -694,7 +798,7 @@ export default function App() {
                 <a
                   key={link.href}
                   href={link.href}
-                  className="text-cream/90 hover:text-gold transition-colors duration-200 font-medium text-sm"
+                  className="text-white/90 hover:text-white transition-colors duration-200 font-medium text-sm"
                   data-ocid="nav.link"
                 >
                   {link.label}
@@ -715,7 +819,7 @@ export default function App() {
 
             {/* Mobile menu button */}
             <button
-              className="md:hidden text-cream p-2 rounded-md"
+              className="md:hidden text-white p-2 rounded-md"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               type="button"
               aria-label="Toggle menu"
@@ -731,13 +835,13 @@ export default function App() {
 
           {/* Mobile Menu */}
           {mobileMenuOpen && (
-            <div className="md:hidden pb-4 border-t border-navy-light/30">
+            <div className="md:hidden pb-4 border-t border-white/20">
               <div className="flex flex-col gap-2 pt-3">
                 {navLinks.map((link) => (
                   <a
                     key={link.href}
                     href={link.href}
-                    className="text-cream/90 hover:text-gold px-2 py-2 font-medium transition-colors"
+                    className="text-white/90 hover:text-white px-2 py-2 font-medium transition-colors"
                     onClick={() => setMobileMenuOpen(false)}
                     data-ocid="nav.link"
                   >
@@ -822,43 +926,28 @@ export default function App() {
                 className="btn-gold text-base px-8 py-4"
                 data-ocid="hero.primary_button"
               >
-                <PackageIcon className="w-5 h-5" /> View Packages
+                Explore Packages
               </a>
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-6 mt-16 max-w-lg mx-auto">
+            <div className="mt-16 grid grid-cols-3 gap-4 max-w-lg mx-auto">
               {[
-                { label: "Tour Packages", value: "9+" },
-                { label: "Happy Clients", value: "500+" },
-                { label: "Destinations", value: "8+" },
+                { value: "500+", label: "Happy Travellers" },
+                { value: "9", label: "Destinations" },
+                { value: "10+", label: "Years Experience" },
               ].map((stat) => (
-                <div key={stat.label} className="text-center">
-                  <div className="text-gold font-display text-3xl font-bold">
+                <div
+                  key={stat.label}
+                  className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-4 py-3"
+                >
+                  <div className="text-2xl font-display font-bold text-gold">
                     {stat.value}
                   </div>
-                  <div className="text-white/80 text-sm mt-1">{stat.label}</div>
+                  <div className="text-white/80 text-xs">{stat.label}</div>
                 </div>
               ))}
             </div>
-          </div>
-
-          {/* Slide dot indicators */}
-          <div className="absolute bottom-16 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-            {HERO_SLIDES.map((slide, i) => (
-              <button
-                key={slide.label}
-                type="button"
-                onClick={() => setHeroSlide(i)}
-                className={`rounded-full transition-all duration-300 ${
-                  i === heroSlide
-                    ? "bg-gold w-8 h-3"
-                    : "bg-white/50 w-3 h-3 hover:bg-white/80"
-                }`}
-                aria-label={`Go to slide ${slide.label}`}
-                data-ocid="hero.toggle"
-              />
-            ))}
           </div>
 
           {/* Scroll indicator */}
@@ -885,11 +974,11 @@ export default function App() {
               {PACKAGES.map((pkg, idx) => (
                 <div
                   key={pkg.id}
-                  className="bg-white rounded-2xl shadow-card overflow-hidden card-hover flex flex-col"
+                  className="bg-orange-50 rounded-2xl shadow-card overflow-hidden card-hover flex flex-col"
                   data-ocid={`packages.item.${idx + 1}`}
                 >
                   {/* Card Header */}
-                  <div className="bg-gradient-to-br from-navy to-navy-light p-6">
+                  <div className="bg-gradient-to-br from-amber-600 to-amber-700 p-6">
                     <div className="flex items-start justify-between gap-2 mb-3">
                       <Badge className="bg-gold text-white text-xs font-semibold border-0">
                         {pkg.destination}
@@ -909,7 +998,7 @@ export default function App() {
                   <div className="p-5 flex flex-col flex-1">
                     <div className="flex items-center justify-between mb-4">
                       <div>
-                        <span className="text-2xl font-display font-bold text-navy">
+                        <span className="text-2xl font-display font-bold text-charcoal">
                           {pkg.price}
                         </span>
                         <span className="text-slate-600 text-sm ml-1">
@@ -928,7 +1017,7 @@ export default function App() {
                     <button
                       type="button"
                       onClick={() => toggleItinerary(pkg.id)}
-                      className="w-full flex items-center justify-between text-sm font-semibold text-navy border border-navy/20 rounded-lg px-4 py-2.5 hover:bg-navy/5 transition-colors mb-4"
+                      className="w-full flex items-center justify-between text-sm font-semibold text-charcoal border border-charcoal/20 rounded-lg px-4 py-2.5 hover:bg-charcoal/5 transition-colors mb-4"
                       data-ocid={`packages.item.${idx + 1}.toggle`}
                     >
                       <span>View Itinerary</span>
@@ -941,12 +1030,18 @@ export default function App() {
 
                     {/* Itinerary Details */}
                     {expandedPackage === pkg.id && (
-                      <div className="mb-4 space-y-3 max-h-72 overflow-y-auto pr-1">
+                      <div className="mb-4 space-y-3 max-h-96 overflow-y-auto pr-1">
                         {pkg.itinerary.map((day) => (
                           <div
                             key={day.day}
                             className="border-l-2 border-gold pl-3"
                           >
+                            <img
+                              src={`${day.photo}?w=400&q=80`}
+                              alt={day.title}
+                              className="w-full h-24 object-cover rounded-lg mb-2"
+                              loading="lazy"
+                            />
                             <div className="flex items-center gap-2 mb-1">
                               <span className="text-xs bg-gold/20 text-gold-dark font-bold px-2 py-0.5 rounded-full">
                                 {day.day}
@@ -1010,16 +1105,16 @@ export default function App() {
               {TAXI_ROUTES.map((route, idx) => (
                 <div
                   key={route.to}
-                  className="bg-white rounded-2xl shadow-card p-6 text-center card-hover"
+                  className="bg-orange-50 rounded-2xl shadow-card p-6 text-center card-hover"
                   data-ocid={`taxi.item.${idx + 1}`}
                 >
-                  <div className="w-14 h-14 bg-navy/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Car className="w-7 h-7 text-navy" />
+                  <div className="w-14 h-14 bg-charcoal/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Car className="w-7 h-7 text-charcoal" />
                   </div>
                   <div className="text-sm text-slate-600 mb-1">
                     From {route.from}
                   </div>
-                  <h3 className="font-display text-xl font-bold text-navy mb-2">
+                  <h3 className="font-display text-xl font-bold text-charcoal mb-2">
                     → {route.to}
                   </h3>
                   <div className="flex items-center justify-center gap-2 text-sm text-slate-600 mb-1">
@@ -1062,17 +1157,17 @@ export default function App() {
                   key={svc.id}
                   type="button"
                   onClick={() => setServiceModal(svc.id)}
-                  className="bg-white rounded-2xl shadow-card p-6 text-left card-hover group focus:outline-none focus:ring-2 focus:ring-navy/40"
+                  className="bg-orange-50 rounded-2xl shadow-card p-6 text-left card-hover group focus:outline-none focus:ring-2 focus:ring-charcoal/40"
                   data-ocid={`services.item.${idx + 1}.button`}
                 >
-                  <div className="w-14 h-14 bg-navy/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-navy group-hover:text-cream transition-colors">
-                    <svc.icon className="w-7 h-7 text-navy group-hover:text-cream transition-colors" />
+                  <div className="w-14 h-14 bg-charcoal/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-charcoal group-hover:text-white transition-colors">
+                    <svc.icon className="w-7 h-7 text-charcoal group-hover:text-white transition-colors" />
                   </div>
                   <h3 className="font-display text-lg font-bold text-charcoal mb-2">
                     {svc.title}
                   </h3>
                   <p className="text-sm text-slate-600">{svc.short}</p>
-                  <div className="mt-4 text-xs font-semibold text-navy flex items-center gap-1">
+                  <div className="mt-4 text-xs font-semibold text-charcoal flex items-center gap-1">
                     Click for details{" "}
                     <ChevronDown className="w-3 h-3 rotate-[-90deg]" />
                   </div>
@@ -1092,8 +1187,8 @@ export default function App() {
               <>
                 <DialogHeader>
                   <DialogTitle className="font-display text-xl flex items-center gap-3">
-                    <div className="w-10 h-10 bg-navy/10 rounded-lg flex items-center justify-center">
-                      <activeService.icon className="w-5 h-5 text-navy" />
+                    <div className="w-10 h-10 bg-charcoal/10 rounded-lg flex items-center justify-center">
+                      <activeService.icon className="w-5 h-5 text-charcoal" />
                     </div>
                     {activeService.title}
                   </DialogTitle>
@@ -1127,7 +1222,7 @@ export default function App() {
         </Dialog>
 
         {/* ── Reviews ── */}
-        <section id="reviews" className="py-20 bg-navy">
+        <section id="reviews" className="py-20 bg-charcoal">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-14">
               <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-3">
@@ -1186,13 +1281,13 @@ export default function App() {
               {/* Info */}
               <div className="space-y-8">
                 <div>
-                  <h3 className="font-display text-2xl font-bold text-navy mb-6">
+                  <h3 className="font-display text-2xl font-bold text-charcoal mb-6">
                     Get in Touch
                   </h3>
                   <div className="space-y-5">
                     <div className="flex items-start gap-4">
-                      <div className="w-11 h-11 bg-navy/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                        <MapPin className="w-5 h-5 text-navy" />
+                      <div className="w-11 h-11 bg-charcoal/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <MapPin className="w-5 h-5 text-charcoal" />
                       </div>
                       <div>
                         <div className="font-semibold text-charcoal">
@@ -1204,8 +1299,8 @@ export default function App() {
                       </div>
                     </div>
                     <div className="flex items-start gap-4">
-                      <div className="w-11 h-11 bg-navy/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                        <Phone className="w-5 h-5 text-navy" />
+                      <div className="w-11 h-11 bg-charcoal/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                        <Phone className="w-5 h-5 text-charcoal" />
                       </div>
                       <div>
                         <div className="font-semibold text-charcoal">
@@ -1215,16 +1310,16 @@ export default function App() {
                           href={waLink("Hi Travellers Points!")}
                           target="_blank"
                           rel="noreferrer"
-                          className="text-navy hover:text-gold transition-colors text-sm font-medium"
+                          className="text-charcoal hover:text-gold transition-colors text-sm font-medium"
                         >
-                          +91 7319076862
+                          +91 7719264029
                         </a>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-navy rounded-2xl p-6 text-white">
+                <div className="bg-charcoal rounded-2xl p-6 text-white">
                   <h4 className="font-display text-lg font-bold mb-2 text-white">
                     Quick WhatsApp Enquiry
                   </h4>
@@ -1248,7 +1343,7 @@ export default function App() {
               {/* Form */}
               <form
                 onSubmit={handleFormSubmit}
-                className="bg-white rounded-2xl shadow-card p-8 space-y-5"
+                className="bg-orange-50 rounded-2xl shadow-card p-8 space-y-5"
               >
                 <h3 className="font-display text-xl font-bold text-charcoal">
                   Send a Message
@@ -1268,7 +1363,7 @@ export default function App() {
                     }
                     placeholder="Full name"
                     required
-                    className="border-border focus:ring-navy"
+                    className="border-border focus:ring-charcoal"
                     data-ocid="contact.input"
                   />
                 </div>
@@ -1288,7 +1383,7 @@ export default function App() {
                     }
                     placeholder="your@email.com"
                     required
-                    className="border-border focus:ring-navy"
+                    className="border-border focus:ring-charcoal"
                     data-ocid="contact.input"
                   />
                 </div>
@@ -1308,13 +1403,13 @@ export default function App() {
                     placeholder="Tell us about your travel plans..."
                     required
                     rows={4}
-                    className="border-border focus:ring-navy resize-none"
+                    className="border-border focus:ring-charcoal resize-none"
                     data-ocid="contact.textarea"
                   />
                 </div>
                 <Button
                   type="submit"
-                  className="w-full bg-navy hover:bg-navy-dark text-white py-3"
+                  className="w-full bg-charcoal hover:bg-charcoal/80 text-white py-3"
                   data-ocid="contact.submit_button"
                 >
                   {formSent ? (
@@ -1363,7 +1458,7 @@ export default function App() {
               </div>
               <div className="flex items-center gap-2 text-sm mt-1">
                 <Phone className="w-4 h-4 text-gold" />
-                +91 7319076862
+                +91 7719264029
               </div>
             </div>
 

@@ -42,9 +42,9 @@
     --radius: 0.5rem;
 
     /* Custom tokens */
-    --navy: 0.22 0.07 250;
-    --navy-dark: 0.15 0.06 250;
-    --navy-light: 0.3 0.08 250;
+    --navy: 0.99 0 0;
+    --navy-dark: 0.95 0 0;
+    --navy-light: 0.97 0 0;
     --gold: 0.72 0.14 80;
     --gold-dark: 0.6 0.13 80;
     --gold-light: 0.82 0.12 80;
@@ -79,7 +79,7 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-navy text-cream px-6 py-3 rounded-lg font-semibold transition-all duration-200 hover:bg-navy-dark hover:scale-105 active:scale-95 inline-flex items-center gap-2;
+    @apply bg-charcoal text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 hover:bg-charcoal/80 hover:scale-105 active:scale-95 inline-flex items-center gap-2;
   }
   .btn-gold {
     @apply bg-gold text-charcoal px-6 py-3 rounded-lg font-semibold transition-all duration-200 hover:bg-gold-dark hover:scale-105 active:scale-95 inline-flex items-center gap-2;
@@ -88,7 +88,7 @@
     @apply bg-amber-500 text-white px-5 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200 hover:bg-amber-600 hover:scale-105 active:scale-95 inline-flex items-center gap-2;
   }
   .section-title {
-    @apply text-3xl md:text-4xl font-bold text-navy mb-3;
+    @apply text-3xl md:text-4xl font-bold text-charcoal mb-3;
   }
   .section-subtitle {
     @apply text-muted-foreground text-lg max-w-2xl mx-auto;
