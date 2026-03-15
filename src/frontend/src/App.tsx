@@ -665,11 +665,18 @@ function Hero() {
           key={src}
           className="hero-slide"
           style={{
-            backgroundImage: `url(${src})`,
             opacity: i === current ? 1 : 0,
             zIndex: i === current ? 1 : 0,
           }}
-        />
+        >
+          <img
+            src={src}
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover"
+            loading={i === 0 ? "eager" : "lazy"}
+            aria-hidden="true"
+          />
+        </div>
       ))}
 
       {/* Overlay */}
@@ -1314,13 +1321,20 @@ function PackagesSection() {
       {PKG_BG_IMAGES.map((src, i) => (
         <div
           key={src}
-          className="absolute inset-0 bg-cover bg-center transition-opacity duration-1000"
+          className="absolute inset-0 transition-opacity duration-1000 overflow-hidden"
           style={{
-            backgroundImage: `url(${src})`,
             opacity: i === pkgBg ? 1 : 0,
             zIndex: 0,
           }}
-        />
+        >
+          <img
+            src={src}
+            alt=""
+            className="w-full h-full object-cover"
+            loading="lazy"
+            aria-hidden="true"
+          />
+        </div>
       ))}
       {/* Dark overlay so text & cards remain readable */}
       <div className="absolute inset-0 bg-black/70 z-10" />
