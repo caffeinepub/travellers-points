@@ -2,55 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: "Playfair Display";
-  src: url("/assets/fonts/PlayfairDisplay.woff2") format("woff2");
-  font-weight: 400 800;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "DM Sans";
-  src: url("/assets/fonts/DMSans.woff2") format("woff2");
-  font-weight: 300 700;
-  font-style: normal;
-  font-display: swap;
-}
-
 @layer base {
   :root {
-    --background: 96 12% 97%;
-    --foreground: 220 25% 10%;
-    --card: 0 0% 100%;
-    --card-foreground: 220 25% 10%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 25% 10%;
-    --primary: 220 60% 22%;
-    --primary-foreground: 210 40% 97%;
-    --secondary: 45 80% 48%;
-    --secondary-foreground: 220 25% 10%;
-    --muted: 96 8% 92%;
-    --muted-foreground: 220 10% 40%;
-    --accent: 45 80% 48%;
-    --accent-foreground: 220 25% 10%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 220 10% 85%;
-    --input: 220 10% 85%;
-    --ring: 220 40% 22%;
+    /* Dark luxury theme */
+    --background: 0.13 0.02 250;
+    --foreground: 0.96 0.02 90;
+    --card: 0.18 0.02 250;
+    --card-foreground: 0.96 0.02 90;
+    --popover: 0.2 0.03 250;
+    --popover-foreground: 0.96 0.02 90;
+    --primary: 0.75 0.13 82;
+    --primary-foreground: 0.13 0.02 250;
+    --secondary: 0.24 0.03 250;
+    --secondary-foreground: 0.88 0.03 90;
+    --muted: 0.22 0.03 250;
+    --muted-foreground: 0.65 0.03 90;
+    --accent: 0.75 0.13 82;
+    --accent-foreground: 0.13 0.02 250;
+    --destructive: 0.55 0.22 27;
+    --destructive-foreground: 0.98 0.01 90;
+    --border: 0.28 0.04 250;
+    --input: 0.24 0.03 250;
+    --ring: 0.75 0.13 82;
     --radius: 0.5rem;
-
-    /* Custom tokens */
-    --navy: 0.99 0 0;
-    --navy-dark: 0.95 0 0;
-    --navy-light: 0.97 0 0;
-    --gold: 0.72 0.14 80;
-    --gold-dark: 0.6 0.13 80;
-    --gold-light: 0.82 0.12 80;
-    --cream: 0.97 0.01 96;
-    --cream-dark: 0.93 0.02 96;
-    --charcoal: 0.15 0.02 150;
   }
 }
 
@@ -58,42 +32,116 @@
   * {
     @apply border-border;
   }
-  html {
-    scroll-behavior: smooth;
-  }
   body {
-    @apply bg-cream text-charcoal font-body;
-    font-size: 16px;
-    line-height: 1.6;
+    @apply bg-background text-foreground font-body;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
   h1,
   h2,
   h3,
-  h4,
-  h5,
-  h6 {
+  h4 {
     @apply font-display;
-    line-height: 1.2;
   }
 }
 
-@layer components {
-  .btn-primary {
-    @apply bg-charcoal text-white px-6 py-3 rounded-lg font-semibold transition-all duration-200 hover:bg-charcoal/80 hover:scale-105 active:scale-95 inline-flex items-center gap-2;
+/* Hero carousel */
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: opacity 1.2s ease-in-out;
+}
+
+/* Gold text gradient */
+.text-gold-gradient {
+  background: linear-gradient(
+    135deg,
+    oklch(0.85 0.12 82),
+    oklch(0.75 0.13 82),
+    oklch(0.65 0.14 82)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Card hover effect */
+.package-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.package-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.6), 0 0 40px
+    rgba(212, 175, 55, 0.15);
+}
+
+/* Nav link hover */
+.nav-link {
+  position: relative;
+  @apply text-cream-dark transition-colors duration-200;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: oklch(0.75 0.13 82);
+  transition: width 0.3s ease;
+}
+.nav-link:hover {
+  @apply text-gold;
+}
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Section divider */
+.gold-divider {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, oklch(0.75 0.13 82), oklch(0.85 0.1 82));
+  margin: 0 auto;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: oklch(0.13 0.02 250);
+}
+::-webkit-scrollbar-thumb {
+  background: oklch(0.75 0.13 82 / 0.5);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.75 0.13 82 / 0.8);
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* WhatsApp float pulse */
+@keyframes wa-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4);
   }
-  .btn-gold {
-    @apply bg-gold text-charcoal px-6 py-3 rounded-lg font-semibold transition-all duration-200 hover:bg-gold-dark hover:scale-105 active:scale-95 inline-flex items-center gap-2;
+  50% {
+    box-shadow: 0 0 0 12px rgba(37, 211, 102, 0);
   }
-  .btn-whatsapp {
-    @apply bg-amber-500 text-white px-5 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200 hover:bg-amber-600 hover:scale-105 active:scale-95 inline-flex items-center gap-2;
-  }
-  .section-title {
-    @apply text-3xl md:text-4xl font-bold text-charcoal mb-3;
-  }
-  .section-subtitle {
-    @apply text-muted-foreground text-lg max-w-2xl mx-auto;
-  }
-  .card-hover {
-    @apply transition-all duration-300 hover:shadow-luxury hover:-translate-y-1;
-  }
+}
+.wa-float {
+  animation: wa-pulse 2.5s ease-in-out infinite;
+}
+
+/* Itinerary expand */
+.itinerary-content {
+  overflow: hidden;
+  transition: max-height 0.4s ease-in-out;
 }

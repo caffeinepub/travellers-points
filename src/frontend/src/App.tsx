@@ -1,4 +1,3 @@
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -7,748 +6,541 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Car,
-  ChevronDown,
-  ChevronUp,
-  Clock,
-  Hotel,
-  MapPin,
-  Menu,
-  MessageCircle,
-  PackageIcon,
-  Phone,
-  Plane,
-  Settings,
-  Shield,
-  Star,
-  X,
-} from "lucide-react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
-// ─── Data ──────────────────────────────────────────────────────────────────────
-
-const WHATSAPP = "917719264029";
-
-function waLink(msg: string) {
-  return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+// ── Types ──────────────────────────────────────────────────────────────────────
+interface ItineraryDay {
+  day: string;
+  title: string;
+  details: string;
 }
 
-const HERO_SLIDES = [
-  {
-    src: "/assets/generated/darjeeling-bg.dim_1920x1080.jpg",
-    label: "Darjeeling",
-  },
-  { src: "/assets/generated/bhutan-bg.dim_1920x1080.jpg", label: "Bhutan" },
-  { src: "/assets/generated/sikkim-bg.dim_1920x1080.jpg", label: "Sikkim" },
-  { src: "/assets/generated/kashmir-bg.dim_1920x1080.jpg", label: "Kashmir" },
-];
-
-interface TourPackage {
+interface Package {
   id: string;
   name: string;
-  destination: string;
   duration: string;
   price: string;
-  priceNote: string;
   pickup: string;
-  highlight: string;
-  itinerary: { day: string; title: string; details: string; photo: string }[];
+  image: string;
+  inclusions: string[];
+  itinerary: ItineraryDay[];
 }
 
-const PACKAGES: TourPackage[] = [
+interface Service {
+  icon: string;
+  name: string;
+  description: string;
+  detail: string;
+}
+
+interface Review {
+  text: string;
+  author: string;
+  location: string;
+}
+
+// ── Data ───────────────────────────────────────────────────────────────────────
+const HERO_IMAGES = [
+  "/assets/generated/bhutan-tigers-nest-hero.dim_1920x1080.jpg",
+  "/assets/generated/kashmir-dal-lake-hero.dim_1920x1080.jpg",
+  "/assets/generated/darjeeling-tea-hills-hero.dim_1920x1080.jpg",
+  "/assets/generated/sikkim-kanchenjunga-hero.dim_1920x1080.jpg",
+  "/assets/generated/himalaya-golden-hour.dim_1920x1080.jpg",
+  "/assets/generated/manali-mountains.dim_1920x1080.jpg",
+  "/assets/generated/sikkim-tsomgo-lake.dim_1920x1080.jpg",
+  "/assets/generated/bhutan-punakha-dzong-hero.dim_1920x1080.jpg",
+  "/assets/generated/manali-rohtang-hero.dim_1920x1080.jpg",
+  "/assets/generated/nepal-everest-hero.dim_1920x1080.jpg",
+];
+
+const PACKAGES: Package[] = [
   {
     id: "bhutan-group",
     name: "Bhutan Group Tour",
-    destination: "Bhutan",
-    duration: "6N / 7D",
-    price: "₹24,500",
-    priceNote: "per person",
-    pickup: "Bagdogra Airport / NJP Station",
-    highlight: "Tiger's Nest Monastery & Punakha Dzong",
+    duration: "6 Nights / 7 Days",
+    price: "₹24,500/person",
+    pickup: "Bagdogra Airport or NJP Railway Station",
+    image: "/assets/generated/bhutan-tigers-nest.dim_1920x1080.jpg",
+    inclusions: [
+      "Accommodation (6 nights)",
+      "All meals (Breakfast + Dinner)",
+      "AC vehicle",
+      "Bhutan entry permit & visa",
+      "SDF fee",
+      "Sightseeing as per itinerary",
+      "Tour guide",
+    ],
     itinerary: [
       {
         day: "Day 1",
-        title: "Pickup → Phuentsholing",
+        title: "Arrival at Phuentsholing",
         details:
-          "Pickup from Bagdogra Airport or NJP Station → drive to Phuentsholing. Check-in, local sightseeing: Zangto Pelri Lhakhang, Karbandi Monastery. Overnight stay.",
-        photo:
-          "https://images.unsplash.com/photo-1553856622-d1b352e9a211?w=600&q=80",
+          "Check-in hotel. Evening local sightseeing: Zangto Pelri Lhakhang, Crocodile Breeding Centre, Market area.",
       },
       {
         day: "Day 2",
-        title: "Phuentsholing → Thimphu",
+        title: "Phuentsholing to Thimphu (165km, 5–6hrs)",
         details:
-          "Drive to Thimphu (capital city). Visit Buddha Dordenma Statue, Takin Preserve, Memorial Chorten, Changangkha Lhakhang, Folk Heritage Museum. Overnight stay in Thimphu.",
-        photo:
-          "https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?w=600&q=80",
+          "Visit Chuzom confluence, Buddha Dordenma statue, National Memorial Chorten, Tashichho Dzong.",
       },
       {
         day: "Day 3",
-        title: "Thimphu Sightseeing",
+        title: "Thimphu to Punakha (77km, 3hrs)",
         details:
-          "Visit Dochula Pass (108 chortens & Himalayan views), National Museum, Tashichho Dzong, Simply Bhutan Museum. Evening: local market. Overnight stay in Thimphu.",
-        photo:
-          "https://images.unsplash.com/photo-1551918120-9739cb430c6d?w=600&q=80",
+          "Dochu La Pass (108 chortens), Punakha Dzong, Suspension Bridge, Chimi Lhakhang (Fertility Temple).",
       },
       {
         day: "Day 4",
-        title: "Thimphu → Punakha",
+        title: "Punakha to Paro (125km, 4hrs)",
         details:
-          "Drive to Punakha valley. Visit Punakha Dzong (historical fortress), Chimi Lhakhang Fertility Temple, Suspension Bridge, Mo Chhu River. Overnight stay in Punakha.",
-        photo:
-          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
+          "National Museum of Bhutan, Rinpung Dzong, Paro town sightseeing.",
       },
       {
         day: "Day 5",
-        title: "Punakha → Paro",
+        title: "Paro — Tiger's Nest",
         details:
-          "Drive to Paro. Visit Rinpung Dzong, National Museum of Paro, Paro Town Market. Evening stroll along Paro Chhu river. Overnight stay in Paro.",
-        photo:
-          "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80",
+          "Tiger's Nest Monastery (Taktshang) hike (3–4hrs). Visit Kyichu Lhakhang temple.",
       },
       {
         day: "Day 6",
-        title: "Tiger's Nest Hike",
-        details:
-          "Early morning hike to Taktsang Palphug Monastery (Tiger's Nest) – one of Bhutan's most iconic sites. Also visit Drukgyel Dzong ruins, Kyichu Lhakhang. Overnight stay in Paro.",
-        photo:
-          "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600&q=80",
+        title: "Paro to Phuentsholing (165km)",
+        details: "Shopping, overnight Phuentsholing.",
       },
       {
         day: "Day 7",
-        title: "Paro → Drop",
-        details:
-          "After breakfast, drive back to the border. Drop at Bagdogra Airport or NJP Station. Tour ends with wonderful memories.",
-        photo:
-          "https://images.unsplash.com/photo-1488085061387-422e29b40080?w=600&q=80",
+        title: "Departure",
+        details: "Drop to Bagdogra Airport or NJP Railway Station.",
       },
     ],
   },
   {
     id: "bhutan-private",
     name: "Bhutan Private Tour",
-    destination: "Bhutan",
-    duration: "6N / 7D",
-    price: "₹43,000",
-    priceNote: "per person",
-    pickup: "Bagdogra Airport / NJP Station",
-    highlight: "Private Vehicle & Personalised Service",
+    duration: "6 Nights / 7 Days",
+    price: "₹43,000/person",
+    pickup: "Bagdogra Airport or NJP Railway Station",
+    image: "/assets/generated/bhutan-punakha-dzong.dim_800x600.jpg",
+    inclusions: [
+      "Accommodation (6 nights)",
+      "All meals (Breakfast + Dinner)",
+      "Private AC vehicle",
+      "Bhutan entry permit & visa",
+      "SDF fee",
+      "Sightseeing as per itinerary",
+      "Personal tour guide",
+    ],
     itinerary: [
       {
         day: "Day 1",
-        title: "Pickup → Phuentsholing",
+        title: "Arrival at Phuentsholing",
         details:
-          "Private pickup from Bagdogra Airport or NJP Station → drive to Phuentsholing. Check-in, local sightseeing: Zangto Pelri Lhakhang, Karbandi Monastery. Overnight stay.",
-        photo:
-          "https://images.unsplash.com/photo-1553856622-d1b352e9a211?w=600&q=80",
+          "Check-in hotel. Evening local sightseeing: Zangto Pelri Lhakhang, Crocodile Breeding Centre, Market area.",
       },
       {
         day: "Day 2",
-        title: "Phuentsholing → Thimphu",
+        title: "Phuentsholing to Thimphu (165km, 5–6hrs)",
         details:
-          "Drive to Thimphu (capital city). Visit Buddha Dordenma Statue, Takin Preserve, Memorial Chorten, Changangkha Lhakhang, Folk Heritage Museum. Overnight stay in Thimphu.",
-        photo:
-          "https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?w=600&q=80",
+          "Visit Chuzom confluence, Buddha Dordenma statue, National Memorial Chorten, Tashichho Dzong.",
       },
       {
         day: "Day 3",
-        title: "Thimphu Sightseeing",
+        title: "Thimphu to Punakha (77km, 3hrs)",
         details:
-          "Visit Dochula Pass (108 chortens & Himalayan views), National Museum, Tashichho Dzong, Simply Bhutan Museum. Evening: local market. Overnight stay in Thimphu.",
-        photo:
-          "https://images.unsplash.com/photo-1551918120-9739cb430c6d?w=600&q=80",
+          "Dochu La Pass (108 chortens), Punakha Dzong, Suspension Bridge, Chimi Lhakhang (Fertility Temple).",
       },
       {
         day: "Day 4",
-        title: "Thimphu → Punakha",
+        title: "Punakha to Paro (125km, 4hrs)",
         details:
-          "Drive to Punakha valley. Visit Punakha Dzong (historical fortress), Chimi Lhakhang Fertility Temple, Suspension Bridge, Mo Chhu River. Overnight stay in Punakha.",
-        photo:
-          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
+          "National Museum of Bhutan, Rinpung Dzong, Paro town sightseeing.",
       },
       {
         day: "Day 5",
-        title: "Punakha → Paro",
+        title: "Paro — Tiger's Nest",
         details:
-          "Drive to Paro. Visit Rinpung Dzong, National Museum of Paro, Paro Town Market. Evening stroll along Paro Chhu river. Overnight stay in Paro.",
-        photo:
-          "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80",
+          "Tiger's Nest Monastery (Taktshang) hike (3–4hrs). Visit Kyichu Lhakhang temple.",
       },
       {
         day: "Day 6",
-        title: "Tiger's Nest Hike",
-        details:
-          "Early morning hike to Taktsang Palphug Monastery (Tiger's Nest) – one of Bhutan's most iconic sites. Also visit Drukgyel Dzong ruins, Kyichu Lhakhang. Overnight stay in Paro.",
-        photo:
-          "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600&q=80",
+        title: "Paro to Phuentsholing (165km)",
+        details: "Shopping, overnight Phuentsholing.",
       },
       {
         day: "Day 7",
-        title: "Paro → Drop",
-        details:
-          "After breakfast, drive back to the border. Drop at Bagdogra Airport or NJP Station. Tour ends with wonderful memories.",
-        photo:
-          "https://images.unsplash.com/photo-1488085061387-422e29b40080?w=600&q=80",
+        title: "Departure",
+        details: "Drop to Bagdogra Airport or NJP Railway Station.",
       },
     ],
   },
   {
     id: "darjeeling",
     name: "Darjeeling Tour",
-    destination: "Darjeeling",
-    duration: "4N / 5D",
-    price: "₹8,500",
-    priceNote: "per person",
-    pickup: "NJP / Bagdogra Airport",
-    highlight: "Tiger Hill Sunrise & Tea Gardens",
+    duration: "3 Nights / 4 Days",
+    price: "₹8,500/person",
+    pickup: "NJP Railway Station or Bagdogra Airport",
+    image: "/assets/generated/darjeeling-tea-garden.dim_1920x1080.jpg",
+    inclusions: [
+      "3 nights hotel",
+      "Breakfast",
+      "AC vehicle",
+      "All sightseeing",
+    ],
     itinerary: [
       {
         day: "Day 1",
-        title: "NJP → Darjeeling",
-        details:
-          "Pickup from NJP Station or Bagdogra Airport. Drive to Darjeeling, check-in. Evening visit to Mall Road and Chowrasta. Overnight stay.",
-        photo:
-          "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&q=80",
+        title: "Arrival Darjeeling",
+        details: "Check-in, Mall Road, Chowrasta, Nehru Road evening walk.",
       },
       {
         day: "Day 2",
-        title: "Tiger Hill & Monasteries",
+        title: "Tiger Hill & Beyond",
         details:
-          "Early morning (4 AM) drive to Tiger Hill for sunrise over Kanchenjunga. Visit Ghoom Monastery (oldest Buddhist monastery), Batasia Loop (spiral railway track), Peace Pagoda. Overnight stay.",
-        photo:
-          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
+          "Tiger Hill sunrise (4am), Ghoom Monastery, Batasia Loop, Rock Garden, Mirik Lake.",
       },
       {
         day: "Day 3",
-        title: "Tea Gardens & Zoo",
+        title: "Tea Gardens & Culture",
         details:
-          "Visit Happy Valley Tea Estate (tour & tasting), Himalayan Mountaineering Institute & Padmaja Naidu Himalayan Zoo (snow leopards, red pandas), Tenzing Rock. Overnight stay.",
-        photo:
-          "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
+          "Tea Garden visit, Happy Valley Tea Estate, Himalayan Mountaineering Institute, Zoo, Ropeway.",
       },
       {
         day: "Day 4",
-        title: "Mirik & Toy Train",
-        details:
-          "Day trip to Mirik (serene lake & orange orchards). Return for a joyride on the famous Darjeeling Himalayan Railway Toy Train (UNESCO Heritage). Overnight stay.",
-        photo:
-          "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80",
-      },
-      {
-        day: "Day 5",
         title: "Departure",
-        details:
-          "After breakfast, checkout and drive back to NJP Station or Bagdogra Airport. Tour ends.",
-        photo:
-          "https://images.unsplash.com/photo-1488085061387-422e29b40080?w=600&q=80",
+        details: "Drop to NJP Railway Station or Bagdogra Airport.",
       },
     ],
   },
   {
     id: "sikkim",
     name: "Sikkim Tour",
-    destination: "Sikkim",
-    duration: "5N / 6D",
-    price: "₹12,000",
-    priceNote: "per person",
-    pickup: "NJP / Bagdogra Airport",
-    highlight: "Tsomgo Lake & Nathula Pass",
+    duration: "5 Nights / 6 Days",
+    price: "₹12,500/person",
+    pickup: "NJP Railway Station or Bagdogra Airport",
+    image: "/assets/generated/sikkim-tsomgo-lake.dim_1920x1080.jpg",
+    inclusions: ["5 nights hotel", "Breakfast", "AC vehicle", "All permits"],
     itinerary: [
       {
         day: "Day 1",
-        title: "NJP → Gangtok",
-        details:
-          "Pickup from NJP Station or Bagdogra Airport. Drive to Gangtok, the capital of Sikkim. Check-in and evening visit to MG Marg. Overnight stay.",
-        photo:
-          "https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?w=600&q=80",
+        title: "NJP/Bagdogra to Gangtok (4hrs)",
+        details: "Check-in, MG Marg evening stroll.",
       },
       {
         day: "Day 2",
-        title: "Tsomgo & Nathula",
+        title: "Tsomgo Lake & Nathula",
         details:
-          "Visit Tsomgo Lake (glacial lake at 12,400 ft), Baba Mandir (soldier shrine), Nathula Pass (India-China border, permit required). Overnight stay in Gangtok.",
-        photo:
-          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
+          "Tsomgo Lake (12,400 ft), Baba Mandir, Nathula Pass (subject to permit).",
       },
       {
         day: "Day 3",
-        title: "Gangtok Monasteries",
+        title: "Gangtok Local Sightseeing",
         details:
-          "Visit Rumtek Monastery (largest in Sikkim), Enchey Monastery, Do-Drul Chorten stupa. Evening: Lal Bazaar shopping. Overnight stay.",
-        photo:
-          "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&q=80",
+          "Rumtek Monastery, Enchey Monastery, Namgyal Institute of Tibetology, Flower Exhibition Centre.",
       },
       {
         day: "Day 4",
-        title: "Gangtok → Pelling",
-        details:
-          "Drive to Pelling. Visit Rabdentse Ruins (ancient Sikkim capital), Pemayangtse Monastery (one of the oldest in Sikkim). Overnight stay in Pelling.",
-        photo:
-          "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80",
+        title: "Gangtok to Pelling (3hrs)",
+        details: "Rabdentse Ruins, Pemayangtse Monastery.",
       },
       {
         day: "Day 5",
-        title: "Khecheopalri & Singshore",
-        details:
-          "Visit Khecheopalri Lake (sacred wish-fulfilling lake), Singshore Bridge (highest bridge in Sikkim, 98m). Overnight stay in Pelling.",
-        photo:
-          "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80",
+        title: "Pelling Sightseeing",
+        details: "Khecheopalri Lake, Kanchenjunga viewpoint, Singshore Bridge.",
       },
       {
         day: "Day 6",
-        title: "Pelling → NJP",
-        details:
-          "After breakfast, drive back to NJP Station or Bagdogra Airport. Tour concludes.",
-        photo:
-          "https://images.unsplash.com/photo-1488085061387-422e29b40080?w=600&q=80",
+        title: "Departure",
+        details: "Drop to NJP Railway Station or Bagdogra Airport.",
       },
     ],
   },
   {
     id: "nepal",
     name: "Nepal Tour",
-    destination: "Nepal",
-    duration: "5N / 6D",
-    price: "₹15,000",
-    priceNote: "per person",
-    pickup: "NJP / Bagdogra / Kathmandu",
-    highlight: "Kathmandu, Pokhara & Fewa Lake",
+    duration: "5 Nights / 6 Days",
+    price: "₹15,000/person",
+    pickup: "Bagdogra Airport (flight to Kathmandu) or direct road",
+    image: "/assets/generated/nepal-kathmandu.dim_800x600.jpg",
+    inclusions: [
+      "5 nights hotel",
+      "Breakfast",
+      "All sightseeing",
+      "Tour guide",
+    ],
     itinerary: [
       {
         day: "Day 1",
         title: "Arrival Kathmandu",
-        details:
-          "Arrival at Kathmandu. Transfer to hotel. Evening visit to Thamel market. Welcome dinner. Overnight stay.",
-        photo:
-          "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&q=80",
+        details: "Pashupatinath Temple, Bouddhanath Stupa.",
       },
       {
         day: "Day 2",
-        title: "Kathmandu Temples",
+        title: "Kathmandu Valley",
         details:
-          "Visit Pashupatinath Temple (sacred Hindu temple on Bagmati River), Boudhanath Stupa (largest stupa in Asia), Swayambhunath aka Monkey Temple. Overnight stay.",
-        photo:
-          "https://images.unsplash.com/photo-1469521669194-babb45599def?w=600&q=80",
+          "Swayambhunath (Monkey Temple), Patan Durbar Square, Patan Museum.",
       },
       {
         day: "Day 3",
-        title: "Durbar Squares",
-        details:
-          "Visit Patan Durbar Square (UNESCO World Heritage Site with ancient palaces), Bhaktapur Durbar Square (medieval city of devotees). Overnight stay in Kathmandu.",
-        photo:
-          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
+        title: "Kathmandu to Pokhara (7hrs)",
+        details: "Fewa Lake boat ride, Tal Barahi Temple.",
       },
       {
         day: "Day 4",
-        title: "Kathmandu → Pokhara",
+        title: "Pokhara Sightseeing",
         details:
-          "Drive or fly to Pokhara (7 hours by road). Arrive and visit Fewa Lake (boating optional), Davis Falls, Gupteshwor Cave. Overnight stay in Pokhara.",
-        photo:
-          "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80",
+          "Sarangkot sunrise, World Peace Pagoda, Devi's Fall, Gupteshwor Cave.",
       },
       {
         day: "Day 5",
-        title: "Pokhara Sightseeing",
-        details:
-          "Early morning Sarangkot sunrise viewpoint (Annapurna range). Phewa Lake boating, World Peace Pagoda (Japanese pagoda). Evening in Lakeside market. Overnight stay.",
-        photo:
-          "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80",
+        title: "Pokhara to Kathmandu",
+        details: "Manakamana Cable Car.",
       },
       {
         day: "Day 6",
         title: "Departure",
-        details:
-          "Morning leisure. Transfer to airport or bus station for return journey. Tour ends.",
-        photo:
-          "https://images.unsplash.com/photo-1488085061387-422e29b40080?w=600&q=80",
+        details: "Transfer to airport for departure.",
       },
     ],
   },
   {
     id: "manali",
     name: "Manali Tour",
-    destination: "Manali",
-    duration: "5N / 6D",
-    price: "₹13,500",
-    priceNote: "per person",
-    pickup: "Delhi / Chandigarh",
-    highlight: "Rohtang Pass & Solang Valley",
+    duration: "5 Nights / 6 Days",
+    price: "₹14,000/person",
+    pickup: "Chandigarh or Delhi (own arrangement)",
+    image: "/assets/generated/manali-rohtang.dim_800x600.jpg",
+    inclusions: [
+      "5 nights hotel",
+      "Breakfast",
+      "All sightseeing",
+      "AC vehicle",
+    ],
     itinerary: [
       {
         day: "Day 1",
-        title: "Delhi/Chandigarh → Manali",
-        details:
-          "Overnight journey from Delhi or Chandigarh to Manali by Volvo bus or private vehicle. Arrive and check-in. Evening rest.",
-        photo:
-          "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&q=80",
+        title: "Arrival Manali",
+        details: "Check-in, Mall Road, Hadimba Temple evening.",
       },
       {
         day: "Day 2",
-        title: "Rohtang Pass & Solang Valley",
-        details:
-          "Early morning excursion to Rohtang Pass (13,050 ft) – snow activities, paragliding. Visit Solang Valley for skiing/zorbing. Overnight stay.",
-        photo:
-          "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80",
+        title: "Solang Valley",
+        details: "Snow activities, Rohtang Pass permit arrangements.",
       },
       {
         day: "Day 3",
-        title: "Manali Local Sightseeing",
-        details:
-          "Visit Hadimba Temple (iconic wooden temple), Manu Temple, Old Manali village, Club House (river-side activities), Vashisht Hot Springs. Overnight stay.",
-        photo:
-          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
+        title: "Rohtang Pass (13,050 ft)",
+        details: "Beas Kund, snow activities (seasonal).",
       },
       {
         day: "Day 4",
-        title: "Naggar & Bijli Mahadev",
+        title: "Local Sightseeing",
         details:
-          "Visit Naggar Castle (heritage hotel & museum), Roerich Art Gallery (famous Russian painter's home), Bijli Mahadev Temple (sacred high-altitude temple, 2-km trek). Overnight stay.",
-        photo:
-          "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80",
+          "Naggar Castle, Nicholas Roerich Art Gallery, Old Manali market.",
       },
       {
         day: "Day 5",
-        title: "Adventure & Shopping",
-        details:
-          "River rafting on Beas River, local handicraft shopping, Mall Road Manali. Farewell dinner. Overnight stay.",
-        photo:
-          "https://images.unsplash.com/photo-1488085061387-422e29b40080?w=600&q=80",
+        title: "Parvati Valley",
+        details: "Manikaran Sahib Gurudwara, Kasol village, Parvati Valley.",
       },
-      {
-        day: "Day 6",
-        title: "Departure",
-        details:
-          "After breakfast, departure from Manali. Drive back to Delhi or Chandigarh. Tour ends.",
-        photo:
-          "https://images.unsplash.com/photo-1488085061387-422e29b40080?w=600&q=80",
-      },
+      { day: "Day 6", title: "Departure", details: "Drop to Chandigarh." },
     ],
   },
   {
     id: "shimla",
     name: "Shimla Tour",
-    destination: "Shimla",
-    duration: "4N / 5D",
-    price: "₹10,000",
-    priceNote: "per person",
-    pickup: "Delhi / Chandigarh",
-    highlight: "Mall Road & Kufri Snow Point",
+    duration: "3 Nights / 4 Days",
+    price: "₹9,500/person",
+    pickup: "Chandigarh or Delhi (own arrangement)",
+    image: "/assets/generated/shimla-mall-road.dim_800x600.jpg",
+    inclusions: [
+      "3 nights hotel",
+      "Breakfast",
+      "All sightseeing",
+      "AC vehicle",
+    ],
     itinerary: [
       {
         day: "Day 1",
-        title: "Delhi/Chandigarh → Shimla",
-        details:
-          "Depart from Delhi or Chandigarh. Arrive Shimla, check-in. Evening walk on Mall Road. Overnight stay.",
-        photo:
-          "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80",
+        title: "Arrival Shimla",
+        details: "The Ridge, Mall Road, Christ Church, Lakkar Bazaar.",
       },
       {
         day: "Day 2",
-        title: "Kufri & Chail",
+        title: "Kufri Excursion",
         details:
-          "Day trip to Kufri (snow activities, Himalayan wildlife park), Fagu viewpoint, Green Valley, Chail (world's highest cricket ground). Overnight stay in Shimla.",
-        photo:
-          "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80",
+          "Fun World, Himalayan Wildlife Zoo, Indira Tourist Park, horse riding.",
       },
       {
         day: "Day 3",
-        title: "Shimla City Tour",
+        title: "Local Sightseeing",
         details:
-          "Visit The Ridge (open air space with Himalayan panorama), Mall Road shopping, Christ Church (neo-Gothic architecture), Jakhu Temple (ancient Hanuman temple, 2.5 km trek). Overnight stay.",
-        photo:
-          "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&q=80",
+          "Jakhoo Temple, Summer Hill, Prospect Hill, Chadwick Falls, Glen Forest.",
       },
-      {
-        day: "Day 4",
-        title: "Mashobra & Tattapani",
-        details:
-          "Visit Mashobra village (apple orchards), Naldehra Golf Course (one of the oldest in India), Tattapani (hot sulphur springs). Overnight stay.",
-        photo:
-          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
-      },
-      {
-        day: "Day 5",
-        title: "Departure",
-        details:
-          "After breakfast, checkout. Drive back to Delhi or Chandigarh. Tour concludes.",
-        photo:
-          "https://images.unsplash.com/photo-1488085061387-422e29b40080?w=600&q=80",
-      },
+      { day: "Day 4", title: "Departure", details: "Drop to Chandigarh." },
     ],
   },
   {
     id: "kashmir",
     name: "Kashmir Tour",
-    destination: "Kashmir",
-    duration: "6N / 7D",
-    price: "₹18,000",
-    priceNote: "per person",
+    duration: "5 Nights / 6 Days",
+    price: "₹18,000/person",
     pickup: "Srinagar Airport",
-    highlight: "Dal Lake Houseboat & Gulmarg Gondola",
+    image: "/assets/generated/darjeeling-tea-garden.dim_1920x1080.jpg",
+    inclusions: [
+      "5N houseboat + hotel",
+      "Breakfast + Dinner",
+      "Shikara ride",
+      "AC vehicle",
+      "All sightseeing",
+    ],
     itinerary: [
       {
         day: "Day 1",
-        title: "Srinagar Arrival",
-        details:
-          "Arrival at Srinagar Airport. Transfer to houseboat on Dal Lake. Evening Shikara ride on Dal Lake. Overnight stay on houseboat.",
-        photo:
-          "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
+        title: "Arrival Srinagar",
+        details: "Shikara ride Dal Lake, houseboat check-in.",
       },
       {
         day: "Day 2",
-        title: "Gulmarg",
-        details:
-          "Day excursion to Gulmarg (Meadow of Flowers). Gondola ride (Phase 1 & 2) up to 14,000 ft. Snow activities, skiing. Return to Srinagar. Overnight stay.",
-        photo:
-          "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80",
+        title: "Gulmarg (8,694 ft)",
+        details: "Gondola cable car, meadows, skiing (seasonal).",
       },
       {
         day: "Day 3",
         title: "Pahalgam",
-        details:
-          "Day trip to Pahalgam (Valley of Shepherds). Visit Betaab Valley (Bollywood filming location), Chandanwari, Aru Valley. River-side picnic. Return to Srinagar. Overnight stay.",
-        photo:
-          "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80",
+        details: "Betaab Valley, Aru Valley, Chandanwari.",
       },
       {
         day: "Day 4",
         title: "Srinagar Local",
         details:
-          "Visit Shankaracharya Temple (hilltop Hindu shrine), Mughal Gardens (Nishat, Shalimar, Chashme Shahi), local market for Pashmina shawls & dry fruits. Overnight stay.",
-        photo:
-          "https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?w=600&q=80",
+          "Mughal Gardens (Nishat, Shalimar), Shankaracharya Temple, Hazratbal Shrine.",
       },
       {
         day: "Day 5",
-        title: "Sonmarg",
-        details:
-          "Day excursion to Sonmarg (Meadow of Gold). Visit Thajiwas Glacier (accessible by pony/trek). Panoramic Himalayan views. Return to Srinagar. Overnight stay.",
-        photo:
-          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
+        title: "Sonamarg",
+        details: "Thajiwas Glacier, pony rides, scenic drive.",
       },
       {
         day: "Day 6",
-        title: "Srinagar → Jammu",
-        details:
-          "Drive from Srinagar to Jammu via scenic Banihal Pass. Enroute stop at Vaishno Devi (optional). Overnight stay in Jammu.",
-        photo:
-          "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&q=80",
-      },
-      {
-        day: "Day 7",
         title: "Departure",
-        details:
-          "After breakfast, transfer to Jammu Airport/Railway Station. Tour concludes.",
-        photo:
-          "https://images.unsplash.com/photo-1488085061387-422e29b40080?w=600&q=80",
+        details: "Drop to Srinagar Airport.",
       },
     ],
   },
   {
     id: "mathura",
     name: "Mathura Tour",
-    destination: "Mathura",
-    duration: "2N / 3D",
-    price: "₹7,000",
-    priceNote: "per person",
-    pickup: "Agra / Mathura Region",
-    highlight: "Krishna Janmabhoomi & ISKCON Vrindavan",
+    duration: "2 Nights / 3 Days",
+    price: "₹6,500/person",
+    pickup: "Mathura Railway Station or Agra",
+    image: "/assets/generated/mathura-krishna-temple.dim_800x600.jpg",
+    inclusions: [
+      "2 nights hotel",
+      "Breakfast",
+      "All sightseeing",
+      "AC vehicle",
+    ],
     itinerary: [
       {
         day: "Day 1",
-        title: "Arrival at Mathura",
+        title: "Arrival Mathura",
         details:
-          "Arrive at Mathura. Check-in at hotel. Visit Krishna Janmabhoomi (birthplace of Lord Krishna), Dwarkadhish Temple, Vishram Ghat (evening aarti on Yamuna river). Overnight stay.",
-        photo:
-          "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=600&q=80",
+          "Krishna Janmabhoomi Temple, Dwarkadhish Temple, Vishram Ghat (evening aarti).",
       },
       {
         day: "Day 2",
         title: "Vrindavan",
-        details:
-          "Full day in Vrindavan (land of Lord Krishna). Visit ISKCON Temple (world-famous, grand architecture), Banke Bihari Temple, Prem Mandir (illuminated at night), Govardhan Hill (parikrama route). Overnight stay.",
-        photo:
-          "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80",
+        details: "ISKCON Temple, Banke Bihari Temple, Prem Mandir, Rang Bhumi.",
       },
       {
         day: "Day 3",
-        title: "Barsana → Departure",
-        details:
-          "Morning visit to Barsana, birthplace of Radha Rani. Visit Radha Rani Temple (hilltop temple). Return to Mathura. Tour ends with divine blessings.",
-        photo:
-          "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80",
+        title: "Govardhan & Departure",
+        details: "Govardhan Parikrama (partial), Radha Kund, Departure.",
       },
     ],
   },
 ];
 
-const REVIEWS = [
+const SERVICES: Service[] = [
   {
-    name: "Rahul S.",
-    city: "Kolkata",
-    destination: "Bhutan",
-    text: "Amazing Bhutan trip! Everything was perfectly arranged from pickup at NJP to drop back. Professional guides, comfortable stay, and a truly memorable experience. Highly recommended!",
-    rating: 5,
+    icon: "✈️",
+    name: "Flights",
+    description: "Domestic & international flight bookings",
+    detail:
+      "We assist with domestic and international flight bookings for all your tour destinations. Get best rates for Bagdogra, Kolkata, Delhi, Srinagar, Kathmandu routes. Contact us on WhatsApp for availability and current pricing.",
   },
   {
-    name: "Priya M.",
-    city: "Delhi",
-    destination: "Sikkim",
-    text: "The Sikkim tour was breathtaking. Professional service and great value for money. Tsomgo Lake and Nathula Pass were absolutely stunning. Will book again!",
-    rating: 5,
+    icon: "🏨",
+    name: "Hotels",
+    description: "Premium hotel & resort bookings",
+    detail:
+      "Premium hotel and resort bookings across all destinations — Bhutan, Darjeeling, Sikkim, Nepal, Manali, Shimla, Kashmir. Handpicked properties ensuring comfort and value for your stay.",
   },
   {
-    name: "Amit K.",
-    city: "Mumbai",
-    destination: "Kashmir",
-    text: "Kashmir tour was a dream come true. Dal Lake houseboat was unforgettable. Excellent hospitality and smooth arrangements throughout the trip.",
-    rating: 5,
+    icon: "🗺️",
+    name: "Tour Packages",
+    description: "Complete customizable tour packages",
+    detail:
+      "Complete tour packages with accommodation, meals, transport, and guided sightseeing. All our packages are fully customizable as per your requirements. Group and private options available for all budgets.",
   },
   {
-    name: "Sunita D.",
-    city: "West Bengal",
-    destination: "Darjeeling",
-    text: "Darjeeling package was perfect for a family trip. Kids absolutely loved Tiger Hill sunrise. Tea garden visit was a great experience. Thank you Travellers Points!",
-    rating: 5,
+    icon: "🛡️",
+    name: "Travel Insurance",
+    description: "Trip protection & travel insurance",
+    detail:
+      "Travel insurance guidance for domestic and international tours. Protect your trip against cancellations, medical emergencies, and travel delays. We help you choose the right coverage for peace of mind.",
   },
 ];
 
-const SERVICES = [
+const REVIEWS: Review[] = [
   {
-    id: "flights",
-    icon: Plane,
-    title: "Flight Booking",
-    short: "Domestic & international flight reservations at best prices.",
-    details:
-      "We assist with domestic and international flight bookings for all major airlines. Get competitive fares, flexible dates, and seat preferences. We handle group bookings, last-minute tickets, and special assistance requests.",
+    text: "Amazing Bhutan trip organized by Travellers Points! Everything was perfectly arranged — hotels, transport, guide. Highly recommended!",
+    author: "Rahul S.",
+    location: "Kolkata",
   },
   {
-    id: "hotels",
-    icon: Hotel,
-    title: "Hotel Booking",
-    short: "Comfortable stays at budget to luxury properties.",
-    details:
-      "From budget guesthouses to luxury resorts, we book accommodations across all our tour destinations. Options include government-approved hotels, heritage properties, home-stays, and eco-lodges.",
+    text: "Our Darjeeling and Sikkim package was excellent. Very professional team, great value for money.",
+    author: "Priya M.",
+    location: "West Bengal",
   },
   {
-    id: "packages",
-    icon: PackageIcon,
-    title: "Tour Packages",
-    short: "All-inclusive packages with transport, stay & sightseeing.",
-    details:
-      "Our tour packages include transportation, accommodation, meals (as specified), sightseeing, and local guides. We offer both group and private tours with customisation options for families, honeymooners, and corporate groups.",
+    text: "Kashmir trip was absolutely breathtaking. Travellers Points made the whole experience stress-free and memorable.",
+    author: "Amit K.",
+    location: "Delhi",
   },
   {
-    id: "insurance",
-    icon: Shield,
-    title: "Travel Insurance",
-    short: "Comprehensive travel cover for worry-free journeys.",
-    details:
-      "We provide travel insurance covering medical emergencies, trip cancellation, baggage loss, and flight delays. Coverage available for domestic and international travel with 24/7 assistance helpline.",
+    text: "Best Bhutan Group Tour! Met wonderful people, saw amazing places. Will definitely book again.",
+    author: "Sneha D.",
+    location: "Siliguri",
+  },
+  {
+    text: "Nepal tour was perfectly planned. All temples and viewpoints covered. Great guide provided.",
+    author: "Rohan B.",
+    location: "Kolkata",
   },
 ];
 
 const TAXI_ROUTES = [
-  {
-    from: "Jaigaon",
-    to: "Siliguri",
-    duration: "~2.5 hrs",
-    note: "Convenient and comfortable transfer",
-  },
-  {
-    from: "Jaigaon",
-    to: "Darjeeling",
-    duration: "~3.5 hrs",
-    note: "Scenic hill road journey",
-  },
-  {
-    from: "Jaigaon",
-    to: "Gangtok (Sikkim)",
-    duration: "~5 hrs",
-    note: "Door-to-door service available",
-  },
+  { from: "Jaigaon", to: "Siliguri" },
+  { from: "Jaigaon", to: "Darjeeling" },
+  { from: "Jaigaon", to: "Gangtok (Sikkim)" },
+  { from: "Jaigaon", to: "Bagdogra Airport" },
+  { from: "Jaigaon", to: "NJP Railway Station" },
 ];
 
-// ─── Hero Tagline Component ────────────────────────────────────────────────────
-const TAGLINES = [
-  "Your Dream Journey Begins With Us",
-  "Where Every Trip Becomes a Timeless Memory",
-  "Explore the Himalayas, Discover Yourself",
-  "From Your Dream to the World — We Take You There",
-];
+const WA_NUMBER = "917719264029";
+const WA_BASE = `https://wa.me/${WA_NUMBER}`;
 
-function HeroTagline() {
-  const [idx, setIdx] = useState(0);
-  const [visible, setVisible] = useState(true);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setVisible(false);
-      setTimeout(() => {
-        setIdx((prev) => (prev + 1) % TAGLINES.length);
-        setVisible(true);
-      }, 400);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <div className="mb-10 h-8 flex items-center justify-center">
-      <p
-        className="text-gold font-display text-lg md:text-xl font-semibold italic transition-opacity duration-400"
-        style={{ opacity: visible ? 1 : 0, transition: "opacity 0.4s ease" }}
-      >
-        ✦ {TAGLINES[idx]} ✦
-      </p>
-    </div>
-  );
+function waLink(msg: string) {
+  return `${WA_BASE}?text=${encodeURIComponent(msg)}`;
 }
 
-// ─── App Component ─────────────────────────────────────────────────────────────
-export default function App() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [expandedPackage, setExpandedPackage] = useState<string | null>(null);
-  const [serviceModal, setServiceModal] = useState<string | null>(null);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-  const [formSent, setFormSent] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [heroSlide, setHeroSlide] = useState(0);
+// ── Navbar ─────────────────────────────────────────────────────────────────────
+function Navbar({ scrolled }: { scrolled: boolean }) {
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handler);
-    return () => window.removeEventListener("scroll", handler);
-  }, []);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setHeroSlide((prev) => (prev + 1) % HERO_SLIDES.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const toggleItinerary = (id: string) => {
-    setExpandedPackage((prev) => (prev === id ? null : id));
-  };
-
-  const handleFormSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const msg = `Hi Travellers Points! I am ${formData.name} (${formData.email}). ${formData.message}`;
-    window.open(waLink(msg), "_blank");
-    setFormSent(true);
-    setTimeout(() => setFormSent(false), 3000);
-    setFormData({ name: "", email: "", message: "" });
-  };
-
-  const activeService = SERVICES.find((s) => s.id === serviceModal);
-
-  const navLinks = [
+  const links = [
     { label: "Home", href: "#home" },
     { label: "Packages", href: "#packages" },
     { label: "Services", href: "#services" },
@@ -758,790 +550,1361 @@ export default function App() {
   ];
 
   return (
-    <div className="min-h-screen bg-cream font-body">
-      {/* SEO Meta */}
-      <title>
-        Travellers Points – Best Tour Packages from Jaigaon | Bhutan,
-        Darjeeling, Sikkim, Kashmir
-      </title>
-
-      {/* ── Navbar ── */}
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled ? "bg-orange-600 shadow-md" : "bg-orange-600/95"
-        }`}
-      >
-        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 md:h-20">
-            {/* Logo */}
-            <a
-              href="#home"
-              className="flex items-center gap-3"
-              data-ocid="nav.link"
-            >
-              <img
-                src="/assets/uploads/image_b1a1f18a-1.png"
-                alt="Travellers Points Logo"
-                className="h-10 w-auto"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = "none";
-                }}
-              />
-              <span className="text-white font-display text-lg font-bold leading-tight hidden sm:block">
-                Travellers Points
-              </span>
-            </a>
-
-            {/* Desktop Nav */}
-            <div className="hidden md:flex items-center gap-6">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="text-white/90 hover:text-white transition-colors duration-200 font-medium text-sm"
-                  data-ocid="nav.link"
-                >
-                  {link.label}
-                </a>
-              ))}
-              <a
-                href={waLink(
-                  "Hi Travellers Points! I would like to enquire about your tour packages.",
-                )}
-                target="_blank"
-                rel="noreferrer"
-                className="btn-gold text-sm px-4 py-2"
-                data-ocid="nav.primary_button"
-              >
-                <MessageCircle className="w-4 h-4" /> WhatsApp
-              </a>
-            </div>
-
-            {/* Mobile menu button */}
-            <button
-              className="md:hidden text-white p-2 rounded-md"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              type="button"
-              aria-label="Toggle menu"
-              data-ocid="nav.toggle"
-            >
-              {mobileMenuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
-            </button>
-          </div>
-
-          {/* Mobile Menu */}
-          {mobileMenuOpen && (
-            <div className="md:hidden pb-4 border-t border-white/20">
-              <div className="flex flex-col gap-2 pt-3">
-                {navLinks.map((link) => (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    className="text-white/90 hover:text-white px-2 py-2 font-medium transition-colors"
-                    onClick={() => setMobileMenuOpen(false)}
-                    data-ocid="nav.link"
-                  >
-                    {link.label}
-                  </a>
-                ))}
-              </div>
-            </div>
-          )}
-        </nav>
-      </header>
-
-      <main>
-        {/* ── Hero with Slideshow ── */}
-        <section
-          id="home"
-          className="relative min-h-screen flex items-center justify-center overflow-hidden"
-          style={{
-            background:
-              "linear-gradient(135deg, oklch(0.18 0.09 150) 0%, oklch(0.25 0.09 150) 40%, oklch(0.28 0.10 170) 70%, oklch(0.22 0.09 160) 100%)",
-          }}
-        >
-          {/* Sliding background images */}
-          {HERO_SLIDES.map((slide, i) => (
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled
+          ? "bg-charcoal/95 backdrop-blur-md shadow-luxury border-b border-gold/10"
+          : "bg-gradient-to-b from-black/70 to-transparent"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 md:h-20">
+          {/* Logo */}
+          <a
+            href="#home"
+            className="flex items-center gap-3"
+            data-ocid="nav.link"
+          >
             <img
-              key={slide.src}
-              src={slide.src}
-              alt={slide.label}
-              loading={i === 0 ? "eager" : "lazy"}
-              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
-                i === heroSlide ? "opacity-100" : "opacity-0"
-              }`}
+              src="/assets/uploads/image_b1a1f18a-1.png"
+              alt="Travellers Points"
+              className="h-10 w-auto"
+              onError={(e) => {
+                (e.currentTarget as HTMLImageElement).style.display = "none";
+              }}
             />
-          ))}
+            <span className="font-display text-lg font-semibold text-gold hidden sm:block">
+              Travellers Points
+            </span>
+          </a>
 
-          {/* Dark overlay */}
-          <div className="absolute inset-0 bg-black/55" />
-
-          {/* Decorative pattern */}
-          <div
-            className="absolute inset-0 opacity-5"
-            style={{
-              backgroundImage:
-                "radial-gradient(circle at 2px 2px, white 1px, transparent 0)",
-              backgroundSize: "40px 40px",
-            }}
-          />
-
-          {/* Gold accent line */}
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-gold to-transparent" />
-
-          {/* Slide label badge */}
-          <div className="absolute top-24 right-6 z-20">
-            <div className="bg-gold/90 text-white text-sm font-bold px-4 py-1.5 rounded-full shadow-lg backdrop-blur-sm flex items-center gap-2">
-              <MapPin className="w-3.5 h-3.5" />
-              {HERO_SLIDES[heroSlide].label}
-            </div>
-          </div>
-
-          <div className="relative z-10 text-center px-4 max-w-5xl mx-auto pt-24">
-            <div className="inline-flex items-center gap-2 bg-gold/25 border border-gold/40 text-gold px-4 py-1.5 rounded-full text-sm font-medium mb-6 backdrop-blur-sm">
-              <MapPin className="w-4 h-4" />
-              Based in Jaigaon, West Bengal
-            </div>
-
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold text-white mb-6 leading-tight">
-              Explore the World with
-              <span className="block text-gold mt-1">Travellers Points</span>
-            </h1>
-
-            <p className="text-white/90 text-lg md:text-xl mb-6 max-w-2xl mx-auto">
-              Premium Tour Packages from Jaigaon, West Bengal — crafting
-              extraordinary Himalayan journeys.
-            </p>
-
-            {/* Rotating taglines */}
-            <HeroTagline />
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          {/* Desktop Links */}
+          <div className="hidden md:flex items-center gap-8">
+            {links.map((l) => (
               <a
-                href="#packages"
-                className="btn-gold text-base px-8 py-4"
-                data-ocid="hero.primary_button"
+                key={l.label}
+                href={l.href}
+                className="nav-link text-sm font-body font-medium tracking-wide"
+                data-ocid={"nav.link"}
               >
-                Explore Packages
+                {l.label}
               </a>
-            </div>
-
-            {/* Stats */}
-            <div className="mt-16 grid grid-cols-3 gap-4 max-w-lg mx-auto">
-              {[
-                { value: "500+", label: "Happy Travellers" },
-                { value: "9", label: "Destinations" },
-                { value: "10+", label: "Years Experience" },
-              ].map((stat) => (
-                <div
-                  key={stat.label}
-                  className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-4 py-3"
-                >
-                  <div className="text-2xl font-display font-bold text-gold">
-                    {stat.value}
-                  </div>
-                  <div className="text-white/80 text-xs">{stat.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Scroll indicator */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/50 animate-bounce">
-            <ChevronDown className="w-6 h-6" />
-          </div>
-        </section>
-
-        {/* ── Packages ── */}
-        <section id="packages" className="py-20 bg-cream">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-14">
-              <h2 className="section-title">Our Tour Packages</h2>
-              <p className="section-subtitle">
-                Expertly curated packages for unforgettable journeys across the
-                Himalayas
-              </p>
-            </div>
-
-            <div
-              className="grid gap-6 md:grid-cols-2 xl:grid-cols-3"
-              data-ocid="packages.list"
+            ))}
+            <a
+              href={waLink("Hi, I would like to enquire about tour packages.")}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-5 py-2 bg-gold text-charcoal font-body font-semibold text-sm rounded-sm tracking-wide hover:bg-gold-light transition-colors duration-200"
+              data-ocid="nav.primary_button"
             >
-              {PACKAGES.map((pkg, idx) => (
-                <div
-                  key={pkg.id}
-                  className="bg-orange-50 rounded-2xl shadow-card overflow-hidden card-hover flex flex-col"
-                  data-ocid={`packages.item.${idx + 1}`}
-                >
-                  {/* Card Header */}
-                  <div className="bg-gradient-to-br from-amber-600 to-amber-700 p-6">
-                    <div className="flex items-start justify-between gap-2 mb-3">
-                      <Badge className="bg-gold text-white text-xs font-semibold border-0">
-                        {pkg.destination}
-                      </Badge>
-                      <Badge className="bg-gold text-white text-xs font-bold border-0 px-2 py-1">
-                        <Clock className="w-3 h-3 mr-1" />
-                        {pkg.duration}
-                      </Badge>
-                    </div>
-                    <h3 className="font-display text-xl font-bold text-white mb-1">
-                      {pkg.name}
-                    </h3>
-                    <p className="text-white/80 text-xs">{pkg.highlight}</p>
-                  </div>
-
-                  {/* Card Body */}
-                  <div className="p-5 flex flex-col flex-1">
-                    <div className="flex items-center justify-between mb-4">
-                      <div>
-                        <span className="text-2xl font-display font-bold text-charcoal">
-                          {pkg.price}
-                        </span>
-                        <span className="text-slate-600 text-sm ml-1">
-                          {pkg.priceNote}
-                        </span>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-xs text-slate-500">Pickup</div>
-                        <div className="text-xs font-medium text-charcoal">
-                          {pkg.pickup}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Expand Itinerary */}
-                    <button
-                      type="button"
-                      onClick={() => toggleItinerary(pkg.id)}
-                      className="w-full flex items-center justify-between text-sm font-semibold text-charcoal border border-charcoal/20 rounded-lg px-4 py-2.5 hover:bg-charcoal/5 transition-colors mb-4"
-                      data-ocid={`packages.item.${idx + 1}.toggle`}
-                    >
-                      <span>View Itinerary</span>
-                      {expandedPackage === pkg.id ? (
-                        <ChevronUp className="w-4 h-4" />
-                      ) : (
-                        <ChevronDown className="w-4 h-4" />
-                      )}
-                    </button>
-
-                    {/* Itinerary Details */}
-                    {expandedPackage === pkg.id && (
-                      <div className="mb-4 space-y-3 max-h-96 overflow-y-auto pr-1">
-                        {pkg.itinerary.map((day) => (
-                          <div
-                            key={day.day}
-                            className="border-l-2 border-gold pl-3"
-                          >
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className="text-xs bg-gold/20 text-gold-dark font-bold px-2 py-0.5 rounded-full">
-                                {day.day}
-                              </span>
-                              <span className="text-sm font-semibold text-charcoal">
-                                {day.title}
-                              </span>
-                            </div>
-                            <p className="text-xs text-slate-600 leading-relaxed">
-                              {day.details}
-                            </p>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-
-                    {/* Book Button */}
-                    <div className="mt-auto space-y-2">
-                      <a
-                        href={waLink(
-                          `Hi, I am interested in the ${pkg.name} (${pkg.duration}). Please share details and availability.`,
-                        )}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="btn-whatsapp w-full justify-center text-sm py-3"
-                        data-ocid={`packages.item.${idx + 1}.primary_button`}
-                      >
-                        <MessageCircle className="w-4 h-4" /> Book on Request
-                      </a>
-                      <a
-                        href={waLink(
-                          `Hi, I would like to customize the ${pkg.name}. Please help me create a custom itinerary.`,
-                        )}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="w-full justify-center text-sm py-2.5 border-2 border-gold/50 text-gold-dark rounded-lg font-semibold inline-flex items-center gap-2 hover:bg-gold/10 transition-colors"
-                        data-ocid={`packages.item.${idx + 1}.secondary_button`}
-                      >
-                        <Settings className="w-4 h-4" /> Customize Package on
-                        Request
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+              Book Now
+            </a>
           </div>
-        </section>
 
-        {/* ── Taxi Service ── */}
-        <section id="taxi" className="py-20 bg-cream-dark">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-14">
-              <h2 className="section-title">Local Taxi Services</h2>
-              <p className="section-subtitle">
-                Reliable transfers from Jaigaon to nearby destinations
-              </p>
-            </div>
-
-            <div className="grid gap-6 sm:grid-cols-3" data-ocid="taxi.list">
-              {TAXI_ROUTES.map((route, idx) => (
-                <div
-                  key={route.to}
-                  className="bg-orange-50 rounded-2xl shadow-card p-6 text-center card-hover"
-                  data-ocid={`taxi.item.${idx + 1}`}
-                >
-                  <div className="w-14 h-14 bg-charcoal/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Car className="w-7 h-7 text-charcoal" />
-                  </div>
-                  <div className="text-sm text-slate-600 mb-1">
-                    From {route.from}
-                  </div>
-                  <h3 className="font-display text-xl font-bold text-charcoal mb-2">
-                    → {route.to}
-                  </h3>
-                  <div className="flex items-center justify-center gap-2 text-sm text-slate-600 mb-1">
-                    <Clock className="w-4 h-4" /> {route.duration}
-                  </div>
-                  <p className="text-sm text-slate-600 mb-5">{route.note}</p>
-                  <a
-                    href={waLink(
-                      `Hi, I need a taxi from ${route.from} to ${route.to}. Please share details.`,
-                    )}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="btn-whatsapp w-full justify-center text-sm"
-                    data-ocid={`taxi.item.${idx + 1}.primary_button`}
-                  >
-                    <MessageCircle className="w-4 h-4" /> Book Taxi on WhatsApp
-                  </a>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ── Services ── */}
-        <section id="services" className="py-20 bg-cream">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-14">
-              <h2 className="section-title">Our Services</h2>
-              <p className="section-subtitle">
-                End-to-end travel solutions for your perfect journey
-              </p>
-            </div>
-
+          {/* Mobile menu toggle */}
+          <button
+            type="button"
+            className="md:hidden text-cream p-2"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+          >
             <div
-              className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
-              data-ocid="services.list"
-            >
-              {SERVICES.map((svc, idx) => (
-                <button
-                  key={svc.id}
-                  type="button"
-                  onClick={() => setServiceModal(svc.id)}
-                  className="bg-orange-50 rounded-2xl shadow-card p-6 text-left card-hover group focus:outline-none focus:ring-2 focus:ring-charcoal/40"
-                  data-ocid={`services.item.${idx + 1}.button`}
-                >
-                  <div className="w-14 h-14 bg-charcoal/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-charcoal group-hover:text-white transition-colors">
-                    <svc.icon className="w-7 h-7 text-charcoal group-hover:text-white transition-colors" />
-                  </div>
-                  <h3 className="font-display text-lg font-bold text-charcoal mb-2">
-                    {svc.title}
-                  </h3>
-                  <p className="text-sm text-slate-600">{svc.short}</p>
-                  <div className="mt-4 text-xs font-semibold text-charcoal flex items-center gap-1">
-                    Click for details{" "}
-                    <ChevronDown className="w-3 h-3 rotate-[-90deg]" />
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Service Modal */}
-        <Dialog
-          open={!!serviceModal}
-          onOpenChange={(o) => !o && setServiceModal(null)}
-        >
-          <DialogContent className="max-w-md" data-ocid="services.dialog">
-            {activeService && (
-              <>
-                <DialogHeader>
-                  <DialogTitle className="font-display text-xl flex items-center gap-3">
-                    <div className="w-10 h-10 bg-charcoal/10 rounded-lg flex items-center justify-center">
-                      <activeService.icon className="w-5 h-5 text-charcoal" />
-                    </div>
-                    {activeService.title}
-                  </DialogTitle>
-                </DialogHeader>
-                <p className="text-slate-600 text-sm leading-relaxed">
-                  {activeService.details}
-                </p>
-                <div className="flex gap-3 mt-2">
-                  <a
-                    href={waLink(
-                      `Hi, I want to enquire about your ${activeService.title} service.`,
-                    )}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="btn-whatsapp flex-1 justify-center"
-                    data-ocid="services.dialog.primary_button"
-                  >
-                    <MessageCircle className="w-4 h-4" /> Enquire on WhatsApp
-                  </a>
-                  <Button
-                    variant="outline"
-                    onClick={() => setServiceModal(null)}
-                    data-ocid="services.dialog.close_button"
-                  >
-                    Close
-                  </Button>
-                </div>
-              </>
-            )}
-          </DialogContent>
-        </Dialog>
-
-        {/* ── Reviews ── */}
-        <section id="reviews" className="py-20 bg-charcoal">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-14">
-              <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-3">
-                Client Reviews
-              </h2>
-              <p className="text-white/80 text-lg">
-                What our travellers say about us
-              </p>
-            </div>
-
+              className={`w-6 h-0.5 bg-current mb-1.5 transition-all ${menuOpen ? "rotate-45 translate-y-2" : ""}`}
+            />
             <div
-              className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
-              data-ocid="reviews.list"
-            >
-              {REVIEWS.map((review, reviewIdx) => (
-                <div
-                  key={review.name}
-                  className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6 card-hover"
-                  data-ocid={`reviews.item.${reviewIdx + 1}`}
-                >
-                  <div className="flex items-center gap-1 mb-3">
-                    <Star className="w-4 h-4 fill-gold text-gold" />
-                    <Star className="w-4 h-4 fill-gold text-gold" />
-                    <Star className="w-4 h-4 fill-gold text-gold" />
-                    <Star className="w-4 h-4 fill-gold text-gold" />
-                    <Star className="w-4 h-4 fill-gold text-gold" />
-                  </div>
-                  <p className="text-white/90 text-sm leading-relaxed mb-4">
-                    &ldquo;{review.text}&rdquo;
-                  </p>
-                  <div className="border-t border-white/20 pt-3">
-                    <div className="font-semibold text-white text-sm">
-                      {review.name}
-                    </div>
-                    <div className="text-white/70 text-xs">
-                      {review.city} • {review.destination}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+              className={`w-6 h-0.5 bg-current mb-1.5 transition-all ${menuOpen ? "opacity-0" : ""}`}
+            />
+            <div
+              className={`w-6 h-0.5 bg-current transition-all ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`}
+            />
+          </button>
+        </div>
 
-        {/* ── Contact ── */}
-        <section id="contact" className="py-20 bg-cream-dark">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-14">
-              <h2 className="section-title">Contact Us</h2>
-              <p className="section-subtitle">
-                Get in touch to plan your dream trip
-              </p>
-            </div>
-
-            <div className="grid gap-10 lg:grid-cols-2 max-w-5xl mx-auto">
-              {/* Info */}
-              <div className="space-y-8">
-                <div>
-                  <h3 className="font-display text-2xl font-bold text-charcoal mb-6">
-                    Get in Touch
-                  </h3>
-                  <div className="space-y-5">
-                    <div className="flex items-start gap-4">
-                      <div className="w-11 h-11 bg-charcoal/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                        <MapPin className="w-5 h-5 text-charcoal" />
-                      </div>
-                      <div>
-                        <div className="font-semibold text-charcoal">
-                          Address
-                        </div>
-                        <div className="text-slate-600 text-sm">
-                          Jaigaon, Alipurduar, West Bengal, India
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-4">
-                      <div className="w-11 h-11 bg-charcoal/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                        <Phone className="w-5 h-5 text-charcoal" />
-                      </div>
-                      <div>
-                        <div className="font-semibold text-charcoal">
-                          WhatsApp / Phone
-                        </div>
-                        <a
-                          href={waLink("Hi Travellers Points!")}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="text-charcoal hover:text-gold transition-colors text-sm font-medium"
-                        >
-                          +91 7719264029
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-charcoal rounded-2xl p-6 text-white">
-                  <h4 className="font-display text-lg font-bold mb-2 text-white">
-                    Quick WhatsApp Enquiry
-                  </h4>
-                  <p className="text-white/80 text-sm mb-4">
-                    For fastest response, message us directly on WhatsApp
-                  </p>
-                  <a
-                    href={waLink(
-                      "Hi Travellers Points! I would like to enquire about a tour package.",
-                    )}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="btn-whatsapp w-full justify-center bg-amber-500 hover:bg-amber-600"
-                    data-ocid="contact.primary_button"
-                  >
-                    <MessageCircle className="w-5 h-5" /> Chat on WhatsApp
-                  </a>
-                </div>
-              </div>
-
-              {/* Form */}
-              <form
-                onSubmit={handleFormSubmit}
-                className="bg-orange-50 rounded-2xl shadow-card p-8 space-y-5"
+        {/* Mobile Menu */}
+        {menuOpen && (
+          <div className="md:hidden bg-charcoal border-t border-gold/10 py-4">
+            {links.map((l) => (
+              <a
+                key={l.label}
+                href={l.href}
+                className="block px-4 py-3 text-cream-dark hover:text-gold hover:bg-charcoal-light transition-colors font-body"
+                onClick={() => setMenuOpen(false)}
+                data-ocid="nav.link"
               >
-                <h3 className="font-display text-xl font-bold text-charcoal">
-                  Send a Message
-                </h3>
-                <div className="space-y-1">
-                  <label
-                    className="text-sm font-medium text-charcoal"
-                    htmlFor="contact-name"
-                  >
-                    Your Name
-                  </label>
-                  <Input
-                    id="contact-name"
-                    value={formData.name}
-                    onChange={(e) =>
-                      setFormData((p) => ({ ...p, name: e.target.value }))
-                    }
-                    placeholder="Full name"
-                    required
-                    className="border-border focus:ring-charcoal"
-                    data-ocid="contact.input"
-                  />
-                </div>
-                <div className="space-y-1">
-                  <label
-                    className="text-sm font-medium text-charcoal"
-                    htmlFor="contact-email"
-                  >
-                    Email Address
-                  </label>
-                  <Input
-                    id="contact-email"
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) =>
-                      setFormData((p) => ({ ...p, email: e.target.value }))
-                    }
-                    placeholder="your@email.com"
-                    required
-                    className="border-border focus:ring-charcoal"
-                    data-ocid="contact.input"
-                  />
-                </div>
-                <div className="space-y-1">
-                  <label
-                    className="text-sm font-medium text-charcoal"
-                    htmlFor="contact-message"
-                  >
-                    Message
-                  </label>
-                  <Textarea
-                    id="contact-message"
-                    value={formData.message}
-                    onChange={(e) =>
-                      setFormData((p) => ({ ...p, message: e.target.value }))
-                    }
-                    placeholder="Tell us about your travel plans..."
-                    required
-                    rows={4}
-                    className="border-border focus:ring-charcoal resize-none"
-                    data-ocid="contact.textarea"
-                  />
-                </div>
-                <Button
-                  type="submit"
-                  className="w-full bg-charcoal hover:bg-charcoal/80 text-white py-3"
-                  data-ocid="contact.submit_button"
-                >
-                  {formSent ? (
-                    <span data-ocid="contact.success_state">
-                      ✓ Message Sent via WhatsApp!
-                    </span>
-                  ) : (
-                    <>
-                      <MessageCircle className="w-4 h-4 mr-2" /> Send via
-                      WhatsApp
-                    </>
-                  )}
-                </Button>
-              </form>
-            </div>
+                {l.label}
+              </a>
+            ))}
           </div>
-        </section>
-      </main>
+        )}
+      </div>
+    </nav>
+  );
+}
 
-      {/* ── Footer ── */}
-      <footer className="bg-charcoal text-white/70">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 mb-10">
-            {/* Brand */}
-            <div className="lg:col-span-2">
-              <div className="flex items-center gap-3 mb-4">
-                <img
-                  src="/assets/uploads/image_b1a1f18a-1.png"
-                  alt="Travellers Points"
-                  className="h-10 w-auto"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).style.display = "none";
-                  }}
-                />
-                <span className="font-display text-xl font-bold text-white">
-                  Travellers Points
+// ── Hero ───────────────────────────────────────────────────────────────────────
+function Hero() {
+  const [current, setCurrent] = useState(0);
+
+  const next = useCallback(() => {
+    setCurrent((c) => (c + 1) % HERO_IMAGES.length);
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(next, 5000);
+    return () => clearInterval(timer);
+  }, [next]);
+
+  return (
+    <section
+      id="home"
+      className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden"
+    >
+      {/* Slides */}
+      {HERO_IMAGES.map((src, i) => (
+        <div
+          key={src}
+          className="hero-slide"
+          style={{
+            backgroundImage: `url(${src})`,
+            opacity: i === current ? 1 : 0,
+            zIndex: i === current ? 1 : 0,
+          }}
+        />
+      ))}
+
+      {/* Overlay */}
+      <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
+
+      {/* Content */}
+      <div className="relative z-20 text-center px-4 max-w-5xl mx-auto">
+        <p className="font-body text-gold tracking-[0.3em] text-sm md:text-base mb-4 uppercase">
+          Welcome to
+        </p>
+        <h1 className="font-display text-5xl md:text-7xl lg:text-8xl text-gold-gradient mb-6 leading-tight">
+          TRAVELLERS
+          <br />
+          <span className="italic font-normal">Points</span>
+        </h1>
+        <div className="gold-divider mx-auto mb-6" />
+        <p className="font-display text-xl md:text-2xl text-cream italic mb-3">
+          From your dream to the world.
+        </p>
+        <p className="font-body text-cream-dark text-sm md:text-base tracking-widest mb-10">
+          Expert tours to
+          Bhutan&nbsp;•&nbsp;Darjeeling&nbsp;•&nbsp;Sikkim&nbsp;•&nbsp;Nepal&nbsp;•&nbsp;Kashmir
+        </p>
+        <a
+          href="#packages"
+          className="inline-block px-10 py-4 border border-gold text-gold font-body font-medium tracking-widest text-sm uppercase hover:bg-gold hover:text-charcoal transition-all duration-300"
+          data-ocid="hero.primary_button"
+        >
+          Explore Packages
+        </a>
+      </div>
+
+      {/* Slide indicators */}
+      <div className="absolute bottom-8 left-0 right-0 z-20 flex justify-center gap-2">
+        {HERO_IMAGES.map((src, i) => (
+          <button
+            type="button"
+            key={src}
+            onClick={() => setCurrent(i)}
+            className={`w-8 h-0.5 transition-all duration-300 ${
+              i === current ? "bg-gold" : "bg-white/30"
+            }`}
+            aria-label={`Slide ${i + 1}`}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// ── Bhutan Sub-Packages ────────────────────────────────────────────────────────
+const BHUTAN_PACKAGES: Package[] = [
+  {
+    id: "bhutan-4n5d",
+    name: "Bhutan 4 Nights 5 Days",
+    duration: "4 Nights / 5 Days",
+    price: "On Request",
+    pickup: "Bagdogra Airport or NJP Railway Station",
+    image: "/assets/generated/bhutan-tigers-nest.dim_1920x1080.jpg",
+    inclusions: [
+      "Accommodation (4 nights)",
+      "All meals (Breakfast + Dinner)",
+      "AC vehicle",
+      "Bhutan entry permit & visa",
+      "SDF fee",
+      "Sightseeing as per itinerary",
+      "Tour guide",
+    ],
+    itinerary: [
+      {
+        day: "Day 1",
+        title: "Arrival at Phuentsholing",
+        details:
+          "Arrive at Phuentsholing (Bhutan border town). Check-in hotel. Evening local sightseeing: Zangto Pelri Lhakhang, Crocodile Breeding Centre, Market area.",
+      },
+      {
+        day: "Day 2",
+        title: "Phuentsholing to Thimphu (165km, 5–6hrs)",
+        details:
+          "Proceed to Thimphu, Bhutan's capital. Visit Chuzom confluence, Buddha Dordenma statue, National Memorial Chorten, Tashichho Dzong. Overnight Thimphu.",
+      },
+      {
+        day: "Day 3",
+        title: "Thimphu to Punakha (77km, 3hrs)",
+        details:
+          "Cross Dochu La Pass (108 chortens, Himalayan views). Visit Punakha Dzong, Suspension Bridge, Chimi Lhakhang (Fertility Temple). Overnight Punakha.",
+      },
+      {
+        day: "Day 4",
+        title: "Punakha to Paro (125km, 4hrs)",
+        details:
+          "Drive to Paro. Visit National Museum of Bhutan, Rinpung Dzong, Paro town sightseeing. Overnight Paro.",
+      },
+      {
+        day: "Day 5",
+        title: "Paro Departure",
+        details:
+          "Morning at leisure. Drop to Bagdogra Airport or NJP Railway Station. Tour ends with sweet memories of Bhutan.",
+      },
+    ],
+  },
+  {
+    id: "bhutan-5n6d",
+    name: "Bhutan 5 Nights 6 Days",
+    duration: "5 Nights / 6 Days",
+    price: "On Request",
+    pickup: "Bagdogra Airport or NJP Railway Station",
+    image: "/assets/generated/bhutan-punakha-dzong.dim_800x600.jpg",
+    inclusions: [
+      "Accommodation (5 nights)",
+      "All meals (Breakfast + Dinner)",
+      "AC vehicle",
+      "Bhutan entry permit & visa",
+      "SDF fee",
+      "Sightseeing as per itinerary",
+      "Tour guide",
+    ],
+    itinerary: [
+      {
+        day: "Day 1",
+        title: "Arrival at Phuentsholing",
+        details:
+          "Arrive at Phuentsholing. Check-in hotel. Evening local sightseeing: Zangto Pelri Lhakhang, Crocodile Breeding Centre, Market area.",
+      },
+      {
+        day: "Day 2",
+        title: "Phuentsholing to Thimphu (165km, 5–6hrs)",
+        details:
+          "Drive to Thimphu via Chuzom confluence. Visit Buddha Dordenma statue, National Memorial Chorten, Tashichho Dzong. Overnight Thimphu.",
+      },
+      {
+        day: "Day 3",
+        title: "Thimphu to Punakha (77km, 3hrs)",
+        details:
+          "Cross Dochu La Pass. Visit Punakha Dzong, Suspension Bridge, Chimi Lhakhang. Overnight Punakha.",
+      },
+      {
+        day: "Day 4",
+        title: "Punakha to Paro (125km, 4hrs)",
+        details:
+          "Drive to Paro. Visit National Museum, Rinpung Dzong, Paro town. Overnight Paro.",
+      },
+      {
+        day: "Day 5",
+        title: "Paro — Tiger's Nest Hike",
+        details:
+          "Full day Tiger's Nest Monastery (Taktshang) hike (3–4hrs, 900m ascent). Visit Kyichu Lhakhang temple. Overnight Paro.",
+      },
+      {
+        day: "Day 6",
+        title: "Departure",
+        details:
+          "Morning at leisure. Drop to Bagdogra Airport or NJP Railway Station. Tour ends.",
+      },
+    ],
+  },
+  {
+    id: "bhutan-group-6n7d",
+    name: "Bhutan Group Tour",
+    duration: "6 Nights / 7 Days",
+    price: "₹24,500/person",
+    pickup: "Bagdogra Airport or NJP Railway Station",
+    image: "/assets/generated/bhutan-tigers-nest.dim_1920x1080.jpg",
+    inclusions: [
+      "Accommodation (6 nights)",
+      "All meals (Breakfast + Dinner)",
+      "AC vehicle",
+      "Bhutan entry permit & visa",
+      "SDF fee",
+      "Sightseeing as per itinerary",
+      "Tour guide",
+    ],
+    itinerary: [
+      {
+        day: "Day 1",
+        title: "Arrival at Phuentsholing",
+        details:
+          "Check-in hotel. Evening local sightseeing: Zangto Pelri Lhakhang, Crocodile Breeding Centre, Market area.",
+      },
+      {
+        day: "Day 2",
+        title: "Phuentsholing to Thimphu (165km, 5–6hrs)",
+        details:
+          "Visit Chuzom confluence, Buddha Dordenma statue, National Memorial Chorten, Tashichho Dzong.",
+      },
+      {
+        day: "Day 3",
+        title: "Thimphu to Punakha (77km, 3hrs)",
+        details:
+          "Dochu La Pass (108 chortens), Punakha Dzong, Suspension Bridge, Chimi Lhakhang (Fertility Temple).",
+      },
+      {
+        day: "Day 4",
+        title: "Punakha to Paro (125km, 4hrs)",
+        details:
+          "National Museum of Bhutan, Rinpung Dzong, Paro town sightseeing.",
+      },
+      {
+        day: "Day 5",
+        title: "Paro — Tiger's Nest",
+        details:
+          "Tiger's Nest Monastery (Taktshang) hike (3–4hrs). Visit Kyichu Lhakhang temple.",
+      },
+      {
+        day: "Day 6",
+        title: "Paro to Phuentsholing (165km)",
+        details: "Shopping, overnight Phuentsholing.",
+      },
+      {
+        day: "Day 7",
+        title: "Departure",
+        details: "Drop to Bagdogra Airport or NJP Railway Station.",
+      },
+    ],
+  },
+  {
+    id: "bhutan-7n8d",
+    name: "Bhutan 7 Nights 8 Days",
+    duration: "7 Nights / 8 Days",
+    price: "On Request",
+    pickup: "Bagdogra Airport or NJP Railway Station",
+    image: "/assets/generated/bhutan-punakha-dzong.dim_800x600.jpg",
+    inclusions: [
+      "Accommodation (7 nights)",
+      "All meals (Breakfast + Dinner)",
+      "AC vehicle",
+      "Bhutan entry permit & visa",
+      "SDF fee",
+      "Sightseeing as per itinerary",
+      "Tour guide",
+    ],
+    itinerary: [
+      {
+        day: "Day 1",
+        title: "Arrival at Phuentsholing",
+        details:
+          "Arrive at Phuentsholing. Check-in hotel. Evening local sightseeing: Zangto Pelri Lhakhang, Crocodile Breeding Centre, Market area.",
+      },
+      {
+        day: "Day 2",
+        title: "Phuentsholing to Thimphu (165km, 5–6hrs)",
+        details:
+          "Drive to Thimphu. Visit Chuzom confluence, Buddha Dordenma statue, National Memorial Chorten, Tashichho Dzong. Overnight Thimphu.",
+      },
+      {
+        day: "Day 3",
+        title: "Thimphu — Dochula Pass & Punakha",
+        details:
+          "Morning city tour: Folk Heritage Museum, Textile Museum, Motithang Takin Preserve. Cross Dochu La Pass (3,100m). Punakha Dzong, Suspension Bridge. Overnight Punakha.",
+      },
+      {
+        day: "Day 4",
+        title: "Wangdue Phodrang Exploration",
+        details:
+          "Visit Wangdue Phodrang Dzong (restored 17th-century fortress), Gangtey Gonpa (Black-necked Crane Sanctuary), Phobjikha Valley scenic drive. Overnight Punakha/Wangdue.",
+      },
+      {
+        day: "Day 5",
+        title: "Punakha to Paro (125km, 4hrs)",
+        details:
+          "Drive to Paro. Visit National Museum of Bhutan, Rinpung Dzong, Paro town sightseeing. Overnight Paro.",
+      },
+      {
+        day: "Day 6",
+        title: "Paro — Tiger's Nest Hike",
+        details:
+          "Full day Tiger's Nest Monastery (Taktshang) hike (3–4hrs). Visit Kyichu Lhakhang temple. Overnight Paro.",
+      },
+      {
+        day: "Day 7",
+        title: "Paro Local Sightseeing",
+        details:
+          "Visit Drukgyal Dzong (ruins of ancient fortress), Chelela Pass (highest motorable road, 3,810m), Bondey Village. Evening leisure in Paro market. Overnight Phuentsholing.",
+      },
+      {
+        day: "Day 8",
+        title: "Departure",
+        details:
+          "Drop to Bagdogra Airport or NJP Railway Station. Tour ends with unforgettable Bhutan memories.",
+      },
+    ],
+  },
+];
+
+// ── Bhutan Packages Modal ──────────────────────────────────────────────────────
+function BhutanSubPackageCard({ pkg, index }: { pkg: Package; index: number }) {
+  const [open, setOpen] = useState(false);
+
+  const waMsg = encodeURIComponent(
+    `Hi, I am interested in the ${pkg.name} (${pkg.duration}). Please share details and pricing.`,
+  );
+  const waLink = `https://wa.me/917719264029?text=${waMsg}`;
+
+  return (
+    <div
+      className="bg-charcoal-light rounded-sm overflow-hidden shadow-card border border-gold/10 flex flex-col"
+      data-ocid={`bhutan.item.${index + 1}`}
+    >
+      <div className="relative h-40 overflow-hidden">
+        <img
+          src={pkg.image}
+          alt={pkg.name}
+          className="w-full h-full object-cover"
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 to-transparent" />
+        <div className="absolute bottom-2 left-3">
+          <span className="text-xs font-body text-cream-dark bg-black/60 px-2 py-0.5 rounded-sm">
+            {pkg.duration}
+          </span>
+        </div>
+      </div>
+
+      <div
+        className="px-4 pt-3 pb-2 border-b border-gold/20"
+        style={{
+          background:
+            "linear-gradient(135deg, oklch(0.62 0.13 82 / 0.15), oklch(0.75 0.13 82 / 0.05))",
+        }}
+      >
+        <h4 className="font-display text-base text-gold font-semibold">
+          {pkg.name}
+        </h4>
+        <p className="font-body text-cream-dark text-xs mt-0.5">
+          {pkg.duration}
+        </p>
+      </div>
+
+      <div className="px-4 py-3 space-y-1.5 flex-1">
+        <div className="flex items-center gap-2">
+          <span className="text-gold text-xs">💰</span>
+          <span className="font-body text-cream font-semibold text-sm">
+            {pkg.price}
+          </span>
+        </div>
+        <div className="flex items-start gap-2">
+          <span className="text-gold text-xs mt-0.5">📍</span>
+          <span className="font-body text-cream-dark text-xs">
+            {pkg.pickup}
+          </span>
+        </div>
+        <p className="font-body text-gold text-xs italic">
+          Customized package available on request
+        </p>
+      </div>
+
+      <div className="px-4 pb-2">
+        <button
+          type="button"
+          onClick={() => setOpen(!open)}
+          className="w-full flex items-center justify-between py-1.5 px-3 border border-gold/30 text-gold text-xs font-body hover:bg-gold/10 transition-colors rounded-sm"
+          data-ocid={`bhutan.toggle.${index + 1}`}
+        >
+          <span>{open ? "Hide Itinerary" : "View Itinerary"}</span>
+          <span
+            className={`transition-transform duration-300 ${open ? "rotate-180" : ""}`}
+          >
+            ▼
+          </span>
+        </button>
+      </div>
+
+      {open && (
+        <div className="px-4 pb-4 space-y-2.5 border-t border-gold/10 pt-3">
+          {pkg.itinerary.map((day) => (
+            <div key={day.day} className="flex gap-2">
+              <div className="flex-shrink-0">
+                <span className="inline-block bg-gold text-charcoal text-xs font-body font-semibold px-2 py-0.5 rounded-sm">
+                  {day.day}
                 </span>
               </div>
-              <p className="text-sm leading-relaxed mb-4 max-w-xs text-white/70">
-                Premium tour packages from Jaigaon, West Bengal. Bhutan,
-                Darjeeling, Sikkim, Nepal & more.
-              </p>
-              <div className="flex items-center gap-2 text-sm">
-                <MapPin className="w-4 h-4 text-gold" />
-                Jaigaon, Alipurduar, West Bengal
-              </div>
-              <div className="flex items-center gap-2 text-sm mt-1">
-                <Phone className="w-4 h-4 text-gold" />
-                +91 7719264029
+              <div>
+                <p className="font-body text-cream text-xs font-medium">
+                  {day.title}
+                </p>
+                <p className="font-body text-cream-dark text-xs mt-0.5 leading-relaxed">
+                  {day.details}
+                </p>
               </div>
             </div>
-
-            {/* Quick Links */}
-            <div>
-              <h4 className="text-white font-semibold mb-4">Quick Links</h4>
-              <ul className="space-y-2 text-sm">
-                {[
-                  ["#home", "Home"],
-                  ["#packages", "Packages"],
-                  ["#services", "Services"],
-                  ["#taxi", "Taxi"],
-                  ["#reviews", "Reviews"],
-                  ["#contact", "Contact"],
-                ].map(([href, label]) => (
-                  <li key={href}>
-                    <a
-                      href={href}
-                      className="hover:text-gold transition-colors"
-                      data-ocid="footer.link"
-                    >
-                      {label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Destinations */}
-            <div>
-              <h4 className="text-white font-semibold mb-4">Destinations</h4>
-              <ul className="space-y-2 text-sm">
-                {[
-                  "Bhutan",
-                  "Darjeeling",
-                  "Sikkim",
-                  "Nepal",
-                  "Manali",
-                  "Shimla",
-                  "Kashmir",
-                  "Mathura",
-                ].map((d) => (
-                  <li key={d}>
-                    <a
-                      href="#packages"
-                      className="hover:text-gold transition-colors"
-                      data-ocid="footer.link"
-                    >
-                      {d}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          <div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
-            <p className="text-white/60">
-              © {new Date().getFullYear()} Travellers Points. All rights
-              reserved.
+          ))}
+          <div className="mt-3 p-2.5 bg-charcoal/50 rounded-sm border border-gold/10">
+            <p className="font-body text-gold text-xs font-semibold uppercase tracking-wider mb-1.5">
+              Inclusions
             </p>
-            <p className="text-white/50">
-              Built with ❤️ using{" "}
-              <a
-                href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(window.location.hostname)}`}
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-gold transition-colors"
-              >
-                caffeine.ai
-              </a>
-            </p>
+            <ul className="space-y-1">
+              {pkg.inclusions.map((inc) => (
+                <li
+                  key={inc}
+                  className="font-body text-cream-dark text-xs flex items-center gap-1.5"
+                >
+                  <span className="text-gold">✓</span> {inc}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
-      </footer>
+      )}
 
-      {/* Floating WhatsApp Button */}
-      <a
-        href={waLink(
-          "Hi Travellers Points! I would like to enquire about your tour packages.",
-        )}
-        target="_blank"
-        rel="noreferrer"
-        className="fixed bottom-6 right-6 z-50 bg-amber-500 hover:bg-amber-600 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-luxury transition-all duration-200 hover:scale-110"
-        aria-label="Chat on WhatsApp"
-        data-ocid="nav.primary_button"
+      <div className="px-4 pb-4 pt-2">
+        <a
+          href={waLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center gap-2 w-full py-2.5 rounded-sm font-body font-semibold text-white text-xs transition-all hover:opacity-90"
+          style={{ backgroundColor: "#25D366" }}
+          data-ocid={`bhutan.primary_button.${index + 1}`}
+        >
+          <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            className="w-3.5 h-3.5 fill-current"
+          >
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+          </svg>
+          Book on Request
+        </a>
+      </div>
+    </div>
+  );
+}
+
+function BhutanPackagesModal({
+  open,
+  onClose,
+}: { open: boolean; onClose: () => void }) {
+  return (
+    <Dialog open={open} onOpenChange={onClose}>
+      <DialogContent
+        className="max-w-5xl w-full bg-charcoal border border-gold/30 text-cream max-h-[90vh] overflow-y-auto"
+        data-ocid="bhutan.dialog"
       >
-        <MessageCircle className="w-7 h-7" />
-      </a>
+        <DialogHeader>
+          <DialogTitle className="font-display text-2xl text-gold text-center">
+            Bhutan Tour Packages
+          </DialogTitle>
+          <p className="font-body text-cream-dark text-sm text-center mt-1">
+            Choose from our curated Bhutan experiences — from quick getaways to
+            immersive journeys
+          </p>
+          <div className="gold-divider" />
+        </DialogHeader>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-5 mt-2">
+          {BHUTAN_PACKAGES.map((pkg, i) => (
+            <BhutanSubPackageCard key={pkg.id} pkg={pkg} index={i} />
+          ))}
+        </div>
+        <div className="text-center mt-4 pt-4 border-t border-gold/20">
+          <p className="font-body text-cream-dark text-xs">
+            All packages include Bhutan entry permits, SDF fee, accommodation,
+            meals & guided sightseeing.
+            <br />
+            For custom itineraries, contact us on WhatsApp.
+          </p>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+// ── Package Card ───────────────────────────────────────────────────────────────
+function PackageCard({ pkg, index }: { pkg: Package; index: number }) {
+  const [open, setOpen] = useState(false);
+  const [bhutanModalOpen, setBhutanModalOpen] = useState(false);
+  const isBhutan = pkg.id === "bhutan-group" || pkg.id === "bhutan-private";
+
+  return (
+    <div
+      className="package-card bg-charcoal-light rounded-sm overflow-hidden shadow-card border border-gold/10"
+      data-ocid={`packages.item.${index + 1}`}
+    >
+      {/* Image */}
+      <div className="relative h-48 overflow-hidden">
+        <img
+          src={pkg.image}
+          alt={pkg.name}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 to-transparent" />
+        <div className="absolute bottom-3 left-4">
+          <span className="text-xs font-body text-cream-dark bg-black/50 px-2 py-1 rounded-sm">
+            {pkg.duration}
+          </span>
+        </div>
+      </div>
+
+      {/* Header */}
+      <div
+        className="px-5 pt-4 pb-3 border-b border-gold/20"
+        style={{
+          background:
+            "linear-gradient(135deg, oklch(0.62 0.13 82 / 0.15), oklch(0.75 0.13 82 / 0.05))",
+        }}
+      >
+        <h3 className="font-display text-lg text-gold font-semibold">
+          {pkg.name}
+        </h3>
+        <p className="font-body text-cream-dark text-sm mt-0.5">
+          {pkg.duration}
+        </p>
+      </div>
+
+      {/* Body */}
+      <div className="px-5 py-4 space-y-2">
+        <div className="flex items-center gap-2">
+          <span className="text-gold text-sm">💰</span>
+          <span className="font-body text-cream font-semibold">
+            {pkg.price}
+          </span>
+        </div>
+        <div className="flex items-start gap-2">
+          <span className="text-gold text-sm mt-0.5">📍</span>
+          <span className="font-body text-cream-dark text-sm">
+            {pkg.pickup}
+          </span>
+        </div>
+        <p className="font-body text-gold text-xs italic mt-2">
+          Customized package available on request
+        </p>
+      </div>
+
+      {/* Toggle itinerary */}
+      <div className="px-5 pb-3">
+        <button
+          type="button"
+          onClick={() => setOpen(!open)}
+          className="w-full flex items-center justify-between py-2 px-3 border border-gold/30 text-gold text-sm font-body hover:bg-gold/10 transition-colors rounded-sm"
+          data-ocid={`packages.toggle.${index + 1}`}
+        >
+          <span>{open ? "Hide Itinerary" : "View Itinerary"}</span>
+          <span
+            className={`transition-transform duration-300 ${open ? "rotate-180" : ""}`}
+          >
+            ▼
+          </span>
+        </button>
+      </div>
+
+      {/* Itinerary */}
+      {open && (
+        <div className="px-5 pb-5 space-y-3 border-t border-gold/10 pt-4">
+          {pkg.itinerary.map((day) => (
+            <div key={day.day} className="flex gap-3">
+              <div className="flex-shrink-0">
+                <span className="inline-block bg-gold text-charcoal text-xs font-body font-semibold px-2 py-0.5 rounded-sm">
+                  {day.day}
+                </span>
+              </div>
+              <div>
+                <p className="font-body text-cream text-sm font-medium">
+                  {day.title}
+                </p>
+                <p className="font-body text-cream-dark text-xs mt-0.5 leading-relaxed">
+                  {day.details}
+                </p>
+              </div>
+            </div>
+          ))}
+
+          {/* Inclusions */}
+          <div className="mt-4 p-3 bg-charcoal/50 rounded-sm border border-gold/10">
+            <p className="font-body text-gold text-xs font-semibold uppercase tracking-wider mb-2">
+              Inclusions
+            </p>
+            <ul className="space-y-1">
+              {pkg.inclusions.map((inc) => (
+                <li
+                  key={inc}
+                  className="font-body text-cream-dark text-xs flex items-center gap-1.5"
+                >
+                  <span className="text-gold">✓</span> {inc}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* WhatsApp book button */}
+          <a
+            href={waLink(
+              `Hi, I am interested in booking the ${pkg.name} tour package. Please share details.`,
+            )}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 w-full py-3 mt-3 rounded-sm font-body font-semibold text-white text-sm transition-all hover:opacity-90"
+            style={{ backgroundColor: "#25D366" }}
+            data-ocid={`packages.primary_button.${index + 1}`}
+          >
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              className="w-4 h-4 fill-current"
+            >
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+            </svg>
+            Book on Request
+          </a>
+        </div>
+      )}
+
+      {/* Bhutan Packages CTA */}
+      {isBhutan && (
+        <div className="px-5 pb-5 pt-2 border-t border-gold/20">
+          <button
+            type="button"
+            onClick={() => setBhutanModalOpen(true)}
+            className="w-full py-3 px-4 bg-gold text-charcoal font-body font-bold text-sm rounded-sm hover:bg-gold/90 transition-colors flex items-center justify-center gap-2"
+            data-ocid={`packages.open_modal_button.${index + 1}`}
+          >
+            <span>🏔️</span>
+            View All Bhutan Packages
+          </button>
+          <BhutanPackagesModal
+            open={bhutanModalOpen}
+            onClose={() => setBhutanModalOpen(false)}
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── Packages Section ───────────────────────────────────────────────────────────
+const PKG_BG_IMAGES = [
+  "/assets/generated/bg-bhutan-tigers-nest.dim_1920x1080.jpg",
+  "/assets/generated/bg-darjeeling-tea-hills.dim_1920x1080.jpg",
+  "/assets/generated/bg-sikkim-tsomgo-lake.dim_1920x1080.jpg",
+];
+
+function PackagesSection() {
+  const [pkgBg, setPkgBg] = useState(0);
+  useEffect(() => {
+    const t = setInterval(
+      () => setPkgBg((p) => (p + 1) % PKG_BG_IMAGES.length),
+      5000,
+    );
+    return () => clearInterval(t);
+  }, []);
+  return (
+    <section id="packages" className="py-20 relative overflow-hidden">
+      {/* Sliding background */}
+      {PKG_BG_IMAGES.map((src, i) => (
+        <div
+          key={src}
+          className="absolute inset-0 bg-cover bg-center transition-opacity duration-1000"
+          style={{
+            backgroundImage: `url(${src})`,
+            opacity: i === pkgBg ? 1 : 0,
+            zIndex: 0,
+          }}
+        />
+      ))}
+      {/* Dark overlay so text & cards remain readable */}
+      <div className="absolute inset-0 bg-black/70 z-10" />
+      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-14">
+          <p className="font-body text-gold tracking-[0.25em] text-sm uppercase mb-3">
+            Explore
+          </p>
+          <h2 className="font-display text-4xl md:text-5xl text-cream mb-4">
+            Our Tour Packages
+          </h2>
+          <div className="gold-divider" />
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {PACKAGES.map((pkg, i) => (
+            <PackageCard key={pkg.id} pkg={pkg} index={i} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── Service Modal ──────────────────────────────────────────────────────────────
+function ServiceCard({ service, index }: { service: Service; index: number }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className="group bg-charcoal-light border border-gold/10 rounded-sm p-8 text-center hover:border-gold/40 hover:shadow-glow transition-all duration-300 w-full"
+        data-ocid={`services.open_modal_button.${index + 1}`}
+      >
+        <span className="text-5xl block mb-4">{service.icon}</span>
+        <h3 className="font-display text-xl text-gold mb-2">{service.name}</h3>
+        <p className="font-body text-cream-dark text-sm">
+          {service.description}
+        </p>
+        <span className="inline-block mt-4 text-xs font-body text-gold/60 group-hover:text-gold transition-colors">
+          Click for details →
+        </span>
+      </button>
+
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent
+          className="bg-charcoal-light border border-gold/20 text-cream max-w-md"
+          data-ocid={`services.dialog.${index + 1}`}
+        >
+          <DialogHeader>
+            <DialogTitle className="font-display text-2xl text-gold flex items-center gap-3">
+              <span>{service.icon}</span> {service.name}
+            </DialogTitle>
+          </DialogHeader>
+          <p className="font-body text-cream-dark leading-relaxed text-sm">
+            {service.detail}
+          </p>
+          <div className="flex gap-3 mt-4">
+            <a
+              href={waLink(
+                `Hi, I would like to enquire about your ${service.name} service.`,
+              )}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 flex items-center justify-center gap-2 py-3 rounded-sm font-body font-semibold text-white text-sm hover:opacity-90 transition-opacity"
+              style={{ backgroundColor: "#25D366" }}
+              data-ocid={`services.primary_button.${index + 1}`}
+            >
+              <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                className="w-4 h-4 fill-current"
+              >
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+              </svg>
+              Enquire on WhatsApp
+            </a>
+            <Button
+              variant="outline"
+              onClick={() => setOpen(false)}
+              className="border-gold/30 text-cream hover:bg-gold/10"
+              data-ocid={`services.close_button.${index + 1}`}
+            >
+              Close
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
+  );
+}
+
+function ServicesSection() {
+  return (
+    <section
+      id="services"
+      className="py-20"
+      style={{ background: "oklch(0.16 0.02 250)" }}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-14">
+          <p className="font-body text-gold tracking-[0.25em] text-sm uppercase mb-3">
+            What We Offer
+          </p>
+          <h2 className="font-display text-4xl md:text-5xl text-cream mb-4">
+            Our Services
+          </h2>
+          <div className="gold-divider" />
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {SERVICES.map((s, i) => (
+            <ServiceCard key={s.name} service={s} index={i} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── Taxi Section ───────────────────────────────────────────────────────────────
+function TaxiSection() {
+  return (
+    <section id="taxi" className="py-20 bg-background">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-14">
+          <p className="font-body text-gold tracking-[0.25em] text-sm uppercase mb-3">
+            Transportation
+          </p>
+          <h2 className="font-display text-4xl md:text-5xl text-cream mb-4">
+            Local Taxi Services
+          </h2>
+          <div className="gold-divider" />
+          <p className="font-body text-cream-dark mt-4 text-sm">
+            Reliable taxi services from Jaigaon to key destinations
+          </p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
+          {TAXI_ROUTES.map((route) => (
+            <div
+              key={route.to}
+              className="bg-charcoal-light border border-gold/10 rounded-sm p-5 flex items-center gap-4 hover:border-gold/30 transition-colors"
+            >
+              <span className="text-3xl">🚗</span>
+              <div>
+                <p className="font-body text-cream font-medium text-sm">
+                  {route.from} → {route.to}
+                </p>
+                <p className="font-body text-gold text-xs mt-1">
+                  Contact for pricing
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="text-center">
+          <a
+            href={waLink(
+              "Hi, I would like to enquire about taxi services from Jaigaon.",
+            )}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-sm font-body font-semibold text-white hover:opacity-90 transition-opacity"
+            style={{ backgroundColor: "#25D366" }}
+            data-ocid="taxi.primary_button"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              className="w-5 h-5 fill-current"
+            >
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+            </svg>
+            Enquire About Pricing
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── Reviews Section ────────────────────────────────────────────────────────────
+function ReviewsSection() {
+  return (
+    <section
+      id="reviews"
+      className="py-20"
+      style={{ background: "oklch(0.16 0.02 250)" }}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-14">
+          <p className="font-body text-gold tracking-[0.25em] text-sm uppercase mb-3">
+            Testimonials
+          </p>
+          <h2 className="font-display text-4xl md:text-5xl text-cream mb-4">
+            What Our Travellers Say
+          </h2>
+          <div className="gold-divider" />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {REVIEWS.map((review, i) => (
+            <div
+              key={review.author}
+              className="bg-charcoal-light border border-gold/10 rounded-sm p-6 hover:border-gold/30 transition-all duration-300"
+              data-ocid={`reviews.item.${i + 1}`}
+            >
+              <div className="flex gap-1 mb-4">
+                {["1", "2", "3", "4", "5"].map((s) => (
+                  <span key={s} className="text-gold text-sm">
+                    ★
+                  </span>
+                ))}
+              </div>
+              <p className="font-body text-cream-dark text-sm leading-relaxed italic mb-5">
+                &ldquo;{review.text}&rdquo;
+              </p>
+              <div className="flex items-center gap-3 pt-4 border-t border-gold/10">
+                <div className="w-9 h-9 rounded-full bg-gold/20 border border-gold/30 flex items-center justify-center">
+                  <span className="font-display text-gold text-sm font-semibold">
+                    {review.author.charAt(0)}
+                  </span>
+                </div>
+                <div>
+                  <p className="font-body text-cream text-sm font-medium">
+                    {review.author}
+                  </p>
+                  <p className="font-body text-cream-dark text-xs">
+                    {review.location}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── Contact Section ────────────────────────────────────────────────────────────
+function ContactSection() {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+  const [sent, setSent] = useState(false);
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const msg = `Hi, I'm ${form.name} (${form.phone}). ${form.message}`;
+    window.open(waLink(msg), "_blank");
+    setSent(true);
+    setTimeout(() => setSent(false), 3000);
+  }
+
+  return (
+    <section id="contact" className="py-20 bg-background">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-14">
+          <p className="font-body text-gold tracking-[0.25em] text-sm uppercase mb-3">
+            Get In Touch
+          </p>
+          <h2 className="font-display text-4xl md:text-5xl text-cream mb-4">
+            Contact Us
+          </h2>
+          <div className="gold-divider" />
+          <p className="font-body text-cream-dark mt-4 text-sm">
+            Contact us to plan your dream tour
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* Info */}
+          <div className="space-y-8">
+            <div>
+              <h3 className="font-display text-2xl text-gold mb-6">
+                Travellers Points
+              </h3>
+              <p className="font-body text-cream-dark text-sm leading-relaxed">
+                Your trusted travel partner for unforgettable journeys to
+                Bhutan, Darjeeling, Sikkim, Nepal, Manali, Shimla, Kashmir, and
+                Mathura. From your dream to the world.
+              </p>
+            </div>
+            <div className="space-y-4">
+              {[
+                {
+                  icon: "📍",
+                  label: "Address",
+                  value: "Jaigaon, Alipurduar, West Bengal",
+                },
+                { icon: "📞", label: "Phone", value: "7719264029" },
+                { icon: "💬", label: "WhatsApp", value: "7719264029" },
+              ].map((item) => (
+                <div key={item.label} className="flex items-start gap-4">
+                  <span className="text-xl mt-0.5">{item.icon}</span>
+                  <div>
+                    <p className="font-body text-gold text-xs font-semibold uppercase tracking-wider">
+                      {item.label}
+                    </p>
+                    <p className="font-body text-cream text-sm mt-0.5">
+                      {item.value}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <a
+              href={waLink(
+                "Hi, I would like to plan a tour with Travellers Points.",
+              )}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-sm font-body font-semibold text-white hover:opacity-90 transition-opacity"
+              style={{ backgroundColor: "#25D366" }}
+              data-ocid="contact.primary_button"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                className="w-5 h-5 fill-current"
+              >
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+              </svg>
+              Chat on WhatsApp
+            </a>
+          </div>
+
+          {/* Form */}
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-5 bg-charcoal-light border border-gold/10 rounded-sm p-8"
+          >
+            <div className="space-y-1.5">
+              <Label
+                htmlFor="name"
+                className="font-body text-cream-dark text-xs uppercase tracking-wider"
+              >
+                Your Name
+              </Label>
+              <Input
+                id="name"
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                required
+                placeholder="Enter your name"
+                className="bg-charcoal border-gold/20 text-cream placeholder:text-cream-dark/60 focus:border-gold/50 focus:ring-0"
+                data-ocid="contact.input"
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label
+                htmlFor="email"
+                className="font-body text-cream-dark text-xs uppercase tracking-wider"
+              >
+                Email
+              </Label>
+              <Input
+                id="email"
+                type="email"
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                placeholder="Enter your email"
+                className="bg-charcoal border-gold/20 text-cream placeholder:text-cream-dark/60 focus:border-gold/50 focus:ring-0"
+                data-ocid="contact.input"
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label
+                htmlFor="phone"
+                className="font-body text-cream-dark text-xs uppercase tracking-wider"
+              >
+                Phone Number
+              </Label>
+              <Input
+                id="phone"
+                value={form.phone}
+                onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                required
+                placeholder="Enter your phone number"
+                className="bg-charcoal border-gold/20 text-cream placeholder:text-cream-dark/60 focus:border-gold/50 focus:ring-0"
+                data-ocid="contact.input"
+              />
+            </div>
+            <div className="space-y-1.5">
+              <Label
+                htmlFor="message"
+                className="font-body text-cream-dark text-xs uppercase tracking-wider"
+              >
+                Message
+              </Label>
+              <Textarea
+                id="message"
+                value={form.message}
+                onChange={(e) => setForm({ ...form, message: e.target.value })}
+                required
+                placeholder="Tell us about your dream trip..."
+                rows={4}
+                className="bg-charcoal border-gold/20 text-cream placeholder:text-cream-dark/60 focus:border-gold/50 focus:ring-0 resize-none"
+                data-ocid="contact.textarea"
+              />
+            </div>
+            <button
+              type="submit"
+              className="w-full py-3.5 bg-gold text-charcoal font-body font-semibold tracking-widest text-sm uppercase hover:bg-gold-light transition-colors duration-200 rounded-sm"
+              data-ocid="contact.submit_button"
+            >
+              {sent ? "Message Sent! ✓" : "Send Message"}
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── Footer ─────────────────────────────────────────────────────────────────────
+function Footer() {
+  const year = new Date().getFullYear();
+  const hostname =
+    typeof window !== "undefined" ? window.location.hostname : "";
+  return (
+    <footer
+      className="py-12 border-t border-gold/10"
+      style={{ background: "oklch(0.12 0.02 250)" }}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
+          {/* Brand */}
+          <div>
+            <div className="flex items-center gap-3 mb-4">
+              <img
+                src="/assets/uploads/image_b1a1f18a-1.png"
+                alt="Travellers Points"
+                className="h-10 w-auto"
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).style.display = "none";
+                }}
+              />
+              <span className="font-display text-lg text-gold">
+                Travellers Points
+              </span>
+            </div>
+            <p className="font-display text-cream-dark text-sm italic">
+              From your dream to the world.
+            </p>
+            <p className="font-body text-cream-dark/90 text-xs mt-3 leading-relaxed">
+              Expert travel agency specializing in tours to Bhutan, Darjeeling,
+              Sikkim, Nepal, Manali, Shimla, Kashmir, and Mathura.
+            </p>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h4 className="font-body text-gold text-xs uppercase tracking-wider font-semibold mb-4">
+              Quick Links
+            </h4>
+            <ul className="space-y-2">
+              {[
+                "Home",
+                "Packages",
+                "Services",
+                "Taxi",
+                "Reviews",
+                "Contact",
+              ].map((link) => (
+                <li key={link}>
+                  <a
+                    href={`#${link.toLowerCase()}`}
+                    className="font-body text-cream-dark text-sm hover:text-gold transition-colors"
+                    data-ocid="nav.link"
+                  >
+                    {link}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h4 className="font-body text-gold text-xs uppercase tracking-wider font-semibold mb-4">
+              Contact
+            </h4>
+            <address className="not-italic space-y-2">
+              <p className="font-body text-cream-dark text-sm">
+                Jaigaon, Alipurduar
+              </p>
+              <p className="font-body text-cream-dark text-sm">
+                West Bengal, India
+              </p>
+              <p className="font-body text-cream-dark text-sm mt-2">
+                <a
+                  href="tel:7719264029"
+                  className="hover:text-gold transition-colors"
+                >
+                  📞 7719264029
+                </a>
+              </p>
+              <p className="font-body text-cream-dark text-sm">
+                <a
+                  href={WA_BASE}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-gold transition-colors"
+                >
+                  💬 WhatsApp: 7719264029
+                </a>
+              </p>
+            </address>
+          </div>
+        </div>
+
+        <div className="border-t border-gold/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="font-body text-cream-dark/80 text-xs">
+            © {year} Travellers Points. All rights reserved.
+          </p>
+          <p className="font-body text-cream-dark/60 text-xs">
+            Built with ❤️ using{" "}
+            <a
+              href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(hostname)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-gold transition-colors"
+            >
+              caffeine.ai
+            </a>
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+// ── WhatsApp Float ─────────────────────────────────────────────────────────────
+function WhatsAppFloat() {
+  return (
+    <a
+      href={WA_BASE}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="wa-float fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full flex items-center justify-center shadow-luxury hover:scale-110 transition-transform duration-200"
+      style={{ backgroundColor: "#25D366" }}
+      data-ocid="whatsapp.button"
+    >
+      <span className="sr-only">Chat on WhatsApp</span>
+      <svg
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        className="w-7 h-7 fill-white"
+      >
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+      </svg>
+    </a>
+  );
+}
+
+// ── App ────────────────────────────────────────────────────────────────────────
+export default function App() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    function onScroll() {
+      setScrolled(window.scrollY > 60);
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-background text-foreground font-body">
+      <Navbar scrolled={scrolled} />
+      <main>
+        <Hero />
+        <PackagesSection />
+        <ServicesSection />
+        <TaxiSection />
+        <ReviewsSection />
+        <ContactSection />
+      </main>
+      <Footer />
+      <WhatsAppFloat />
     </div>
   );
 }
