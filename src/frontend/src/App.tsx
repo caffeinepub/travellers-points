@@ -1079,7 +1079,7 @@ function GallerySection() {
             Traveller Point.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div className="overflow-hidden rounded-sm shadow-lg border border-gold/20">
             <img
               src="/assets/uploads/IMG_20260319_002523-2.png"
@@ -1107,6 +1107,66 @@ function GallerySection() {
               </p>
               <p className="font-body text-gray-500 text-sm mt-1">
                 Travellers Point Bhutan Group Tour 2024
+              </p>
+            </div>
+          </div>
+          <div className="overflow-hidden rounded-sm shadow-lg border border-gold/20">
+            <img
+              src="/assets/uploads/Bhutan-Group-Tour-1920x960-1.jpg"
+              alt="Traveller Point group at Punakha Dzong, Bhutan"
+              className="w-full h-80 object-cover hover:scale-105 transition-transform duration-500"
+            />
+            <div className="p-4 bg-orange-50">
+              <p className="font-display text-gray-900 text-lg">
+                Punakha Dzong, Bhutan
+              </p>
+              <p className="font-body text-gray-500 text-sm mt-1">
+                Traveller Point group tour at Punakha
+              </p>
+            </div>
+          </div>
+          <div className="overflow-hidden rounded-sm shadow-lg border border-gold/20">
+            <img
+              src="/assets/uploads/IMG_20260319_022230-2.png"
+              alt="Rise of Group Tour - Travellers Point"
+              className="w-full h-80 object-cover hover:scale-105 transition-transform duration-500"
+            />
+            <div className="p-4 bg-orange-50">
+              <p className="font-display text-gray-900 text-lg">
+                Rise of Group Tour
+              </p>
+              <p className="font-body text-gray-500 text-sm mt-1">
+                Join Traveller Point group tours to Bhutan
+              </p>
+            </div>
+          </div>
+          <div className="overflow-hidden rounded-sm shadow-lg border border-gold/20">
+            <img
+              src="/assets/uploads/1773868851113-3.png"
+              alt="Travellers Point group at Punakha with banner"
+              className="w-full h-80 object-cover hover:scale-105 transition-transform duration-500"
+            />
+            <div className="p-4 bg-orange-50">
+              <p className="font-display text-gray-900 text-lg">
+                Punakha, Bhutan
+              </p>
+              <p className="font-body text-gray-500 text-sm mt-1">
+                Travellers Point Jaigaon group in Bhutan
+              </p>
+            </div>
+          </div>
+          <div className="overflow-hidden rounded-sm shadow-lg border border-gold/20">
+            <img
+              src="/assets/uploads/1773868740018-4.png"
+              alt="Travellers Point group at Tiger's Nest trek"
+              className="w-full h-80 object-cover hover:scale-105 transition-transform duration-500"
+            />
+            <div className="p-4 bg-orange-50">
+              <p className="font-display text-gray-900 text-lg">
+                Tiger's Nest Trek, Bhutan
+              </p>
+              <p className="font-body text-gray-500 text-sm mt-1">
+                Travellers Point group trekking to Tiger's Nest
               </p>
             </div>
           </div>
