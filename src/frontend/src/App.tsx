@@ -25,6 +25,7 @@ interface Package {
   pickup: string;
   image: string;
   inclusions: string[];
+  exclusions?: string[];
   itinerary: ItineraryDay[];
 }
 
@@ -58,7 +59,7 @@ const HERO_IMAGES = [
 const PACKAGES: Package[] = [
   {
     id: "bhutan-group",
-    name: "Bhutan Group Tour",
+    name: "Bhutan Tour Package",
     duration: "6 Nights / 7 Days",
     price: "₹24,500/person",
     pickup: "Bagdogra Airport or NJP Railway Station",
@@ -75,103 +76,53 @@ const PACKAGES: Package[] = [
     itinerary: [
       {
         day: "Day 1",
-        title: "Arrival at Phuentsholing",
+        title: "Arrival and Phuentsholing",
         details:
-          "Check-in hotel. Evening local sightseeing: Zangto Pelri Lhakhang, Crocodile Breeding Centre, Market area.",
+          "Pick-up from Bagdogra Airport (IXB) or New Jalpaiguri (NJP) and drive to Phuentsholing. Check in to the hotel and spend the evening exploring Phuentsholing's monasteries, parks, and nightlife.",
       },
       {
         day: "Day 2",
-        title: "Phuentsholing to Thimphu (165km, 5–6hrs)",
+        title: "Journey to Thimphu",
         details:
-          "Visit Chuzom confluence, Buddha Dordenma statue, National Memorial Chorten, Tashichho Dzong.",
+          "After breakfast and immigration, drive to Thimphu. Stopovers at Kharbandi Gumpa, Chukha Waterfall, Chukha Dam, and Dharma Kaya Stupas. Evening guided walk around Thimphu's Clock Tower Square.",
       },
       {
         day: "Day 3",
-        title: "Thimphu to Punakha (77km, 3hrs)",
+        title: "Excursion to Punakha",
         details:
-          "Dochu La Pass (108 chortens), Punakha Dzong, Suspension Bridge, Chimi Lhakhang (Fertility Temple).",
+          "Drive to Punakha with stops at Dochula Pass and the Suspension Bridge. Visit Punakha Dzong and the Two Rivers viewpoint. Optional activities: River rafting and riverside lunch. Return to Thimphu for the night.",
       },
       {
         day: "Day 4",
-        title: "Punakha to Paro (125km, 4hrs)",
+        title: "Thimphu Sightseeing & Drive to Paro",
         details:
-          "National Museum of Bhutan, Rinpung Dzong, Paro town sightseeing.",
+          "Morning sightseeing in Thimphu: Simtokha Dzong, Buddha Dordenma, Tashichho Dzong, Simply Bhutan, and the Takin Preserve Zoo. Drive to Paro, stopping at the historic Tachogang Lhakhang iron chain bridge. Evening free time to explore Paro local market and nightlife.",
       },
       {
         day: "Day 5",
-        title: "Paro — Tiger's Nest",
+        title: "Hike to Tiger's Nest",
         details:
-          "Tiger's Nest Monastery (Taktshang) hike (3–4hrs). Visit Kyichu Lhakhang temple.",
+          "Early morning hike to Taktshang Lhakhang (Tiger's Nest). Stop at the canteen halfway for views and rest. Optional: Relaxing hot stone bath in Paro.",
       },
       {
         day: "Day 6",
-        title: "Paro to Phuentsholing (165km)",
-        details: "Shopping, overnight Phuentsholing.",
+        title: "Paro Sightseeing & Drive back to Phuentsholing",
+        details:
+          "Visit Paro Ta Dzong in the morning. Sightseeing en route while driving back to Phuentsholing. Free evening in Phuentsholing.",
       },
       {
         day: "Day 7",
         title: "Departure",
-        details: "Drop to Bagdogra Airport or NJP Railway Station.",
+        details:
+          "Drive from Phuentsholing to Bagdogra Airport or New Jalpaiguri (NJP) for your flight home.",
       },
     ],
-  },
-  {
-    id: "bhutan-private",
-    name: "Bhutan Private Tour",
-    duration: "6 Nights / 7 Days",
-    price: "₹43,000/person",
-    pickup: "Bagdogra Airport or NJP Railway Station",
-    image: "/assets/generated/bhutan-punakha-dzong.dim_800x600.jpg",
-    inclusions: [
-      "Accommodation (6 nights)",
-      "All meals (Breakfast + Dinner)",
-      "Private AC vehicle",
-      "Bhutan entry permit & visa",
-      "SDF fee",
-      "Sightseeing as per itinerary",
-      "Personal tour guide",
-    ],
-    itinerary: [
-      {
-        day: "Day 1",
-        title: "Arrival at Phuentsholing",
-        details:
-          "Check-in hotel. Evening local sightseeing: Zangto Pelri Lhakhang, Crocodile Breeding Centre, Market area.",
-      },
-      {
-        day: "Day 2",
-        title: "Phuentsholing to Thimphu (165km, 5–6hrs)",
-        details:
-          "Visit Chuzom confluence, Buddha Dordenma statue, National Memorial Chorten, Tashichho Dzong.",
-      },
-      {
-        day: "Day 3",
-        title: "Thimphu to Punakha (77km, 3hrs)",
-        details:
-          "Dochu La Pass (108 chortens), Punakha Dzong, Suspension Bridge, Chimi Lhakhang (Fertility Temple).",
-      },
-      {
-        day: "Day 4",
-        title: "Punakha to Paro (125km, 4hrs)",
-        details:
-          "National Museum of Bhutan, Rinpung Dzong, Paro town sightseeing.",
-      },
-      {
-        day: "Day 5",
-        title: "Paro — Tiger's Nest",
-        details:
-          "Tiger's Nest Monastery (Taktshang) hike (3–4hrs). Visit Kyichu Lhakhang temple.",
-      },
-      {
-        day: "Day 6",
-        title: "Paro to Phuentsholing (165km)",
-        details: "Shopping, overnight Phuentsholing.",
-      },
-      {
-        day: "Day 7",
-        title: "Departure",
-        details: "Drop to Bagdogra Airport or NJP Railway Station.",
-      },
+    exclusions: [
+      "Air/train tickets",
+      "Personal expenses",
+      "Adventure activities (rafting, etc.)",
+      "Travel insurance",
+      "Any item not mentioned in inclusions",
     ],
   },
   {
@@ -255,211 +206,6 @@ const PACKAGES: Package[] = [
       },
     ],
   },
-  {
-    id: "nepal",
-    name: "Nepal Tour",
-    duration: "5 Nights / 6 Days",
-    price: "₹15,000/person",
-    pickup: "Bagdogra Airport (flight to Kathmandu) or direct road",
-    image: "/assets/generated/nepal-kathmandu.dim_800x600.jpg",
-    inclusions: [
-      "5 nights hotel",
-      "Breakfast",
-      "All sightseeing",
-      "Tour guide",
-    ],
-    itinerary: [
-      {
-        day: "Day 1",
-        title: "Arrival Kathmandu",
-        details: "Pashupatinath Temple, Bouddhanath Stupa.",
-      },
-      {
-        day: "Day 2",
-        title: "Kathmandu Valley",
-        details:
-          "Swayambhunath (Monkey Temple), Patan Durbar Square, Patan Museum.",
-      },
-      {
-        day: "Day 3",
-        title: "Kathmandu to Pokhara (7hrs)",
-        details: "Fewa Lake boat ride, Tal Barahi Temple.",
-      },
-      {
-        day: "Day 4",
-        title: "Pokhara Sightseeing",
-        details:
-          "Sarangkot sunrise, World Peace Pagoda, Devi's Fall, Gupteshwor Cave.",
-      },
-      {
-        day: "Day 5",
-        title: "Pokhara to Kathmandu",
-        details: "Manakamana Cable Car.",
-      },
-      {
-        day: "Day 6",
-        title: "Departure",
-        details: "Transfer to airport for departure.",
-      },
-    ],
-  },
-  {
-    id: "manali",
-    name: "Manali Tour",
-    duration: "5 Nights / 6 Days",
-    price: "₹14,000/person",
-    pickup: "Chandigarh or Delhi (own arrangement)",
-    image: "/assets/generated/manali-rohtang.dim_800x600.jpg",
-    inclusions: [
-      "5 nights hotel",
-      "Breakfast",
-      "All sightseeing",
-      "AC vehicle",
-    ],
-    itinerary: [
-      {
-        day: "Day 1",
-        title: "Arrival Manali",
-        details: "Check-in, Mall Road, Hadimba Temple evening.",
-      },
-      {
-        day: "Day 2",
-        title: "Solang Valley",
-        details: "Snow activities, Rohtang Pass permit arrangements.",
-      },
-      {
-        day: "Day 3",
-        title: "Rohtang Pass (13,050 ft)",
-        details: "Beas Kund, snow activities (seasonal).",
-      },
-      {
-        day: "Day 4",
-        title: "Local Sightseeing",
-        details:
-          "Naggar Castle, Nicholas Roerich Art Gallery, Old Manali market.",
-      },
-      {
-        day: "Day 5",
-        title: "Parvati Valley",
-        details: "Manikaran Sahib Gurudwara, Kasol village, Parvati Valley.",
-      },
-      { day: "Day 6", title: "Departure", details: "Drop to Chandigarh." },
-    ],
-  },
-  {
-    id: "shimla",
-    name: "Shimla Tour",
-    duration: "3 Nights / 4 Days",
-    price: "₹9,500/person",
-    pickup: "Chandigarh or Delhi (own arrangement)",
-    image: "/assets/generated/shimla-mall-road.dim_800x600.jpg",
-    inclusions: [
-      "3 nights hotel",
-      "Breakfast",
-      "All sightseeing",
-      "AC vehicle",
-    ],
-    itinerary: [
-      {
-        day: "Day 1",
-        title: "Arrival Shimla",
-        details: "The Ridge, Mall Road, Christ Church, Lakkar Bazaar.",
-      },
-      {
-        day: "Day 2",
-        title: "Kufri Excursion",
-        details:
-          "Fun World, Himalayan Wildlife Zoo, Indira Tourist Park, horse riding.",
-      },
-      {
-        day: "Day 3",
-        title: "Local Sightseeing",
-        details:
-          "Jakhoo Temple, Summer Hill, Prospect Hill, Chadwick Falls, Glen Forest.",
-      },
-      { day: "Day 4", title: "Departure", details: "Drop to Chandigarh." },
-    ],
-  },
-  {
-    id: "kashmir",
-    name: "Kashmir Tour",
-    duration: "5 Nights / 6 Days",
-    price: "₹18,000/person",
-    pickup: "Srinagar Airport",
-    image: "/assets/generated/darjeeling-tea-garden.dim_1920x1080.jpg",
-    inclusions: [
-      "5N houseboat + hotel",
-      "Breakfast + Dinner",
-      "Shikara ride",
-      "AC vehicle",
-      "All sightseeing",
-    ],
-    itinerary: [
-      {
-        day: "Day 1",
-        title: "Arrival Srinagar",
-        details: "Shikara ride Dal Lake, houseboat check-in.",
-      },
-      {
-        day: "Day 2",
-        title: "Gulmarg (8,694 ft)",
-        details: "Gondola cable car, meadows, skiing (seasonal).",
-      },
-      {
-        day: "Day 3",
-        title: "Pahalgam",
-        details: "Betaab Valley, Aru Valley, Chandanwari.",
-      },
-      {
-        day: "Day 4",
-        title: "Srinagar Local",
-        details:
-          "Mughal Gardens (Nishat, Shalimar), Shankaracharya Temple, Hazratbal Shrine.",
-      },
-      {
-        day: "Day 5",
-        title: "Sonamarg",
-        details: "Thajiwas Glacier, pony rides, scenic drive.",
-      },
-      {
-        day: "Day 6",
-        title: "Departure",
-        details: "Drop to Srinagar Airport.",
-      },
-    ],
-  },
-  {
-    id: "mathura",
-    name: "Mathura Tour",
-    duration: "2 Nights / 3 Days",
-    price: "₹6,500/person",
-    pickup: "Mathura Railway Station or Agra",
-    image: "/assets/generated/mathura-krishna-temple.dim_800x600.jpg",
-    inclusions: [
-      "2 nights hotel",
-      "Breakfast",
-      "All sightseeing",
-      "AC vehicle",
-    ],
-    itinerary: [
-      {
-        day: "Day 1",
-        title: "Arrival Mathura",
-        details:
-          "Krishna Janmabhoomi Temple, Dwarkadhish Temple, Vishram Ghat (evening aarti).",
-      },
-      {
-        day: "Day 2",
-        title: "Vrindavan",
-        details: "ISKCON Temple, Banke Bihari Temple, Prem Mandir, Rang Bhumi.",
-      },
-      {
-        day: "Day 3",
-        title: "Govardhan & Departure",
-        details: "Govardhan Parikrama (partial), Radha Kund, Departure.",
-      },
-    ],
-  },
 ];
 
 const SERVICES: Service[] = [
@@ -521,14 +267,6 @@ const REVIEWS: Review[] = [
   },
 ];
 
-const TAXI_ROUTES = [
-  { from: "Jaigaon", to: "Siliguri" },
-  { from: "Jaigaon", to: "Darjeeling" },
-  { from: "Jaigaon", to: "Gangtok (Sikkim)" },
-  { from: "Jaigaon", to: "Bagdogra Airport" },
-  { from: "Jaigaon", to: "NJP Railway Station" },
-];
-
 const WA_NUMBER = "917719264029";
 const WA_BASE = `https://wa.me/${WA_NUMBER}`;
 
@@ -544,7 +282,6 @@ function Navbar({ scrolled }: { scrolled: boolean }) {
     { label: "Home", href: "#home" },
     { label: "Packages", href: "#packages" },
     { label: "Services", href: "#services" },
-    { label: "Taxi", href: "#taxi" },
     { label: "Reviews", href: "#reviews" },
     { label: "Contact", href: "#contact" },
   ];
@@ -553,8 +290,8 @@ function Navbar({ scrolled }: { scrolled: boolean }) {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-charcoal/95 backdrop-blur-md shadow-luxury border-b border-gold/10"
-          : "bg-gradient-to-b from-black/70 to-transparent"
+          ? "bg-white/95 backdrop-blur-md shadow-md border-b border-gold/10"
+          : "bg-white/10 backdrop-blur-sm"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -573,7 +310,7 @@ function Navbar({ scrolled }: { scrolled: boolean }) {
                 (e.currentTarget as HTMLImageElement).style.display = "none";
               }}
             />
-            <span className="font-display text-lg font-semibold text-gold hidden sm:block">
+            <span className="font-display text-lg font-semibold text-orange-500 hidden sm:block">
               Travellers Points
             </span>
           </a>
@@ -584,7 +321,9 @@ function Navbar({ scrolled }: { scrolled: boolean }) {
               <a
                 key={l.label}
                 href={l.href}
-                className="nav-link text-sm font-body font-medium tracking-wide"
+                className={`nav-link text-sm font-body font-medium tracking-wide ${
+                  scrolled ? "text-gray-800" : "text-white"
+                }`}
                 data-ocid={"nav.link"}
               >
                 {l.label}
@@ -594,7 +333,7 @@ function Navbar({ scrolled }: { scrolled: boolean }) {
               href={waLink("Hi, I would like to enquire about tour packages.")}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-5 py-2 bg-gold text-charcoal font-body font-semibold text-sm rounded-sm tracking-wide hover:bg-gold-light transition-colors duration-200"
+              className="px-5 py-2 bg-gold text-white font-body font-semibold text-sm rounded-sm tracking-wide hover:bg-gold/90 transition-colors duration-200"
               data-ocid="nav.primary_button"
             >
               Book Now
@@ -604,30 +343,38 @@ function Navbar({ scrolled }: { scrolled: boolean }) {
           {/* Mobile menu toggle */}
           <button
             type="button"
-            className="md:hidden text-cream p-2"
+            className={`md:hidden p-2 ${
+              scrolled ? "text-gray-800" : "text-white"
+            }`}
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle menu"
           >
             <div
-              className={`w-6 h-0.5 bg-current mb-1.5 transition-all ${menuOpen ? "rotate-45 translate-y-2" : ""}`}
+              className={`w-6 h-0.5 bg-current mb-1.5 transition-all ${
+                menuOpen ? "rotate-45 translate-y-2" : ""
+              }`}
             />
             <div
-              className={`w-6 h-0.5 bg-current mb-1.5 transition-all ${menuOpen ? "opacity-0" : ""}`}
+              className={`w-6 h-0.5 bg-current mb-1.5 transition-all ${
+                menuOpen ? "opacity-0" : ""
+              }`}
             />
             <div
-              className={`w-6 h-0.5 bg-current transition-all ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`}
+              className={`w-6 h-0.5 bg-current transition-all ${
+                menuOpen ? "-rotate-45 -translate-y-2" : ""
+              }`}
             />
           </button>
         </div>
 
         {/* Mobile Menu */}
         {menuOpen && (
-          <div className="md:hidden bg-charcoal border-t border-gold/10 py-4">
+          <div className="md:hidden bg-white border-t border-gold/10 py-4 shadow-md">
             {links.map((l) => (
               <a
                 key={l.label}
                 href={l.href}
-                className="block px-4 py-3 text-cream-dark hover:text-gold hover:bg-charcoal-light transition-colors font-body"
+                className="block px-4 py-3 text-gray-800 hover:text-gold hover:bg-gray-50 transition-colors font-body"
                 onClick={() => setMenuOpen(false)}
                 data-ocid="nav.link"
               >
@@ -693,16 +440,15 @@ function Hero() {
           <span className="italic font-normal">Points</span>
         </h1>
         <div className="gold-divider mx-auto mb-6" />
-        <p className="font-display text-xl md:text-2xl text-cream italic mb-3">
+        <p className="font-display text-xl md:text-2xl text-white italic mb-3">
           From your dream to the world.
         </p>
-        <p className="font-body text-cream-dark text-sm md:text-base tracking-widest mb-10">
-          Expert tours to
-          Bhutan&nbsp;•&nbsp;Darjeeling&nbsp;•&nbsp;Sikkim&nbsp;•&nbsp;Nepal&nbsp;•&nbsp;Kashmir
+        <p className="font-body text-white/80 text-sm md:text-base tracking-widest mb-10">
+          Expert tours to Bhutan&nbsp;•&nbsp;Darjeeling&nbsp;•&nbsp;Sikkim
         </p>
         <a
           href="#packages"
-          className="inline-block px-10 py-4 border border-gold text-gold font-body font-medium tracking-widest text-sm uppercase hover:bg-gold hover:text-charcoal transition-all duration-300"
+          className="inline-block px-10 py-4 border border-gold text-gold font-body font-medium tracking-widest text-sm uppercase hover:bg-gold hover:text-white transition-all duration-300"
           data-ocid="hero.primary_button"
         >
           Explore Packages
@@ -728,424 +474,13 @@ function Hero() {
 }
 
 // ── Bhutan Sub-Packages ────────────────────────────────────────────────────────
-const BHUTAN_PACKAGES: Package[] = [
-  {
-    id: "bhutan-4n5d",
-    name: "Bhutan 4 Nights 5 Days",
-    duration: "4 Nights / 5 Days",
-    price: "On Request",
-    pickup: "Bagdogra Airport or NJP Railway Station",
-    image: "/assets/generated/bhutan-tigers-nest.dim_1920x1080.jpg",
-    inclusions: [
-      "Accommodation (4 nights)",
-      "All meals (Breakfast + Dinner)",
-      "AC vehicle",
-      "Bhutan entry permit & visa",
-      "SDF fee",
-      "Sightseeing as per itinerary",
-      "Tour guide",
-    ],
-    itinerary: [
-      {
-        day: "Day 1",
-        title: "Arrival at Phuentsholing",
-        details:
-          "Arrive at Phuentsholing (Bhutan border town). Check-in hotel. Evening local sightseeing: Zangto Pelri Lhakhang, Crocodile Breeding Centre, Market area.",
-      },
-      {
-        day: "Day 2",
-        title: "Phuentsholing to Thimphu (165km, 5–6hrs)",
-        details:
-          "Proceed to Thimphu, Bhutan's capital. Visit Chuzom confluence, Buddha Dordenma statue, National Memorial Chorten, Tashichho Dzong. Overnight Thimphu.",
-      },
-      {
-        day: "Day 3",
-        title: "Thimphu to Punakha (77km, 3hrs)",
-        details:
-          "Cross Dochu La Pass (108 chortens, Himalayan views). Visit Punakha Dzong, Suspension Bridge, Chimi Lhakhang (Fertility Temple). Overnight Punakha.",
-      },
-      {
-        day: "Day 4",
-        title: "Punakha to Paro (125km, 4hrs)",
-        details:
-          "Drive to Paro. Visit National Museum of Bhutan, Rinpung Dzong, Paro town sightseeing. Overnight Paro.",
-      },
-      {
-        day: "Day 5",
-        title: "Paro Departure",
-        details:
-          "Morning at leisure. Drop to Bagdogra Airport or NJP Railway Station. Tour ends with sweet memories of Bhutan.",
-      },
-    ],
-  },
-  {
-    id: "bhutan-5n6d",
-    name: "Bhutan 5 Nights 6 Days",
-    duration: "5 Nights / 6 Days",
-    price: "On Request",
-    pickup: "Bagdogra Airport or NJP Railway Station",
-    image: "/assets/generated/bhutan-punakha-dzong.dim_800x600.jpg",
-    inclusions: [
-      "Accommodation (5 nights)",
-      "All meals (Breakfast + Dinner)",
-      "AC vehicle",
-      "Bhutan entry permit & visa",
-      "SDF fee",
-      "Sightseeing as per itinerary",
-      "Tour guide",
-    ],
-    itinerary: [
-      {
-        day: "Day 1",
-        title: "Arrival at Phuentsholing",
-        details:
-          "Arrive at Phuentsholing. Check-in hotel. Evening local sightseeing: Zangto Pelri Lhakhang, Crocodile Breeding Centre, Market area.",
-      },
-      {
-        day: "Day 2",
-        title: "Phuentsholing to Thimphu (165km, 5–6hrs)",
-        details:
-          "Drive to Thimphu via Chuzom confluence. Visit Buddha Dordenma statue, National Memorial Chorten, Tashichho Dzong. Overnight Thimphu.",
-      },
-      {
-        day: "Day 3",
-        title: "Thimphu to Punakha (77km, 3hrs)",
-        details:
-          "Cross Dochu La Pass. Visit Punakha Dzong, Suspension Bridge, Chimi Lhakhang. Overnight Punakha.",
-      },
-      {
-        day: "Day 4",
-        title: "Punakha to Paro (125km, 4hrs)",
-        details:
-          "Drive to Paro. Visit National Museum, Rinpung Dzong, Paro town. Overnight Paro.",
-      },
-      {
-        day: "Day 5",
-        title: "Paro — Tiger's Nest Hike",
-        details:
-          "Full day Tiger's Nest Monastery (Taktshang) hike (3–4hrs, 900m ascent). Visit Kyichu Lhakhang temple. Overnight Paro.",
-      },
-      {
-        day: "Day 6",
-        title: "Departure",
-        details:
-          "Morning at leisure. Drop to Bagdogra Airport or NJP Railway Station. Tour ends.",
-      },
-    ],
-  },
-  {
-    id: "bhutan-group-6n7d",
-    name: "Bhutan Group Tour",
-    duration: "6 Nights / 7 Days",
-    price: "₹24,500/person",
-    pickup: "Bagdogra Airport or NJP Railway Station",
-    image: "/assets/generated/bhutan-tigers-nest.dim_1920x1080.jpg",
-    inclusions: [
-      "Accommodation (6 nights)",
-      "All meals (Breakfast + Dinner)",
-      "AC vehicle",
-      "Bhutan entry permit & visa",
-      "SDF fee",
-      "Sightseeing as per itinerary",
-      "Tour guide",
-    ],
-    itinerary: [
-      {
-        day: "Day 1",
-        title: "Arrival at Phuentsholing",
-        details:
-          "Check-in hotel. Evening local sightseeing: Zangto Pelri Lhakhang, Crocodile Breeding Centre, Market area.",
-      },
-      {
-        day: "Day 2",
-        title: "Phuentsholing to Thimphu (165km, 5–6hrs)",
-        details:
-          "Visit Chuzom confluence, Buddha Dordenma statue, National Memorial Chorten, Tashichho Dzong.",
-      },
-      {
-        day: "Day 3",
-        title: "Thimphu to Punakha (77km, 3hrs)",
-        details:
-          "Dochu La Pass (108 chortens), Punakha Dzong, Suspension Bridge, Chimi Lhakhang (Fertility Temple).",
-      },
-      {
-        day: "Day 4",
-        title: "Punakha to Paro (125km, 4hrs)",
-        details:
-          "National Museum of Bhutan, Rinpung Dzong, Paro town sightseeing.",
-      },
-      {
-        day: "Day 5",
-        title: "Paro — Tiger's Nest",
-        details:
-          "Tiger's Nest Monastery (Taktshang) hike (3–4hrs). Visit Kyichu Lhakhang temple.",
-      },
-      {
-        day: "Day 6",
-        title: "Paro to Phuentsholing (165km)",
-        details: "Shopping, overnight Phuentsholing.",
-      },
-      {
-        day: "Day 7",
-        title: "Departure",
-        details: "Drop to Bagdogra Airport or NJP Railway Station.",
-      },
-    ],
-  },
-  {
-    id: "bhutan-7n8d",
-    name: "Bhutan 7 Nights 8 Days",
-    duration: "7 Nights / 8 Days",
-    price: "On Request",
-    pickup: "Bagdogra Airport or NJP Railway Station",
-    image: "/assets/generated/bhutan-punakha-dzong.dim_800x600.jpg",
-    inclusions: [
-      "Accommodation (7 nights)",
-      "All meals (Breakfast + Dinner)",
-      "AC vehicle",
-      "Bhutan entry permit & visa",
-      "SDF fee",
-      "Sightseeing as per itinerary",
-      "Tour guide",
-    ],
-    itinerary: [
-      {
-        day: "Day 1",
-        title: "Arrival at Phuentsholing",
-        details:
-          "Arrive at Phuentsholing. Check-in hotel. Evening local sightseeing: Zangto Pelri Lhakhang, Crocodile Breeding Centre, Market area.",
-      },
-      {
-        day: "Day 2",
-        title: "Phuentsholing to Thimphu (165km, 5–6hrs)",
-        details:
-          "Drive to Thimphu. Visit Chuzom confluence, Buddha Dordenma statue, National Memorial Chorten, Tashichho Dzong. Overnight Thimphu.",
-      },
-      {
-        day: "Day 3",
-        title: "Thimphu — Dochula Pass & Punakha",
-        details:
-          "Morning city tour: Folk Heritage Museum, Textile Museum, Motithang Takin Preserve. Cross Dochu La Pass (3,100m). Punakha Dzong, Suspension Bridge. Overnight Punakha.",
-      },
-      {
-        day: "Day 4",
-        title: "Wangdue Phodrang Exploration",
-        details:
-          "Visit Wangdue Phodrang Dzong (restored 17th-century fortress), Gangtey Gonpa (Black-necked Crane Sanctuary), Phobjikha Valley scenic drive. Overnight Punakha/Wangdue.",
-      },
-      {
-        day: "Day 5",
-        title: "Punakha to Paro (125km, 4hrs)",
-        details:
-          "Drive to Paro. Visit National Museum of Bhutan, Rinpung Dzong, Paro town sightseeing. Overnight Paro.",
-      },
-      {
-        day: "Day 6",
-        title: "Paro — Tiger's Nest Hike",
-        details:
-          "Full day Tiger's Nest Monastery (Taktshang) hike (3–4hrs). Visit Kyichu Lhakhang temple. Overnight Paro.",
-      },
-      {
-        day: "Day 7",
-        title: "Paro Local Sightseeing",
-        details:
-          "Visit Drukgyal Dzong (ruins of ancient fortress), Chelela Pass (highest motorable road, 3,810m), Bondey Village. Evening leisure in Paro market. Overnight Phuentsholing.",
-      },
-      {
-        day: "Day 8",
-        title: "Departure",
-        details:
-          "Drop to Bagdogra Airport or NJP Railway Station. Tour ends with unforgettable Bhutan memories.",
-      },
-    ],
-  },
-];
-
-// ── Bhutan Packages Modal ──────────────────────────────────────────────────────
-function BhutanSubPackageCard({ pkg, index }: { pkg: Package; index: number }) {
-  const [open, setOpen] = useState(false);
-
-  const waMsg = encodeURIComponent(
-    `Hi, I am interested in the ${pkg.name} (${pkg.duration}). Please share details and pricing.`,
-  );
-  const waLink = `https://wa.me/917719264029?text=${waMsg}`;
-
-  return (
-    <div
-      className="bg-charcoal-light rounded-sm overflow-hidden shadow-card border border-gold/10 flex flex-col"
-      data-ocid={`bhutan.item.${index + 1}`}
-    >
-      <div className="relative h-40 overflow-hidden">
-        <img
-          src={pkg.image}
-          alt={pkg.name}
-          className="w-full h-full object-cover"
-          loading="lazy"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 to-transparent" />
-        <div className="absolute bottom-2 left-3">
-          <span className="text-xs font-body text-cream-dark bg-black/60 px-2 py-0.5 rounded-sm">
-            {pkg.duration}
-          </span>
-        </div>
-      </div>
-
-      <div
-        className="px-4 pt-3 pb-2 border-b border-gold/20"
-        style={{
-          background:
-            "linear-gradient(135deg, oklch(0.62 0.13 82 / 0.15), oklch(0.75 0.13 82 / 0.05))",
-        }}
-      >
-        <h4 className="font-display text-base text-gold font-semibold">
-          {pkg.name}
-        </h4>
-        <p className="font-body text-cream-dark text-xs mt-0.5">
-          {pkg.duration}
-        </p>
-      </div>
-
-      <div className="px-4 py-3 space-y-1.5 flex-1">
-        <div className="flex items-center gap-2">
-          <span className="text-gold text-xs">💰</span>
-          <span className="font-body text-cream font-semibold text-sm">
-            {pkg.price}
-          </span>
-        </div>
-        <div className="flex items-start gap-2">
-          <span className="text-gold text-xs mt-0.5">📍</span>
-          <span className="font-body text-cream-dark text-xs">
-            {pkg.pickup}
-          </span>
-        </div>
-        <p className="font-body text-gold text-xs italic">
-          Customized package available on request
-        </p>
-      </div>
-
-      <div className="px-4 pb-2">
-        <button
-          type="button"
-          onClick={() => setOpen(!open)}
-          className="w-full flex items-center justify-between py-1.5 px-3 border border-gold/30 text-gold text-xs font-body hover:bg-gold/10 transition-colors rounded-sm"
-          data-ocid={`bhutan.toggle.${index + 1}`}
-        >
-          <span>{open ? "Hide Itinerary" : "View Itinerary"}</span>
-          <span
-            className={`transition-transform duration-300 ${open ? "rotate-180" : ""}`}
-          >
-            ▼
-          </span>
-        </button>
-      </div>
-
-      {open && (
-        <div className="px-4 pb-4 space-y-2.5 border-t border-gold/10 pt-3">
-          {pkg.itinerary.map((day) => (
-            <div key={day.day} className="flex gap-2">
-              <div className="flex-shrink-0">
-                <span className="inline-block bg-gold text-charcoal text-xs font-body font-semibold px-2 py-0.5 rounded-sm">
-                  {day.day}
-                </span>
-              </div>
-              <div>
-                <p className="font-body text-cream text-xs font-medium">
-                  {day.title}
-                </p>
-                <p className="font-body text-cream-dark text-xs mt-0.5 leading-relaxed">
-                  {day.details}
-                </p>
-              </div>
-            </div>
-          ))}
-          <div className="mt-3 p-2.5 bg-charcoal/50 rounded-sm border border-gold/10">
-            <p className="font-body text-gold text-xs font-semibold uppercase tracking-wider mb-1.5">
-              Inclusions
-            </p>
-            <ul className="space-y-1">
-              {pkg.inclusions.map((inc) => (
-                <li
-                  key={inc}
-                  className="font-body text-cream-dark text-xs flex items-center gap-1.5"
-                >
-                  <span className="text-gold">✓</span> {inc}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      )}
-
-      <div className="px-4 pb-4 pt-2">
-        <a
-          href={waLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 w-full py-2.5 rounded-sm font-body font-semibold text-white text-xs transition-all hover:opacity-90"
-          style={{ backgroundColor: "#25D366" }}
-          data-ocid={`bhutan.primary_button.${index + 1}`}
-        >
-          <svg
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-            className="w-3.5 h-3.5 fill-current"
-          >
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-          </svg>
-          Book on Request
-        </a>
-      </div>
-    </div>
-  );
-}
-
-function BhutanPackagesModal({
-  open,
-  onClose,
-}: { open: boolean; onClose: () => void }) {
-  return (
-    <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent
-        className="max-w-5xl w-full bg-charcoal border border-gold/30 text-cream max-h-[90vh] overflow-y-auto"
-        data-ocid="bhutan.dialog"
-      >
-        <DialogHeader>
-          <DialogTitle className="font-display text-2xl text-gold text-center">
-            Bhutan Tour Packages
-          </DialogTitle>
-          <p className="font-body text-cream-dark text-sm text-center mt-1">
-            Choose from our curated Bhutan experiences — from quick getaways to
-            immersive journeys
-          </p>
-          <div className="gold-divider" />
-        </DialogHeader>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-5 mt-2">
-          {BHUTAN_PACKAGES.map((pkg, i) => (
-            <BhutanSubPackageCard key={pkg.id} pkg={pkg} index={i} />
-          ))}
-        </div>
-        <div className="text-center mt-4 pt-4 border-t border-gold/20">
-          <p className="font-body text-cream-dark text-xs">
-            All packages include Bhutan entry permits, SDF fee, accommodation,
-            meals & guided sightseeing.
-            <br />
-            For custom itineraries, contact us on WhatsApp.
-          </p>
-        </div>
-      </DialogContent>
-    </Dialog>
-  );
-}
-
 // ── Package Card ───────────────────────────────────────────────────────────────
 function PackageCard({ pkg, index }: { pkg: Package; index: number }) {
   const [open, setOpen] = useState(false);
-  const [bhutanModalOpen, setBhutanModalOpen] = useState(false);
-  const isBhutan = pkg.id === "bhutan-group" || pkg.id === "bhutan-private";
 
   return (
     <div
-      className="package-card bg-charcoal-light rounded-sm overflow-hidden shadow-card border border-gold/10"
+      className="package-card bg-orange-50 rounded-sm overflow-hidden shadow-md border border-gold/20"
       data-ocid={`packages.item.${index + 1}`}
     >
       {/* Image */}
@@ -1156,9 +491,9 @@ function PackageCard({ pkg, index }: { pkg: Package; index: number }) {
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
         <div className="absolute bottom-3 left-4">
-          <span className="text-xs font-body text-cream-dark bg-black/50 px-2 py-1 rounded-sm">
+          <span className="text-xs font-body text-white bg-black/50 px-2 py-1 rounded-sm">
             {pkg.duration}
           </span>
         </div>
@@ -1169,30 +504,26 @@ function PackageCard({ pkg, index }: { pkg: Package; index: number }) {
         className="px-5 pt-4 pb-3 border-b border-gold/20"
         style={{
           background:
-            "linear-gradient(135deg, oklch(0.62 0.13 82 / 0.15), oklch(0.75 0.13 82 / 0.05))",
+            "linear-gradient(135deg, oklch(0.62 0.13 82 / 0.1), oklch(0.75 0.13 82 / 0.05))",
         }}
       >
         <h3 className="font-display text-lg text-gold font-semibold">
           {pkg.name}
         </h3>
-        <p className="font-body text-cream-dark text-sm mt-0.5">
-          {pkg.duration}
-        </p>
+        <p className="font-body text-gray-600 text-sm mt-0.5">{pkg.duration}</p>
       </div>
 
       {/* Body */}
       <div className="px-5 py-4 space-y-2">
         <div className="flex items-center gap-2">
           <span className="text-gold text-sm">💰</span>
-          <span className="font-body text-cream font-semibold">
+          <span className="font-body text-gray-900 font-semibold">
             {pkg.price}
           </span>
         </div>
         <div className="flex items-start gap-2">
           <span className="text-gold text-sm mt-0.5">📍</span>
-          <span className="font-body text-cream-dark text-sm">
-            {pkg.pickup}
-          </span>
+          <span className="font-body text-gray-600 text-sm">{pkg.pickup}</span>
         </div>
         <p className="font-body text-gold text-xs italic mt-2">
           Customized package available on request
@@ -1222,15 +553,15 @@ function PackageCard({ pkg, index }: { pkg: Package; index: number }) {
           {pkg.itinerary.map((day) => (
             <div key={day.day} className="flex gap-3">
               <div className="flex-shrink-0">
-                <span className="inline-block bg-gold text-charcoal text-xs font-body font-semibold px-2 py-0.5 rounded-sm">
+                <span className="inline-block bg-gold text-white text-xs font-body font-semibold px-2 py-0.5 rounded-sm">
                   {day.day}
                 </span>
               </div>
               <div>
-                <p className="font-body text-cream text-sm font-medium">
+                <p className="font-body text-gray-900 text-sm font-medium">
                   {day.title}
                 </p>
-                <p className="font-body text-cream-dark text-xs mt-0.5 leading-relaxed">
+                <p className="font-body text-gray-600 text-xs mt-0.5 leading-relaxed">
                   {day.details}
                 </p>
               </div>
@@ -1238,7 +569,7 @@ function PackageCard({ pkg, index }: { pkg: Package; index: number }) {
           ))}
 
           {/* Inclusions */}
-          <div className="mt-4 p-3 bg-charcoal/50 rounded-sm border border-gold/10">
+          <div className="mt-4 p-3 bg-gray-50 rounded-sm border border-gray-200">
             <p className="font-body text-gold text-xs font-semibold uppercase tracking-wider mb-2">
               Inclusions
             </p>
@@ -1246,13 +577,32 @@ function PackageCard({ pkg, index }: { pkg: Package; index: number }) {
               {pkg.inclusions.map((inc) => (
                 <li
                   key={inc}
-                  className="font-body text-cream-dark text-xs flex items-center gap-1.5"
+                  className="font-body text-gray-600 text-xs flex items-center gap-1.5"
                 >
                   <span className="text-gold">✓</span> {inc}
                 </li>
               ))}
             </ul>
           </div>
+
+          {/* Exclusions */}
+          {pkg.exclusions && pkg.exclusions.length > 0 && (
+            <div className="mt-3 p-3 bg-gray-50 rounded-sm border border-gray-200">
+              <p className="font-body text-red-500 text-xs font-semibold uppercase tracking-wider mb-2">
+                Exclusions
+              </p>
+              <ul className="space-y-1">
+                {pkg.exclusions.map((exc) => (
+                  <li
+                    key={exc}
+                    className="font-body text-gray-600 text-xs flex items-center gap-1.5"
+                  >
+                    <span className="text-red-400">✗</span> {exc}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           {/* WhatsApp book button */}
           <a
@@ -1276,25 +626,6 @@ function PackageCard({ pkg, index }: { pkg: Package; index: number }) {
           </a>
         </div>
       )}
-
-      {/* Bhutan Packages CTA */}
-      {isBhutan && (
-        <div className="px-5 pb-5 pt-2 border-t border-gold/20">
-          <button
-            type="button"
-            onClick={() => setBhutanModalOpen(true)}
-            className="w-full py-3 px-4 bg-gold text-charcoal font-body font-bold text-sm rounded-sm hover:bg-gold/90 transition-colors flex items-center justify-center gap-2"
-            data-ocid={`packages.open_modal_button.${index + 1}`}
-          >
-            <span>🏔️</span>
-            View All Bhutan Packages
-          </button>
-          <BhutanPackagesModal
-            open={bhutanModalOpen}
-            onClose={() => setBhutanModalOpen(false)}
-          />
-        </div>
-      )}
     </div>
   );
 }
@@ -1305,6 +636,368 @@ const PKG_BG_IMAGES = [
   "/assets/generated/bg-darjeeling-tea-hills.dim_1920x1080.jpg",
   "/assets/generated/bg-sikkim-tsomgo-lake.dim_1920x1080.jpg",
 ];
+
+// ── Bhutan Tour Card (with sub-packages modal) ──────────────────────────────
+const BHUTAN_SUB_PACKAGES = [
+  {
+    id: "4n5d",
+    duration: "4 Nights / 5 Days",
+    price: "Contact for pricing",
+    summary: "Phuentsholing → Thimphu → Paro → Departure",
+    itinerary: [
+      {
+        day: "Day 1",
+        title: "Arrival at Phuentsholing",
+        details:
+          "Pick-up from Bagdogra Airport or NJP. Check-in and explore Phuentsholing.",
+      },
+      {
+        day: "Day 2",
+        title: "Drive to Thimphu",
+        details:
+          "Immigration, drive to Thimphu via Kharbandi Gumpa, Chukha Dam. Evening at Clock Tower Square.",
+      },
+      {
+        day: "Day 3",
+        title: "Thimphu & Drive to Paro",
+        details:
+          "Buddha Dordenma, Tashichho Dzong, Simply Bhutan. Drive to Paro via iron chain bridge.",
+      },
+      {
+        day: "Day 4",
+        title: "Tiger's Nest Hike",
+        details:
+          "Early morning hike to Taktshang Lhakhang (Tiger's Nest). Optional hot stone bath.",
+      },
+      {
+        day: "Day 5",
+        title: "Departure",
+        details:
+          "Drive back to Phuentsholing and then to Bagdogra Airport or NJP.",
+      },
+    ],
+  },
+  {
+    id: "5n6d",
+    duration: "5 Nights / 6 Days",
+    price: "Contact for pricing",
+    summary:
+      "Phuentsholing → Thimphu → Punakha excursion → Paro → Tiger's Nest → Departure",
+    itinerary: [
+      {
+        day: "Day 1",
+        title: "Arrival at Phuentsholing",
+        details:
+          "Pick-up from Bagdogra Airport or NJP. Check-in and explore Phuentsholing.",
+      },
+      {
+        day: "Day 2",
+        title: "Drive to Thimphu",
+        details:
+          "Immigration, drive to Thimphu via Kharbandi Gumpa, Chukha Waterfall.",
+      },
+      {
+        day: "Day 3",
+        title: "Punakha Excursion",
+        details:
+          "Dochula Pass, Punakha Dzong, Two Rivers viewpoint. Return to Thimphu.",
+      },
+      {
+        day: "Day 4",
+        title: "Thimphu & Drive to Paro",
+        details:
+          "Simtokha Dzong, Buddha Dordenma, Tashichho Dzong. Drive to Paro.",
+      },
+      {
+        day: "Day 5",
+        title: "Tiger's Nest Hike",
+        details:
+          "Early morning hike to Taktshang Lhakhang (Tiger's Nest). Optional hot stone bath.",
+      },
+      {
+        day: "Day 6",
+        title: "Departure",
+        details: "Drive back to Phuentsholing then to Bagdogra Airport or NJP.",
+      },
+    ],
+  },
+  {
+    id: "6n7d",
+    duration: "6 Nights / 7 Days (Group Tour)",
+    price: "₹24,500/person",
+    summary:
+      "Full group tour: Phuentsholing → Thimphu → Punakha → Paro → Tiger's Nest → Departure",
+    itinerary: [
+      {
+        day: "Day 1",
+        title: "Arrival and Phuentsholing",
+        details:
+          "Pick-up from Bagdogra Airport (IXB) or NJP and drive to Phuentsholing. Check in and explore monasteries, parks, and nightlife.",
+      },
+      {
+        day: "Day 2",
+        title: "Journey to Thimphu",
+        details:
+          "After breakfast and immigration, drive to Thimphu. Stopovers at Kharbandi Gumpa, Chukha Waterfall, Chukha Dam, and Dharma Kaya Stupas. Evening guided walk around Clock Tower Square.",
+      },
+      {
+        day: "Day 3",
+        title: "Excursion to Punakha",
+        details:
+          "Drive to Punakha with stops at Dochula Pass and Suspension Bridge. Visit Punakha Dzong and Two Rivers viewpoint. Optional river rafting and riverside lunch.",
+      },
+      {
+        day: "Day 4",
+        title: "Thimphu Sightseeing & Drive to Paro",
+        details:
+          "Morning sightseeing: Simtokha Dzong, Buddha Dordenma, Tashichho Dzong, Simply Bhutan, Takin Preserve Zoo. Drive to Paro stopping at Tachogang Lhakhang iron chain bridge.",
+      },
+      {
+        day: "Day 5",
+        title: "Hike to Tiger's Nest",
+        details:
+          "Early morning hike to Taktshang Lhakhang (Tiger's Nest). Stop at canteen halfway for views and rest. Optional relaxing hot stone bath in Paro.",
+      },
+      {
+        day: "Day 6",
+        title: "Paro Sightseeing & Drive to Phuentsholing",
+        details:
+          "Visit Paro Ta Dzong in the morning. Sightseeing en route while driving back to Phuentsholing.",
+      },
+      {
+        day: "Day 7",
+        title: "Departure",
+        details:
+          "Drive from Phuentsholing to Bagdogra Airport or NJP for your flight home.",
+      },
+    ],
+  },
+  {
+    id: "7n8d",
+    duration: "7 Nights / 8 Days",
+    price: "Contact for pricing",
+    summary: "Extended tour with extra day in Paro and Haa Valley exploration",
+    itinerary: [
+      {
+        day: "Day 1",
+        title: "Arrival at Phuentsholing",
+        details:
+          "Pick-up from Bagdogra Airport or NJP. Check-in and explore Phuentsholing.",
+      },
+      {
+        day: "Day 2",
+        title: "Drive to Thimphu",
+        details:
+          "Immigration, drive to Thimphu via Kharbandi Gumpa, Chukha Waterfall, Chukha Dam.",
+      },
+      {
+        day: "Day 3",
+        title: "Punakha Excursion",
+        details:
+          "Dochula Pass, Punakha Dzong, Two Rivers viewpoint. Return to Thimphu.",
+      },
+      {
+        day: "Day 4",
+        title: "Thimphu Sightseeing",
+        details:
+          "Simtokha Dzong, Buddha Dordenma, Tashichho Dzong, Simply Bhutan, Takin Preserve Zoo.",
+      },
+      {
+        day: "Day 5",
+        title: "Drive to Paro & Haa Valley",
+        details:
+          "Drive to Paro via iron chain bridge. Afternoon excursion to scenic Haa Valley.",
+      },
+      {
+        day: "Day 6",
+        title: "Tiger's Nest Hike",
+        details:
+          "Early morning hike to Taktshang Lhakhang (Tiger's Nest). Optional hot stone bath.",
+      },
+      {
+        day: "Day 7",
+        title: "Paro Sightseeing",
+        details:
+          "Visit Paro Ta Dzong, Rinpung Dzong, and local market. Drive back to Phuentsholing.",
+      },
+      {
+        day: "Day 8",
+        title: "Departure",
+        details:
+          "Drive from Phuentsholing to Bagdogra Airport or NJP for your flight home.",
+      },
+    ],
+  },
+];
+
+function BhutanTourCard() {
+  const [open, setOpen] = useState(false);
+  const [expanded, setExpanded] = useState<string | null>(null);
+
+  return (
+    <>
+      <button
+        type="button"
+        className="package-card bg-orange-50 rounded-sm overflow-hidden shadow-md border border-gold/20 cursor-pointer hover:border-gold/50 transition-all duration-300 w-full text-left"
+        onClick={() => setOpen(true)}
+        data-ocid="bhutan_tour.open_modal_button"
+      >
+        {/* Image */}
+        <div className="relative h-48 overflow-hidden">
+          <img
+            src="/assets/generated/bhutan-tigers-nest.dim_1920x1080.jpg"
+            alt="Bhutan Tour Packages"
+            className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+          <div className="absolute bottom-3 left-4">
+            <span className="text-xs font-body text-white bg-black/50 px-2 py-1 rounded-sm">
+              4 Package Options
+            </span>
+          </div>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="bg-gold/90 text-black font-body font-semibold text-sm px-4 py-2 rounded-sm">
+              Click to Explore Packages ▶
+            </span>
+          </div>
+        </div>
+        {/* Header */}
+        <div
+          className="px-5 pt-4 pb-3 border-b border-gold/20"
+          style={{
+            background:
+              "linear-gradient(135deg, oklch(0.62 0.13 82 / 0.1), oklch(0.75 0.13 82 / 0.05))",
+          }}
+        >
+          <h3 className="font-display text-lg text-gold font-semibold">
+            Bhutan Tour Packages
+          </h3>
+          <p className="font-body text-gray-600 text-sm mt-0.5">
+            4N/5D · 5N/6D · 6N/7D · 7N/8D
+          </p>
+        </div>
+        {/* Body */}
+        <div className="px-5 py-4 space-y-2">
+          <div className="flex items-center gap-2">
+            <span className="text-gold text-sm">💰</span>
+            <span className="font-body text-gray-900 font-semibold">
+              From ₹24,500/person
+            </span>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="text-gold text-sm mt-0.5">📍</span>
+            <span className="font-body text-gray-600 text-sm">
+              Bagdogra Airport or NJP Railway Station
+            </span>
+          </div>
+          <p className="font-body text-gold text-xs italic mt-2">
+            Customized package available on request
+          </p>
+        </div>
+        <div className="px-5 pb-4">
+          <div className="w-full py-2 px-3 border border-gold/30 text-gold text-sm font-body text-center">
+            View All Bhutan Packages
+          </div>
+        </div>
+      </button>
+
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent
+          className="max-w-2xl max-h-[85vh] overflow-y-auto bg-orange-50"
+          data-ocid="bhutan_tour.dialog"
+        >
+          <DialogHeader>
+            <DialogTitle className="font-display text-2xl text-gold">
+              Bhutan Tour Packages
+            </DialogTitle>
+            <p className="font-body text-gray-600 text-sm">
+              Choose your perfect Bhutan experience
+            </p>
+          </DialogHeader>
+          <div className="space-y-4 mt-2">
+            {BHUTAN_SUB_PACKAGES.map((pkg) => (
+              <div
+                key={pkg.id}
+                className="border border-gold/30 rounded-sm overflow-hidden"
+              >
+                <button
+                  type="button"
+                  className="w-full flex items-center justify-between px-4 py-3 hover:bg-gold/10 transition-colors text-left"
+                  onClick={() =>
+                    setExpanded(expanded === pkg.id ? null : pkg.id)
+                  }
+                  data-ocid={`bhutan_tour.${pkg.id}.toggle`}
+                >
+                  <div>
+                    <p className="font-display text-gold font-semibold">
+                      {pkg.duration}
+                    </p>
+                    <p className="font-body text-gray-500 text-xs mt-0.5">
+                      {pkg.summary}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-3 shrink-0 ml-3">
+                    <span className="font-body text-orange-700 text-sm font-semibold">
+                      {pkg.price}
+                    </span>
+                    <span
+                      className={`transition-transform duration-300 text-gold ${expanded === pkg.id ? "rotate-180" : ""}`}
+                    >
+                      ▼
+                    </span>
+                  </div>
+                </button>
+                {expanded === pkg.id && (
+                  <div className="px-4 pb-4 bg-white border-t border-gold/20">
+                    <div className="space-y-3 mt-3">
+                      {pkg.itinerary.map((day) => (
+                        <div key={day.day} className="flex gap-3">
+                          <span className="font-body text-gold text-xs font-semibold shrink-0 w-12">
+                            {day.day}
+                          </span>
+                          <div>
+                            <p className="font-body text-gray-900 text-sm font-medium">
+                              {day.title}
+                            </p>
+                            <p className="font-body text-gray-600 text-xs mt-0.5 leading-relaxed">
+                              {day.details}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mt-4 pt-3 border-t border-gold/10">
+                      <a
+                        href={waLink(
+                          `Hi, I am interested in the Bhutan ${pkg.duration} package. Please share details and availability.`,
+                        )}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-sm font-body font-semibold text-white hover:opacity-90 transition-opacity text-sm"
+                        style={{ backgroundColor: "#25D366" }}
+                        data-ocid={`bhutan_tour.${pkg.id}.primary_button`}
+                      >
+                        <svg
+                          viewBox="0 0 24 24"
+                          aria-hidden="true"
+                          className="w-4 h-4 fill-current"
+                        >
+                          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                        </svg>
+                        Book on Request
+                      </a>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
+  );
+}
 
 function PackagesSection() {
   const [pkgBg, setPkgBg] = useState(0);
@@ -1343,12 +1036,13 @@ function PackagesSection() {
           <p className="font-body text-gold tracking-[0.25em] text-sm uppercase mb-3">
             Explore
           </p>
-          <h2 className="font-display text-4xl md:text-5xl text-cream mb-4">
+          <h2 className="font-display text-4xl md:text-5xl text-white mb-4">
             Our Tour Packages
           </h2>
           <div className="gold-divider" />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <BhutanTourCard />
           {PACKAGES.map((pkg, i) => (
             <PackageCard key={pkg.id} pkg={pkg} index={i} />
           ))}
@@ -1367,14 +1061,12 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="group bg-charcoal-light border border-gold/10 rounded-sm p-8 text-center hover:border-gold/40 hover:shadow-glow transition-all duration-300 w-full"
+        className="group bg-white border border-gold/20 rounded-sm p-8 text-center hover:border-gold/50 hover:shadow-md transition-all duration-300 w-full"
         data-ocid={`services.open_modal_button.${index + 1}`}
       >
         <span className="text-5xl block mb-4">{service.icon}</span>
         <h3 className="font-display text-xl text-gold mb-2">{service.name}</h3>
-        <p className="font-body text-cream-dark text-sm">
-          {service.description}
-        </p>
+        <p className="font-body text-gray-600 text-sm">{service.description}</p>
         <span className="inline-block mt-4 text-xs font-body text-gold/60 group-hover:text-gold transition-colors">
           Click for details →
         </span>
@@ -1382,7 +1074,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent
-          className="bg-charcoal-light border border-gold/20 text-cream max-w-md"
+          className="bg-white border border-gold/20 text-gray-900 max-w-md"
           data-ocid={`services.dialog.${index + 1}`}
         >
           <DialogHeader>
@@ -1390,7 +1082,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
               <span>{service.icon}</span> {service.name}
             </DialogTitle>
           </DialogHeader>
-          <p className="font-body text-cream-dark leading-relaxed text-sm">
+          <p className="font-body text-gray-600 leading-relaxed text-sm">
             {service.detail}
           </p>
           <div className="flex gap-3 mt-4">
@@ -1416,7 +1108,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
             <Button
               variant="outline"
               onClick={() => setOpen(false)}
-              className="border-gold/30 text-cream hover:bg-gold/10"
+              className="border-gold/30 text-gray-700 hover:bg-gold/10"
               data-ocid={`services.close_button.${index + 1}`}
             >
               Close
@@ -1430,17 +1122,13 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 
 function ServicesSection() {
   return (
-    <section
-      id="services"
-      className="py-20"
-      style={{ background: "oklch(0.16 0.02 250)" }}
-    >
+    <section id="services" className="py-20" style={{ background: "#fff7ed" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
           <p className="font-body text-gold tracking-[0.25em] text-sm uppercase mb-3">
             What We Offer
           </p>
-          <h2 className="font-display text-4xl md:text-5xl text-cream mb-4">
+          <h2 className="font-display text-4xl md:text-5xl text-gray-900 mb-4">
             Our Services
           </h2>
           <div className="gold-divider" />
@@ -1455,61 +1143,55 @@ function ServicesSection() {
   );
 }
 
-// ── Taxi Section ───────────────────────────────────────────────────────────────
-function TaxiSection() {
+// ── Gallery Section ────────────────────────────────────────────────────────────
+function GallerySection() {
   return (
-    <section id="taxi" className="py-20 bg-background">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="gallery" className="py-20" style={{ background: "#ffedd5" }}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
           <p className="font-body text-gold tracking-[0.25em] text-sm uppercase mb-3">
-            Transportation
+            Our Trips
           </p>
-          <h2 className="font-display text-4xl md:text-5xl text-cream mb-4">
-            Local Taxi Services
+          <h2 className="font-display text-4xl md:text-5xl text-gray-900 mb-4">
+            Happy Travellers
           </h2>
           <div className="gold-divider" />
-          <p className="font-body text-cream-dark mt-4 text-sm">
-            Reliable taxi services from Jaigaon to key destinations
+          <p className="font-body text-gray-600 mt-4 max-w-xl mx-auto">
+            Real moments, real smiles — our travellers exploring Bhutan with
+            Travellers Points.
           </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
-          {TAXI_ROUTES.map((route) => (
-            <div
-              key={route.to}
-              className="bg-charcoal-light border border-gold/10 rounded-sm p-5 flex items-center gap-4 hover:border-gold/30 transition-colors"
-            >
-              <span className="text-3xl">🚗</span>
-              <div>
-                <p className="font-body text-cream font-medium text-sm">
-                  {route.from} → {route.to}
-                </p>
-                <p className="font-body text-gold text-xs mt-1">
-                  Contact for pricing
-                </p>
-              </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="overflow-hidden rounded-sm shadow-lg border border-gold/20">
+            <img
+              src="/assets/uploads/IMG_20260319_002523-2.png"
+              alt="Travellers Points clients at Tiger's Nest, Bhutan"
+              className="w-full h-80 object-cover hover:scale-105 transition-transform duration-500"
+            />
+            <div className="p-4 bg-orange-50">
+              <p className="font-display text-gray-900 text-lg">
+                Tiger's Nest, Bhutan
+              </p>
+              <p className="font-body text-gray-500 text-sm mt-1">
+                Happy travellers at Taktshang Lhakhang
+              </p>
             </div>
-          ))}
-        </div>
-        <div className="text-center">
-          <a
-            href={waLink(
-              "Hi, I would like to enquire about taxi services from Jaigaon.",
-            )}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-sm font-body font-semibold text-white hover:opacity-90 transition-opacity"
-            style={{ backgroundColor: "#25D366" }}
-            data-ocid="taxi.primary_button"
-          >
-            <svg
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-              className="w-5 h-5 fill-current"
-            >
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-            </svg>
-            Enquire About Pricing
-          </a>
+          </div>
+          <div className="overflow-hidden rounded-sm shadow-lg border border-gold/20">
+            <img
+              src="/assets/uploads/IMG_20260319_002607-3.png"
+              alt="Travellers Points group tour at Bhutan Gate, Jaigaon"
+              className="w-full h-80 object-cover hover:scale-105 transition-transform duration-500"
+            />
+            <div className="p-4 bg-orange-50">
+              <p className="font-display text-gray-900 text-lg">
+                Bhutan Gate, Jaigaon
+              </p>
+              <p className="font-body text-gray-500 text-sm mt-1">
+                Travellers Point Bhutan Group Tour 2024
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1519,17 +1201,13 @@ function TaxiSection() {
 // ── Reviews Section ────────────────────────────────────────────────────────────
 function ReviewsSection() {
   return (
-    <section
-      id="reviews"
-      className="py-20"
-      style={{ background: "oklch(0.16 0.02 250)" }}
-    >
+    <section id="reviews" className="py-20" style={{ background: "#fff7ed" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
           <p className="font-body text-gold tracking-[0.25em] text-sm uppercase mb-3">
             Testimonials
           </p>
-          <h2 className="font-display text-4xl md:text-5xl text-cream mb-4">
+          <h2 className="font-display text-4xl md:text-5xl text-gray-900 mb-4">
             What Our Travellers Say
           </h2>
           <div className="gold-divider" />
@@ -1538,7 +1216,7 @@ function ReviewsSection() {
           {REVIEWS.map((review, i) => (
             <div
               key={review.author}
-              className="bg-charcoal-light border border-gold/10 rounded-sm p-6 hover:border-gold/30 transition-all duration-300"
+              className="bg-orange-50 border border-gold/20 rounded-sm p-6 hover:border-gold/40 transition-all duration-300 shadow-sm"
               data-ocid={`reviews.item.${i + 1}`}
             >
               <div className="flex gap-1 mb-4">
@@ -1548,7 +1226,7 @@ function ReviewsSection() {
                   </span>
                 ))}
               </div>
-              <p className="font-body text-cream-dark text-sm leading-relaxed italic mb-5">
+              <p className="font-body text-gray-600 text-sm leading-relaxed italic mb-5">
                 &ldquo;{review.text}&rdquo;
               </p>
               <div className="flex items-center gap-3 pt-4 border-t border-gold/10">
@@ -1558,10 +1236,10 @@ function ReviewsSection() {
                   </span>
                 </div>
                 <div>
-                  <p className="font-body text-cream text-sm font-medium">
+                  <p className="font-body text-gray-900 text-sm font-medium">
                     {review.author}
                   </p>
-                  <p className="font-body text-cream-dark text-xs">
+                  <p className="font-body text-gray-600 text-xs">
                     {review.location}
                   </p>
                 </div>
@@ -1593,17 +1271,17 @@ function ContactSection() {
   }
 
   return (
-    <section id="contact" className="py-20 bg-background">
+    <section id="contact" style={{ background: "#ffedd5" }} className="py-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
           <p className="font-body text-gold tracking-[0.25em] text-sm uppercase mb-3">
             Get In Touch
           </p>
-          <h2 className="font-display text-4xl md:text-5xl text-cream mb-4">
+          <h2 className="font-display text-4xl md:text-5xl text-gray-900 mb-4">
             Contact Us
           </h2>
           <div className="gold-divider" />
-          <p className="font-body text-cream-dark mt-4 text-sm">
+          <p className="font-body text-gray-600 mt-4 text-sm">
             Contact us to plan your dream tour
           </p>
         </div>
@@ -1612,13 +1290,12 @@ function ContactSection() {
           {/* Info */}
           <div className="space-y-8">
             <div>
-              <h3 className="font-display text-2xl text-gold mb-6">
+              <h3 className="font-display text-2xl text-orange-500 mb-6">
                 Travellers Points
               </h3>
-              <p className="font-body text-cream-dark text-sm leading-relaxed">
+              <p className="font-body text-gray-600 text-sm leading-relaxed">
                 Your trusted travel partner for unforgettable journeys to
-                Bhutan, Darjeeling, Sikkim, Nepal, Manali, Shimla, Kashmir, and
-                Mathura. From your dream to the world.
+                Bhutan, Darjeeling, and Sikkim. From your dream to the world.
               </p>
             </div>
             <div className="space-y-4">
@@ -1637,7 +1314,7 @@ function ContactSection() {
                     <p className="font-body text-gold text-xs font-semibold uppercase tracking-wider">
                       {item.label}
                     </p>
-                    <p className="font-body text-cream text-sm mt-0.5">
+                    <p className="font-body text-gray-900 text-sm mt-0.5">
                       {item.value}
                     </p>
                   </div>
@@ -1668,12 +1345,12 @@ function ContactSection() {
           {/* Form */}
           <form
             onSubmit={handleSubmit}
-            className="space-y-5 bg-charcoal-light border border-gold/10 rounded-sm p-8"
+            className="space-y-5 bg-white border border-gold/20 rounded-sm p-8 shadow-sm"
           >
             <div className="space-y-1.5">
               <Label
                 htmlFor="name"
-                className="font-body text-cream-dark text-xs uppercase tracking-wider"
+                className="font-body text-gray-600 text-xs uppercase tracking-wider"
               >
                 Your Name
               </Label>
@@ -1683,14 +1360,14 @@ function ContactSection() {
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                 required
                 placeholder="Enter your name"
-                className="bg-charcoal border-gold/20 text-cream placeholder:text-cream-dark/60 focus:border-gold/50 focus:ring-0"
+                className="bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 focus:border-gold/50 focus:ring-0"
                 data-ocid="contact.input"
               />
             </div>
             <div className="space-y-1.5">
               <Label
                 htmlFor="email"
-                className="font-body text-cream-dark text-xs uppercase tracking-wider"
+                className="font-body text-gray-600 text-xs uppercase tracking-wider"
               >
                 Email
               </Label>
@@ -1700,14 +1377,14 @@ function ContactSection() {
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 placeholder="Enter your email"
-                className="bg-charcoal border-gold/20 text-cream placeholder:text-cream-dark/60 focus:border-gold/50 focus:ring-0"
+                className="bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 focus:border-gold/50 focus:ring-0"
                 data-ocid="contact.input"
               />
             </div>
             <div className="space-y-1.5">
               <Label
                 htmlFor="phone"
-                className="font-body text-cream-dark text-xs uppercase tracking-wider"
+                className="font-body text-gray-600 text-xs uppercase tracking-wider"
               >
                 Phone Number
               </Label>
@@ -1717,14 +1394,14 @@ function ContactSection() {
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
                 required
                 placeholder="Enter your phone number"
-                className="bg-charcoal border-gold/20 text-cream placeholder:text-cream-dark/60 focus:border-gold/50 focus:ring-0"
+                className="bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 focus:border-gold/50 focus:ring-0"
                 data-ocid="contact.input"
               />
             </div>
             <div className="space-y-1.5">
               <Label
                 htmlFor="message"
-                className="font-body text-cream-dark text-xs uppercase tracking-wider"
+                className="font-body text-gray-600 text-xs uppercase tracking-wider"
               >
                 Message
               </Label>
@@ -1735,13 +1412,13 @@ function ContactSection() {
                 required
                 placeholder="Tell us about your dream trip..."
                 rows={4}
-                className="bg-charcoal border-gold/20 text-cream placeholder:text-cream-dark/60 focus:border-gold/50 focus:ring-0 resize-none"
+                className="bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 focus:border-gold/50 focus:ring-0 resize-none"
                 data-ocid="contact.textarea"
               />
             </div>
             <button
               type="submit"
-              className="w-full py-3.5 bg-gold text-charcoal font-body font-semibold tracking-widest text-sm uppercase hover:bg-gold-light transition-colors duration-200 rounded-sm"
+              className="w-full py-3.5 bg-gold text-white font-body font-semibold tracking-widest text-sm uppercase hover:bg-gold/90 transition-colors duration-200 rounded-sm"
               data-ocid="contact.submit_button"
             >
               {sent ? "Message Sent! ✓" : "Send Message"}
@@ -1761,7 +1438,7 @@ function Footer() {
   return (
     <footer
       className="py-12 border-t border-gold/10"
-      style={{ background: "oklch(0.12 0.02 250)" }}
+      style={{ background: "oklch(0.15 0.02 250)" }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
@@ -1776,7 +1453,7 @@ function Footer() {
                   (e.currentTarget as HTMLImageElement).style.display = "none";
                 }}
               />
-              <span className="font-display text-lg text-gold">
+              <span className="font-display text-lg text-orange-500">
                 Travellers Points
               </span>
             </div>
@@ -1785,7 +1462,7 @@ function Footer() {
             </p>
             <p className="font-body text-cream-dark/90 text-xs mt-3 leading-relaxed">
               Expert travel agency specializing in tours to Bhutan, Darjeeling,
-              Sikkim, Nepal, Manali, Shimla, Kashmir, and Mathura.
+              and Sikkim.
             </p>
           </div>
 
@@ -1907,13 +1584,13 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-foreground font-body">
+    <div className="min-h-screen" style={{ background: "#fff7ed" }}>
       <Navbar scrolled={scrolled} />
       <main>
         <Hero />
         <PackagesSection />
         <ServicesSection />
-        <TaxiSection />
+        <GallerySection />
         <ReviewsSection />
         <ContactSection />
       </main>
