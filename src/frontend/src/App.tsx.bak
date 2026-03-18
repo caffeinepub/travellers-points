@@ -59,7 +59,7 @@ const HERO_IMAGES = [
 const PACKAGES: Package[] = [
   {
     id: "bhutan-group",
-    name: "Bhutan Group Tour",
+    name: "Bhutan Tour Package",
     duration: "6 Nights / 7 Days",
     price: "₹24,500/person",
     pickup: "Bagdogra Airport or NJP Railway Station",
@@ -241,7 +241,7 @@ const SERVICES: Service[] = [
 
 const REVIEWS: Review[] = [
   {
-    text: "Amazing Bhutan trip organized by Traveller Point! Everything was perfectly arranged — hotels, transport, guide. Highly recommended!",
+    text: "Amazing Bhutan trip organized by Travellers Points! Everything was perfectly arranged — hotels, transport, guide. Highly recommended!",
     author: "Rahul S.",
     location: "Kolkata",
   },
@@ -251,7 +251,7 @@ const REVIEWS: Review[] = [
     location: "West Bengal",
   },
   {
-    text: "Kashmir trip was absolutely breathtaking. Traveller Point made the whole experience stress-free and memorable.",
+    text: "Kashmir trip was absolutely breathtaking. Travellers Points made the whole experience stress-free and memorable.",
     author: "Amit K.",
     location: "Delhi",
   },
@@ -304,14 +304,14 @@ function Navbar({ scrolled }: { scrolled: boolean }) {
           >
             <img
               src="/assets/uploads/image_b1a1f18a-1.png"
-              alt="Traveller Point"
+              alt="Travellers Points"
               className="h-10 w-auto"
               onError={(e) => {
                 (e.currentTarget as HTMLImageElement).style.display = "none";
               }}
             />
             <span className="font-display text-lg font-semibold text-orange-500 hidden sm:block">
-              Traveller Point
+              Travellers Points
             </span>
           </a>
 
@@ -480,53 +480,76 @@ function PackageCard({ pkg, index }: { pkg: Package; index: number }) {
 
   return (
     <div
-      className="flex flex-col items-center text-center p-6 bg-white rounded-2xl shadow-md border border-gold/20"
+      className="package-card bg-orange-50 rounded-sm overflow-hidden shadow-md border border-gold/20"
       data-ocid={`packages.item.${index + 1}`}
     >
-      {/* Circular Image */}
-      <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-gold/30 shadow-lg mb-4">
+      {/* Image */}
+      <div className="relative h-48 overflow-hidden">
         <img
           src={pkg.image}
           alt={pkg.name}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
           loading="lazy"
         />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+        <div className="absolute bottom-3 left-4">
+          <span className="text-xs font-body text-white bg-black/50 px-2 py-1 rounded-sm">
+            {pkg.duration}
+          </span>
+        </div>
       </div>
 
-      {/* Title */}
-      <h3 className="font-display text-lg text-gold font-semibold mb-1">
-        {pkg.name}
-      </h3>
-      <p className="font-body text-gray-500 text-sm mb-2">{pkg.duration}</p>
-
-      {/* Pickup */}
-      <div className="flex items-center gap-1.5 justify-center mb-2">
-        <span className="text-gold text-xs">📍</span>
-        <span className="font-body text-gray-500 text-xs">{pkg.pickup}</span>
+      {/* Header */}
+      <div
+        className="px-5 pt-4 pb-3 border-b border-gold/20"
+        style={{
+          background:
+            "linear-gradient(135deg, oklch(0.62 0.13 82 / 0.1), oklch(0.75 0.13 82 / 0.05))",
+        }}
+      >
+        <h3 className="font-display text-lg text-gold font-semibold">
+          {pkg.name}
+        </h3>
+        <p className="font-body text-gray-600 text-sm mt-0.5">{pkg.duration}</p>
       </div>
 
-      <p className="font-body text-gold text-xs italic mb-4">
-        Customized package available on request
-      </p>
+      {/* Body */}
+      <div className="px-5 py-4 space-y-2">
+        <div className="flex items-center gap-2">
+          <span className="text-gold text-sm">💰</span>
+          <span className="font-body text-gray-900 font-semibold">
+            {pkg.price}
+          </span>
+        </div>
+        <div className="flex items-start gap-2">
+          <span className="text-gold text-sm mt-0.5">📍</span>
+          <span className="font-body text-gray-600 text-sm">{pkg.pickup}</span>
+        </div>
+        <p className="font-body text-gold text-xs italic mt-2">
+          Customized package available on request
+        </p>
+      </div>
 
       {/* Toggle itinerary */}
-      <button
-        type="button"
-        onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between py-2 px-3 border border-gold/30 text-gold text-sm font-body hover:bg-gold/10 transition-colors rounded-lg"
-        data-ocid={`packages.toggle.${index + 1}`}
-      >
-        <span>{open ? "Hide Itinerary" : "View Itinerary"}</span>
-        <span
-          className={`transition-transform duration-300 ${open ? "rotate-180" : ""}`}
+      <div className="px-5 pb-3">
+        <button
+          type="button"
+          onClick={() => setOpen(!open)}
+          className="w-full flex items-center justify-between py-2 px-3 border border-gold/30 text-gold text-sm font-body hover:bg-gold/10 transition-colors rounded-sm"
+          data-ocid={`packages.toggle.${index + 1}`}
         >
-          ▼
-        </span>
-      </button>
+          <span>{open ? "Hide Itinerary" : "View Itinerary"}</span>
+          <span
+            className={`transition-transform duration-300 ${open ? "rotate-180" : ""}`}
+          >
+            ▼
+          </span>
+        </button>
+      </div>
 
       {/* Itinerary */}
       {open && (
-        <div className="w-full text-left mt-4 space-y-3 border-t border-gold/10 pt-4">
+        <div className="px-5 pb-5 space-y-3 border-t border-gold/10 pt-4">
           {pkg.itinerary.map((day) => (
             <div key={day.day} className="flex gap-3">
               <div className="flex-shrink-0">
@@ -608,6 +631,11 @@ function PackageCard({ pkg, index }: { pkg: Package; index: number }) {
 }
 
 // ── Packages Section ───────────────────────────────────────────────────────────
+const PKG_BG_IMAGES = [
+  "/assets/generated/bg-bhutan-tigers-nest.dim_1920x1080.jpg",
+  "/assets/generated/bg-darjeeling-tea-hills.dim_1920x1080.jpg",
+  "/assets/generated/bg-sikkim-tsomgo-lake.dim_1920x1080.jpg",
+];
 
 // ── Bhutan Tour Card (with sub-packages modal) ──────────────────────────────
 const BHUTAN_SUB_PACKAGES = [
@@ -810,42 +838,67 @@ function BhutanTourCard() {
     <>
       <button
         type="button"
-        className="flex flex-col items-center text-center p-6 bg-white rounded-2xl shadow-md border border-gold/20 cursor-pointer hover:border-gold/50 transition-all duration-300 w-full"
+        className="package-card bg-orange-50 rounded-sm overflow-hidden shadow-md border border-gold/20 cursor-pointer hover:border-gold/50 transition-all duration-300 w-full text-left"
         onClick={() => setOpen(true)}
         data-ocid="bhutan_tour.open_modal_button"
       >
-        {/* Circular Image */}
-        <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-gold/30 shadow-lg mb-4">
+        {/* Image */}
+        <div className="relative h-48 overflow-hidden">
           <img
             src="/assets/generated/bhutan-tigers-nest.dim_1920x1080.jpg"
             alt="Bhutan Tour Packages"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
             loading="lazy"
           />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+          <div className="absolute bottom-3 left-4">
+            <span className="text-xs font-body text-white bg-black/50 px-2 py-1 rounded-sm">
+              4 Package Options
+            </span>
+          </div>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="bg-gold/90 text-black font-body font-semibold text-sm px-4 py-2 rounded-sm">
+              Click to Explore Packages ▶
+            </span>
+          </div>
         </div>
-
-        {/* Title */}
-        <h3 className="font-display text-lg text-gold font-semibold mb-1">
-          Bhutan Tour Packages
-        </h3>
-        <p className="font-body text-gray-500 text-sm mb-2">
-          4N/5D · 5N/6D · 6N/7D · 7N/8D
-        </p>
-
-        {/* Pickup */}
-        <div className="flex items-center gap-1.5 justify-center mb-2">
-          <span className="text-gold text-xs">📍</span>
-          <span className="font-body text-gray-500 text-xs">
-            Bagdogra Airport or NJP Railway Station
-          </span>
+        {/* Header */}
+        <div
+          className="px-5 pt-4 pb-3 border-b border-gold/20"
+          style={{
+            background:
+              "linear-gradient(135deg, oklch(0.62 0.13 82 / 0.1), oklch(0.75 0.13 82 / 0.05))",
+          }}
+        >
+          <h3 className="font-display text-lg text-gold font-semibold">
+            Bhutan Tour Packages
+          </h3>
+          <p className="font-body text-gray-600 text-sm mt-0.5">
+            4N/5D · 5N/6D · 6N/7D · 7N/8D
+          </p>
         </div>
-
-        <p className="font-body text-gold text-xs italic mb-4">
-          Customized package available on request
-        </p>
-
-        <div className="w-full py-2 px-3 border border-gold/30 text-gold text-sm font-body text-center rounded-lg hover:bg-gold/10 transition-colors">
-          View All Bhutan Packages ▶
+        {/* Body */}
+        <div className="px-5 py-4 space-y-2">
+          <div className="flex items-center gap-2">
+            <span className="text-gold text-sm">💰</span>
+            <span className="font-body text-gray-900 font-semibold">
+              From ₹24,500/person
+            </span>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="text-gold text-sm mt-0.5">📍</span>
+            <span className="font-body text-gray-600 text-sm">
+              Bagdogra Airport or NJP Railway Station
+            </span>
+          </div>
+          <p className="font-body text-gold text-xs italic mt-2">
+            Customized package available on request
+          </p>
+        </div>
+        <div className="px-5 pb-4">
+          <div className="w-full py-2 px-3 border border-gold/30 text-gold text-sm font-body text-center">
+            View All Bhutan Packages
+          </div>
         </div>
       </button>
 
@@ -947,14 +1000,43 @@ function BhutanTourCard() {
 }
 
 function PackagesSection() {
+  const [pkgBg, setPkgBg] = useState(0);
+  useEffect(() => {
+    const t = setInterval(
+      () => setPkgBg((p) => (p + 1) % PKG_BG_IMAGES.length),
+      5000,
+    );
+    return () => clearInterval(t);
+  }, []);
   return (
-    <section id="packages" className="py-20 bg-orange-500">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="packages" className="py-20 relative overflow-hidden">
+      {/* Sliding background */}
+      {PKG_BG_IMAGES.map((src, i) => (
+        <div
+          key={src}
+          className="absolute inset-0 transition-opacity duration-1000 overflow-hidden"
+          style={{
+            opacity: i === pkgBg ? 1 : 0,
+            zIndex: 0,
+          }}
+        >
+          <img
+            src={src}
+            alt=""
+            className="w-full h-full object-cover"
+            loading="lazy"
+            aria-hidden="true"
+          />
+        </div>
+      ))}
+      {/* Dark overlay so text & cards remain readable */}
+      <div className="absolute inset-0 bg-black/70 z-10" />
+      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
           <p className="font-body text-gold tracking-[0.25em] text-sm uppercase mb-3">
             Explore
           </p>
-          <h2 className="font-display text-4xl md:text-5xl text-gray-900 mb-4">
+          <h2 className="font-display text-4xl md:text-5xl text-white mb-4">
             Our Tour Packages
           </h2>
           <div className="gold-divider" />
@@ -1076,14 +1158,14 @@ function GallerySection() {
           <div className="gold-divider" />
           <p className="font-body text-gray-600 mt-4 max-w-xl mx-auto">
             Real moments, real smiles — our travellers exploring Bhutan with
-            Traveller Point.
+            Travellers Points.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="overflow-hidden rounded-sm shadow-lg border border-gold/20">
             <img
               src="/assets/uploads/IMG_20260319_002523-2.png"
-              alt="Traveller Point clients at Tiger's Nest, Bhutan"
+              alt="Travellers Points clients at Tiger's Nest, Bhutan"
               className="w-full h-80 object-cover hover:scale-105 transition-transform duration-500"
             />
             <div className="p-4 bg-orange-50">
@@ -1098,7 +1180,7 @@ function GallerySection() {
           <div className="overflow-hidden rounded-sm shadow-lg border border-gold/20">
             <img
               src="/assets/uploads/IMG_20260319_002607-3.png"
-              alt="Traveller Point group tour at Bhutan Gate, Jaigaon"
+              alt="Travellers Points group tour at Bhutan Gate, Jaigaon"
               className="w-full h-80 object-cover hover:scale-105 transition-transform duration-500"
             />
             <div className="p-4 bg-orange-50">
@@ -1209,7 +1291,7 @@ function ContactSection() {
           <div className="space-y-8">
             <div>
               <h3 className="font-display text-2xl text-orange-500 mb-6">
-                Traveller Point
+                Travellers Points
               </h3>
               <p className="font-body text-gray-600 text-sm leading-relaxed">
                 Your trusted travel partner for unforgettable journeys to
@@ -1241,7 +1323,7 @@ function ContactSection() {
             </div>
             <a
               href={waLink(
-                "Hi, I would like to plan a tour with Traveller Point.",
+                "Hi, I would like to plan a tour with Travellers Points.",
               )}
               target="_blank"
               rel="noopener noreferrer"
@@ -1356,7 +1438,7 @@ function Footer() {
   return (
     <footer
       className="py-12 border-t border-gold/10"
-      style={{ background: "#f97316" }}
+      style={{ background: "oklch(0.15 0.02 250)" }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
@@ -1365,14 +1447,14 @@ function Footer() {
             <div className="flex items-center gap-3 mb-4">
               <img
                 src="/assets/uploads/image_b1a1f18a-1.png"
-                alt="Traveller Point"
+                alt="Travellers Points"
                 className="h-10 w-auto"
                 onError={(e) => {
                   (e.currentTarget as HTMLImageElement).style.display = "none";
                 }}
               />
               <span className="font-display text-lg text-orange-500">
-                Traveller Point
+                Travellers Points
               </span>
             </div>
             <p className="font-display text-cream-dark text-sm italic">
@@ -1447,7 +1529,7 @@ function Footer() {
 
         <div className="border-t border-gold/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="font-body text-cream-dark/80 text-xs">
-            © {year} Traveller Point. All rights reserved.
+            © {year} Travellers Points. All rights reserved.
           </p>
           <p className="font-body text-cream-dark/60 text-xs">
             Built with ❤️ using{" "}
