@@ -1,39 +1,33 @@
-# Travellers Points
+# Traveller Point
 
 ## Current State
-New project. No existing code.
+Luxury travel agency website with Bhutan, Darjeeling, and Sikkim packages. Currently using a grey/white color scheme. Brand name "Traveller Point" shown in orange. White text throughout.
 
 ## Requested Changes (Diff)
 
 ### Add
-- Full travel agency website with multi-section homepage
-- Navigation bar with brand name "Travellers Points" and links to all sections
-- Hero section with background image, tagline, and destination search bar
-- Featured destinations section with cards (image, name, description, price)
-- Services section: Flights, Hotels, Tour Packages, Travel Insurance
-- "Why Choose Us" section with benefit highlights (e.g., best prices, expert guides, 24/7 support, trusted reviews)
-- Customer testimonials section with avatar, name, rating, and quote
-- Travel deals/offers section with promotional cards
-- Contact page/section with a form (name, email, phone, message, submit)
-- Footer with social media links, quick navigation links, and copyright
+- Gold accent colors for section headings, dividers, borders, highlights, and buttons
 
 ### Modify
-- N/A (new project)
+- Background color: change from grey/white to dark charcoal (#1a1a2e or similar deep charcoal #2d2d2d)
+- Text color: white throughout
+- Brand name "Traveller Point": keep orange
+- Navbar: dark charcoal background
+- Package cards: dark charcoal card background with gold borders/accents
+- Section backgrounds: dark charcoal
+- Footer: dark charcoal background
+- Buttons: gold/amber color instead of orange (except WhatsApp button stays green)
+- Headings and decorative elements: gold accents (#d4af37 or amber gold)
+- Any orange/yellow/grey backgrounds: replaced with dark charcoal
 
 ### Remove
-- N/A (new project)
+- Grey and white backgrounds
 
 ## Implementation Plan
-1. Backend: Store contact form submissions (name, email, phone, message, timestamp). Provide read endpoint for admin.
-2. Frontend pages/sections:
-   - Navbar component with smooth scroll links
-   - Hero section with search bar (client-side filter)
-   - Featured Destinations section (static data, 6 destinations)
-   - Services section (4 service cards)
-   - Why Choose Us section (4 benefit items)
-   - Testimonials section (3-4 testimonials)
-   - Deals & Offers section (3 deal cards)
-   - Contact section with form wired to backend
-   - Footer with social icons and nav links
-3. Generate travel imagery: hero background, destination photos
-4. Smooth scroll navigation, warm color palette, elegant typography
+1. Update all background colors to dark charcoal (#1f1f1f or #2a2a2a)
+2. Set all body text to white
+3. Apply gold (#d4af37 or #c9a84c) to section titles, dividers, card borders, and accent elements
+4. Keep "Traveller Point" brand name in orange
+5. Update CTA buttons to gold color
+6. Ensure navbar, footer, package section, services, reviews all use charcoal backgrounds
+7. Validate and deploy

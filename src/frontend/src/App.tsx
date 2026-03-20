@@ -305,8 +305,8 @@ function Navbar({ scrolled }: { scrolled: boolean }) {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-white/95 backdrop-blur-md shadow-md border-b border-gold/10"
-          : "bg-white/10 backdrop-blur-sm"
+          ? "bg-[#1f1f1f]/95 backdrop-blur-md shadow-md border-b border-gold/10"
+          : "bg-black/20 backdrop-blur-sm"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -337,7 +337,7 @@ function Navbar({ scrolled }: { scrolled: boolean }) {
                 key={l.label}
                 href={l.href}
                 className={`nav-link text-sm font-body font-medium tracking-wide ${
-                  scrolled ? "text-gray-800" : "text-white"
+                  scrolled ? "text-foreground" : "text-white"
                 }`}
                 data-ocid={"nav.link"}
               >
@@ -359,7 +359,7 @@ function Navbar({ scrolled }: { scrolled: boolean }) {
           <button
             type="button"
             className={`md:hidden p-2 ${
-              scrolled ? "text-gray-800" : "text-white"
+              scrolled ? "text-foreground" : "text-white"
             }`}
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle menu"
@@ -384,12 +384,12 @@ function Navbar({ scrolled }: { scrolled: boolean }) {
 
         {/* Mobile Menu */}
         {menuOpen && (
-          <div className="md:hidden bg-white border-t border-gold/10 py-4 shadow-md">
+          <div className="md:hidden bg-[#1f1f1f] border-t border-gold/10 py-4 shadow-md">
             {links.map((l) => (
               <a
                 key={l.label}
                 href={l.href}
-                className="block px-4 py-3 text-gray-800 hover:text-gold hover:bg-gray-50 transition-colors font-body"
+                className="block px-4 py-3 text-foreground/80 hover:text-gold hover:bg-gold/10 transition-colors font-body"
                 onClick={() => setMenuOpen(false)}
                 data-ocid="nav.link"
               >
@@ -450,9 +450,9 @@ function Hero() {
           Welcome to
         </p>
         <h1 className="font-display text-5xl md:text-7xl lg:text-8xl text-gold-gradient mb-6 leading-tight">
-          TRAVELLERS
+          TRAVELLER
           <br />
-          <span className="italic font-normal">Points</span>
+          <span className="italic font-normal">Point</span>
         </h1>
         <div className="gold-divider mx-auto mb-6" />
         <p className="font-display text-xl md:text-2xl text-white italic mb-3">
@@ -495,7 +495,7 @@ function PackageCard({ pkg, index }: { pkg: Package; index: number }) {
 
   return (
     <div
-      className="flex flex-col items-center text-center p-6 bg-white rounded-2xl shadow-md border border-gold/20"
+      className="flex flex-col items-center text-center p-6 bg-card rounded-2xl shadow-md border border-gold/30"
       data-ocid={`packages.item.${index + 1}`}
     >
       {/* Circular Image */}
@@ -512,12 +512,16 @@ function PackageCard({ pkg, index }: { pkg: Package; index: number }) {
       <h3 className="font-display text-lg text-gold font-semibold mb-1">
         {pkg.name}
       </h3>
-      <p className="font-body text-gray-500 text-sm mb-2">{pkg.duration}</p>
+      <p className="font-body text-foreground/60 text-sm mb-2">
+        {pkg.duration}
+      </p>
 
       {/* Pickup */}
       <div className="flex items-center gap-1.5 justify-center mb-2">
         <span className="text-gold text-xs">📍</span>
-        <span className="font-body text-gray-500 text-xs">{pkg.pickup}</span>
+        <span className="font-body text-foreground/60 text-xs">
+          {pkg.pickup}
+        </span>
       </div>
 
       <p className="font-body text-gold text-xs italic mb-4">
@@ -550,10 +554,10 @@ function PackageCard({ pkg, index }: { pkg: Package; index: number }) {
                 </span>
               </div>
               <div>
-                <p className="font-body text-gray-900 text-sm font-medium">
+                <p className="font-body text-foreground text-sm font-medium">
                   {day.title}
                 </p>
-                <p className="font-body text-gray-600 text-xs mt-0.5 leading-relaxed">
+                <p className="font-body text-foreground/70 text-xs mt-0.5 leading-relaxed">
                   {day.details}
                 </p>
               </div>
@@ -561,7 +565,7 @@ function PackageCard({ pkg, index }: { pkg: Package; index: number }) {
           ))}
 
           {/* Inclusions */}
-          <div className="mt-4 p-3 bg-gray-100 rounded-sm border border-gray-200">
+          <div className="mt-4 p-3 bg-[#333] rounded-sm border border-gold/20">
             <p className="font-body text-gold text-xs font-semibold uppercase tracking-wider mb-2">
               Inclusions
             </p>
@@ -569,7 +573,7 @@ function PackageCard({ pkg, index }: { pkg: Package; index: number }) {
               {pkg.inclusions.map((inc) => (
                 <li
                   key={inc}
-                  className="font-body text-gray-600 text-xs flex items-center gap-1.5"
+                  className="font-body text-foreground/70 text-xs flex items-center gap-1.5"
                 >
                   <span className="text-gold">✓</span> {inc}
                 </li>
@@ -579,7 +583,7 @@ function PackageCard({ pkg, index }: { pkg: Package; index: number }) {
 
           {/* Exclusions */}
           {pkg.exclusions && pkg.exclusions.length > 0 && (
-            <div className="mt-3 p-3 bg-gray-100 rounded-sm border border-gray-200">
+            <div className="mt-3 p-3 bg-[#333] rounded-sm border border-gold/20">
               <p className="font-body text-red-500 text-xs font-semibold uppercase tracking-wider mb-2">
                 Exclusions
               </p>
@@ -587,7 +591,7 @@ function PackageCard({ pkg, index }: { pkg: Package; index: number }) {
                 {pkg.exclusions.map((exc) => (
                   <li
                     key={exc}
-                    className="font-body text-gray-600 text-xs flex items-center gap-1.5"
+                    className="font-body text-foreground/70 text-xs flex items-center gap-1.5"
                   >
                     <span className="text-red-400">✗</span> {exc}
                   </li>
@@ -625,7 +629,11 @@ function PackageCard({ pkg, index }: { pkg: Package; index: number }) {
 // ── About Section ──────────────────────────────────────────────────────────────
 function AboutSection() {
   return (
-    <section id="about" className="py-20" style={{ background: "#ffffff" }}>
+    <section
+      id="about"
+      className="py-20"
+      style={{ background: "var(--section-bg)" }}
+    >
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div>
@@ -635,24 +643,24 @@ function AboutSection() {
             >
               About Traveller Point
             </h2>
-            <p className="text-gray-700 mb-4 text-base leading-relaxed">
+            <p className="text-foreground/80 mb-4 text-base leading-relaxed">
               Traveller Point is a premier travel agency based in Jaigaon,
               Alipurduar, West Bengal — your gateway to the enchanting kingdoms
               of Bhutan, the misty hills of Darjeeling, the scenic valleys of
               Sikkim, and beyond.
             </p>
-            <p className="text-gray-700 mb-4 text-base leading-relaxed">
+            <p className="text-foreground/80 mb-4 text-base leading-relaxed">
               With years of experience in organising memorable tours, we
               specialise in customised group and private packages to Bhutan,
               Darjeeling, Sikkim, Nepal, Kashmir, Manali, and Shimla. Our expert
               team ensures every journey is seamless — from pickup at
               NJP/Bagdogra to your final destination.
             </p>
-            <p className="text-gray-700 mb-6 text-base leading-relaxed">
+            <p className="text-foreground/80 mb-6 text-base leading-relaxed">
               We are committed to giving every traveller the best experience at
               the most affordable rates, with round-the-clock WhatsApp support.
             </p>
-            <p className="font-bold text-gray-700 mb-6 italic text-lg">
+            <p className="font-bold text-foreground/80 mb-6 italic text-lg">
               "From your dream to the world."
             </p>
             <a
@@ -671,7 +679,7 @@ function AboutSection() {
               src="/assets/uploads/image_b1a1f18a-1.png"
               alt="Traveller Point Logo"
               className="w-64 h-64 md:w-80 md:h-80 object-contain rounded-2xl"
-              style={{ background: "rgba(255,255,255,0.4)", padding: "1rem" }}
+              style={{ background: "rgba(255,255,255,0.05)", padding: "1rem" }}
             />
           </div>
         </div>
@@ -883,7 +891,7 @@ function BhutanTourCard() {
     <>
       <button
         type="button"
-        className="flex flex-col items-center text-center p-6 bg-white rounded-2xl shadow-md border border-gold/20 cursor-pointer hover:border-gold/50 transition-all duration-300 w-full"
+        className="flex flex-col items-center text-center p-6 bg-card rounded-2xl shadow-md border border-gold/30 cursor-pointer hover:border-gold/60 transition-all duration-300 w-full"
         onClick={() => setOpen(true)}
         data-ocid="bhutan_tour.open_modal_button"
       >
@@ -901,14 +909,14 @@ function BhutanTourCard() {
         <h3 className="font-display text-lg text-gold font-semibold mb-1">
           Bhutan Tour Packages
         </h3>
-        <p className="font-body text-gray-500 text-sm mb-2">
+        <p className="font-body text-foreground/60 text-sm mb-2">
           4N/5D · 5N/6D · 6N/7D · 7N/8D
         </p>
 
         {/* Pickup */}
         <div className="flex items-center gap-1.5 justify-center mb-2">
           <span className="text-gold text-xs">📍</span>
-          <span className="font-body text-gray-500 text-xs">
+          <span className="font-body text-foreground/60 text-xs">
             Bagdogra Airport or NJP Railway Station
           </span>
         </div>
@@ -924,14 +932,14 @@ function BhutanTourCard() {
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent
-          className="max-w-2xl max-h-[85vh] overflow-y-auto bg-white"
+          className="max-w-2xl max-h-[85vh] overflow-y-auto bg-card text-foreground"
           data-ocid="bhutan_tour.dialog"
         >
           <DialogHeader>
             <DialogTitle className="font-display text-2xl text-gold">
               Bhutan Tour Packages
             </DialogTitle>
-            <p className="font-body text-gray-600 text-sm">
+            <p className="font-body text-foreground/70 text-sm">
               Choose your perfect Bhutan experience
             </p>
           </DialogHeader>
@@ -953,12 +961,12 @@ function BhutanTourCard() {
                     <p className="font-display text-gold font-semibold">
                       {pkg.duration}
                     </p>
-                    <p className="font-body text-gray-500 text-xs mt-0.5">
+                    <p className="font-body text-foreground/60 text-xs mt-0.5">
                       {pkg.summary}
                     </p>
                   </div>
                   <div className="flex items-center gap-3 shrink-0 ml-3">
-                    <span className="font-body text-orange-700 text-sm font-semibold">
+                    <span className="font-body text-orange-400 text-sm font-semibold">
                       {pkg.price}
                     </span>
                     <span
@@ -969,7 +977,7 @@ function BhutanTourCard() {
                   </div>
                 </button>
                 {expanded === pkg.id && (
-                  <div className="px-4 pb-4 bg-gray-100 border-t border-gold/20">
+                  <div className="px-4 pb-4 bg-[#333] border-t border-gold/20">
                     <div className="space-y-3 mt-3">
                       {pkg.itinerary.map((day) => (
                         <div key={day.day} className="flex gap-3">
@@ -977,10 +985,10 @@ function BhutanTourCard() {
                             {day.day}
                           </span>
                           <div>
-                            <p className="font-body text-gray-900 text-sm font-medium">
+                            <p className="font-body text-foreground text-sm font-medium">
                               {day.title}
                             </p>
-                            <p className="font-body text-gray-600 text-xs mt-0.5 leading-relaxed">
+                            <p className="font-body text-foreground/70 text-xs mt-0.5 leading-relaxed">
                               {day.details}
                             </p>
                           </div>
@@ -1021,13 +1029,13 @@ function BhutanTourCard() {
 
 function PackagesSection() {
   return (
-    <section id="packages" className="py-20 bg-white">
+    <section id="packages" className="py-20 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
           <p className="font-body text-gold tracking-[0.25em] text-sm uppercase mb-3">
             Explore
           </p>
-          <h2 className="font-display text-4xl md:text-5xl text-gray-900 mb-4">
+          <h2 className="font-display text-4xl md:text-5xl text-foreground mb-4">
             Our Tour Packages
           </h2>
           <div className="gold-divider" />
@@ -1052,12 +1060,14 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="group bg-white border border-gold/20 rounded-sm p-8 text-center hover:border-gold/50 hover:shadow-md transition-all duration-300 w-full"
+        className="group bg-card border border-gold/20 rounded-sm p-8 text-center hover:border-gold/50 hover:shadow-md transition-all duration-300 w-full"
         data-ocid={`services.open_modal_button.${index + 1}`}
       >
         <span className="text-5xl block mb-4">{service.icon}</span>
         <h3 className="font-display text-xl text-gold mb-2">{service.name}</h3>
-        <p className="font-body text-gray-600 text-sm">{service.description}</p>
+        <p className="font-body text-foreground/70 text-sm">
+          {service.description}
+        </p>
         <span className="inline-block mt-4 text-xs font-body text-gold/60 group-hover:text-gold transition-colors">
           Click for details →
         </span>
@@ -1065,7 +1075,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent
-          className="bg-white border border-gray-200 text-gray-900 max-w-md"
+          className="bg-card border border-gold/30 text-foreground max-w-md"
           data-ocid={`services.dialog.${index + 1}`}
         >
           <DialogHeader>
@@ -1073,7 +1083,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
               <span>{service.icon}</span> {service.name}
             </DialogTitle>
           </DialogHeader>
-          <p className="font-body text-gray-600 leading-relaxed text-sm">
+          <p className="font-body text-foreground/70 leading-relaxed text-sm">
             {service.detail}
           </p>
           <div className="flex gap-3 mt-4">
@@ -1099,7 +1109,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
             <Button
               variant="outline"
               onClick={() => setOpen(false)}
-              className="border-gold/30 text-gray-700 hover:bg-gold/10"
+              className="border-gold/30 text-foreground/80 hover:bg-gold/10"
               data-ocid={`services.close_button.${index + 1}`}
             >
               Close
@@ -1113,13 +1123,13 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 
 function ServicesSection() {
   return (
-    <section id="services" className="py-20" style={{ background: "#f3f4f6" }}>
+    <section id="services" className="py-20" style={{ background: "#1f1f1f" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
           <p className="font-body text-gold tracking-[0.25em] text-sm uppercase mb-3">
             What We Offer
           </p>
-          <h2 className="font-display text-4xl md:text-5xl text-gray-900 mb-4">
+          <h2 className="font-display text-4xl md:text-5xl text-foreground mb-4">
             Our Services
           </h2>
           <div className="gold-divider" />
@@ -1137,17 +1147,21 @@ function ServicesSection() {
 // ── Gallery Section ────────────────────────────────────────────────────────────
 function GallerySection() {
   return (
-    <section id="gallery" className="py-20" style={{ background: "#ffffff" }}>
+    <section
+      id="gallery"
+      className="py-20"
+      style={{ background: "var(--section-bg)" }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
           <p className="font-body text-gold tracking-[0.25em] text-sm uppercase mb-3">
             Our Trips
           </p>
-          <h2 className="font-display text-4xl md:text-5xl text-gray-900 mb-4">
+          <h2 className="font-display text-4xl md:text-5xl text-foreground mb-4">
             Happy Travellers
           </h2>
           <div className="gold-divider" />
-          <p className="font-body text-gray-600 mt-4 max-w-xl mx-auto">
+          <p className="font-body text-foreground/70 mt-4 max-w-xl mx-auto">
             Real moments, real smiles — our travellers exploring Bhutan with
             Traveller Point.
           </p>
@@ -1159,11 +1173,11 @@ function GallerySection() {
               alt="Traveller Point clients at Tiger's Nest, Bhutan"
               className="w-full h-80 object-cover hover:scale-105 transition-transform duration-500"
             />
-            <div className="p-4 bg-white">
-              <p className="font-display text-gray-900 text-lg">
+            <div className="p-4 bg-card">
+              <p className="font-display text-foreground text-lg">
                 Tiger's Nest, Bhutan
               </p>
-              <p className="font-body text-gray-500 text-sm mt-1">
+              <p className="font-body text-foreground/60 text-sm mt-1">
                 Happy travellers at Taktshang Lhakhang
               </p>
             </div>
@@ -1174,11 +1188,11 @@ function GallerySection() {
               alt="Traveller Point group tour at Bhutan Gate, Jaigaon"
               className="w-full h-80 object-cover hover:scale-105 transition-transform duration-500"
             />
-            <div className="p-4 bg-white">
-              <p className="font-display text-gray-900 text-lg">
+            <div className="p-4 bg-card">
+              <p className="font-display text-foreground text-lg">
                 Bhutan Gate, Jaigaon
               </p>
-              <p className="font-body text-gray-500 text-sm mt-1">
+              <p className="font-body text-foreground/60 text-sm mt-1">
                 Travellers Point Bhutan Group Tour 2024
               </p>
             </div>
@@ -1189,11 +1203,11 @@ function GallerySection() {
               alt="Traveller Point group at Punakha Dzong, Bhutan"
               className="w-full h-80 object-cover hover:scale-105 transition-transform duration-500"
             />
-            <div className="p-4 bg-white">
-              <p className="font-display text-gray-900 text-lg">
+            <div className="p-4 bg-card">
+              <p className="font-display text-foreground text-lg">
                 Punakha Dzong, Bhutan
               </p>
-              <p className="font-body text-gray-500 text-sm mt-1">
+              <p className="font-body text-foreground/60 text-sm mt-1">
                 Traveller Point group tour at Punakha
               </p>
             </div>
@@ -1204,11 +1218,11 @@ function GallerySection() {
               alt="Rise of Group Tour - Travellers Point"
               className="w-full h-80 object-cover hover:scale-105 transition-transform duration-500"
             />
-            <div className="p-4 bg-white">
-              <p className="font-display text-gray-900 text-lg">
+            <div className="p-4 bg-card">
+              <p className="font-display text-foreground text-lg">
                 Rise of Group Tour
               </p>
-              <p className="font-body text-gray-500 text-sm mt-1">
+              <p className="font-body text-foreground/60 text-sm mt-1">
                 Join Traveller Point group tours to Bhutan
               </p>
             </div>
@@ -1219,11 +1233,11 @@ function GallerySection() {
               alt="Travellers Point group at Punakha with banner"
               className="w-full h-80 object-cover hover:scale-105 transition-transform duration-500"
             />
-            <div className="p-4 bg-white">
-              <p className="font-display text-gray-900 text-lg">
+            <div className="p-4 bg-card">
+              <p className="font-display text-foreground text-lg">
                 Punakha, Bhutan
               </p>
-              <p className="font-body text-gray-500 text-sm mt-1">
+              <p className="font-body text-foreground/60 text-sm mt-1">
                 Travellers Point Jaigaon group in Bhutan
               </p>
             </div>
@@ -1234,11 +1248,11 @@ function GallerySection() {
               alt="Travellers Point group at Tiger's Nest trek"
               className="w-full h-80 object-cover hover:scale-105 transition-transform duration-500"
             />
-            <div className="p-4 bg-white">
-              <p className="font-display text-gray-900 text-lg">
+            <div className="p-4 bg-card">
+              <p className="font-display text-foreground text-lg">
                 Tiger's Nest Trek, Bhutan
               </p>
-              <p className="font-body text-gray-500 text-sm mt-1">
+              <p className="font-body text-foreground/60 text-sm mt-1">
                 Travellers Point group trekking to Tiger's Nest
               </p>
             </div>
@@ -1252,13 +1266,13 @@ function GallerySection() {
 // ── Reviews Section ────────────────────────────────────────────────────────────
 function ReviewsSection() {
   return (
-    <section id="reviews" className="py-20" style={{ background: "#f3f4f6" }}>
+    <section id="reviews" className="py-20" style={{ background: "#1f1f1f" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
           <p className="font-body text-gold tracking-[0.25em] text-sm uppercase mb-3">
             Testimonials
           </p>
-          <h2 className="font-display text-4xl md:text-5xl text-gray-900 mb-4">
+          <h2 className="font-display text-4xl md:text-5xl text-foreground mb-4">
             What Our Travellers Say
           </h2>
           <div className="gold-divider" />
@@ -1267,7 +1281,7 @@ function ReviewsSection() {
           {REVIEWS.map((review, i) => (
             <div
               key={review.author}
-              className="bg-white border border-gold/20 rounded-sm p-6 hover:border-gold/40 transition-all duration-300 shadow-sm"
+              className="bg-card border border-gold/20 rounded-sm p-6 hover:border-gold/40 transition-all duration-300 shadow-sm"
               data-ocid={`reviews.item.${i + 1}`}
             >
               <div className="flex gap-1 mb-4">
@@ -1277,7 +1291,7 @@ function ReviewsSection() {
                   </span>
                 ))}
               </div>
-              <p className="font-body text-gray-600 text-sm leading-relaxed italic mb-5">
+              <p className="font-body text-foreground/70 text-sm leading-relaxed italic mb-5">
                 &ldquo;{review.text}&rdquo;
               </p>
               <div className="flex items-center gap-3 pt-4 border-t border-gold/10">
@@ -1287,10 +1301,10 @@ function ReviewsSection() {
                   </span>
                 </div>
                 <div>
-                  <p className="font-body text-gray-900 text-sm font-medium">
+                  <p className="font-body text-foreground text-sm font-medium">
                     {review.author}
                   </p>
-                  <p className="font-body text-gray-600 text-xs">
+                  <p className="font-body text-foreground/70 text-xs">
                     {review.location}
                   </p>
                 </div>
@@ -1322,17 +1336,21 @@ function ContactSection() {
   }
 
   return (
-    <section id="contact" style={{ background: "#ffffff" }} className="py-20">
+    <section
+      id="contact"
+      style={{ background: "var(--section-bg)" }}
+      className="py-20"
+    >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
           <p className="font-body text-gold tracking-[0.25em] text-sm uppercase mb-3">
             Get In Touch
           </p>
-          <h2 className="font-display text-4xl md:text-5xl text-gray-900 mb-4">
+          <h2 className="font-display text-4xl md:text-5xl text-foreground mb-4">
             Contact Us
           </h2>
           <div className="gold-divider" />
-          <p className="font-body text-gray-600 mt-4 text-sm">
+          <p className="font-body text-foreground/70 mt-4 text-sm">
             Contact us to plan your dream tour
           </p>
         </div>
@@ -1344,7 +1362,7 @@ function ContactSection() {
               <h3 className="font-display text-2xl text-orange-500 mb-6">
                 Traveller Point
               </h3>
-              <p className="font-body text-gray-600 text-sm leading-relaxed">
+              <p className="font-body text-foreground/70 text-sm leading-relaxed">
                 Your trusted travel partner for unforgettable journeys to
                 Bhutan, Darjeeling, and Sikkim. From your dream to the world.
               </p>
@@ -1365,7 +1383,7 @@ function ContactSection() {
                     <p className="font-body text-gold text-xs font-semibold uppercase tracking-wider">
                       {item.label}
                     </p>
-                    <p className="font-body text-gray-900 text-sm mt-0.5">
+                    <p className="font-body text-foreground text-sm mt-0.5">
                       {item.value}
                     </p>
                   </div>
@@ -1396,12 +1414,12 @@ function ContactSection() {
           {/* Form */}
           <form
             onSubmit={handleSubmit}
-            className="space-y-5 bg-white border border-gold/20 rounded-sm p-8 shadow-sm"
+            className="space-y-5 bg-card border border-gold/30 rounded-sm p-8 shadow-sm"
           >
             <div className="space-y-1.5">
               <Label
                 htmlFor="name"
-                className="font-body text-gray-600 text-xs uppercase tracking-wider"
+                className="font-body text-foreground/70 text-xs uppercase tracking-wider"
               >
                 Your Name
               </Label>
@@ -1411,14 +1429,14 @@ function ContactSection() {
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                 required
                 placeholder="Enter your name"
-                className="bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 focus:border-gold/50 focus:ring-0"
+                className="bg-[#333] border-gold/30 text-foreground placeholder:text-white/40 focus:border-gold/60 focus:ring-0"
                 data-ocid="contact.input"
               />
             </div>
             <div className="space-y-1.5">
               <Label
                 htmlFor="email"
-                className="font-body text-gray-600 text-xs uppercase tracking-wider"
+                className="font-body text-foreground/70 text-xs uppercase tracking-wider"
               >
                 Email
               </Label>
@@ -1428,14 +1446,14 @@ function ContactSection() {
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 placeholder="Enter your email"
-                className="bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 focus:border-gold/50 focus:ring-0"
+                className="bg-[#333] border-gold/30 text-foreground placeholder:text-white/40 focus:border-gold/60 focus:ring-0"
                 data-ocid="contact.input"
               />
             </div>
             <div className="space-y-1.5">
               <Label
                 htmlFor="phone"
-                className="font-body text-gray-600 text-xs uppercase tracking-wider"
+                className="font-body text-foreground/70 text-xs uppercase tracking-wider"
               >
                 Phone Number
               </Label>
@@ -1445,14 +1463,14 @@ function ContactSection() {
                 onChange={(e) => setForm({ ...form, phone: e.target.value })}
                 required
                 placeholder="Enter your phone number"
-                className="bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 focus:border-gold/50 focus:ring-0"
+                className="bg-[#333] border-gold/30 text-foreground placeholder:text-white/40 focus:border-gold/60 focus:ring-0"
                 data-ocid="contact.input"
               />
             </div>
             <div className="space-y-1.5">
               <Label
                 htmlFor="message"
-                className="font-body text-gray-600 text-xs uppercase tracking-wider"
+                className="font-body text-foreground/70 text-xs uppercase tracking-wider"
               >
                 Message
               </Label>
@@ -1463,7 +1481,7 @@ function ContactSection() {
                 required
                 placeholder="Tell us about your dream trip..."
                 rows={4}
-                className="bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 focus:border-gold/50 focus:ring-0 resize-none"
+                className="bg-[#333] border-gold/30 text-foreground placeholder:text-white/40 focus:border-gold/60 focus:ring-0 resize-none"
                 data-ocid="contact.textarea"
               />
             </div>
@@ -1487,7 +1505,7 @@ function Footer() {
   return (
     <footer
       className="py-12 border-t border-gold/10"
-      style={{ background: "#1f2937" }}
+      style={{ background: "#111111" }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
@@ -1622,7 +1640,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen" style={{ background: "#f3f4f6" }}>
+    <div className="min-h-screen" style={{ background: "#1f1f1f" }}>
       <Navbar scrolled={scrolled} />
       <main>
         <Hero />
