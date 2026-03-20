@@ -305,7 +305,7 @@ function Navbar({ scrolled }: { scrolled: boolean }) {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-orange-600/95 backdrop-blur-md shadow-md border-b border-gold/10"
+          ? "bg-white/95 backdrop-blur-md shadow-md border-b border-gold/10"
           : "bg-white/10 backdrop-blur-sm"
       }`}
     >
@@ -384,7 +384,7 @@ function Navbar({ scrolled }: { scrolled: boolean }) {
 
         {/* Mobile Menu */}
         {menuOpen && (
-          <div className="md:hidden bg-orange-600 border-t border-gold/10 py-4 shadow-md">
+          <div className="md:hidden bg-white border-t border-gold/10 py-4 shadow-md">
             {links.map((l) => (
               <a
                 key={l.label}
@@ -495,7 +495,7 @@ function PackageCard({ pkg, index }: { pkg: Package; index: number }) {
 
   return (
     <div
-      className="flex flex-col items-center text-center p-6 bg-orange-600 rounded-2xl shadow-md border border-gold/20"
+      className="flex flex-col items-center text-center p-6 bg-white rounded-2xl shadow-md border border-gold/20"
       data-ocid={`packages.item.${index + 1}`}
     >
       {/* Circular Image */}
@@ -550,10 +550,10 @@ function PackageCard({ pkg, index }: { pkg: Package; index: number }) {
                 </span>
               </div>
               <div>
-                <p className="font-body text-white text-sm font-medium">
+                <p className="font-body text-gray-900 text-sm font-medium">
                   {day.title}
                 </p>
-                <p className="font-body text-white/80 text-xs mt-0.5 leading-relaxed">
+                <p className="font-body text-gray-600 text-xs mt-0.5 leading-relaxed">
                   {day.details}
                 </p>
               </div>
@@ -561,7 +561,7 @@ function PackageCard({ pkg, index }: { pkg: Package; index: number }) {
           ))}
 
           {/* Inclusions */}
-          <div className="mt-4 p-3 bg-orange-700 rounded-sm border border-orange-500">
+          <div className="mt-4 p-3 bg-gray-100 rounded-sm border border-gray-200">
             <p className="font-body text-gold text-xs font-semibold uppercase tracking-wider mb-2">
               Inclusions
             </p>
@@ -569,7 +569,7 @@ function PackageCard({ pkg, index }: { pkg: Package; index: number }) {
               {pkg.inclusions.map((inc) => (
                 <li
                   key={inc}
-                  className="font-body text-white/80 text-xs flex items-center gap-1.5"
+                  className="font-body text-gray-600 text-xs flex items-center gap-1.5"
                 >
                   <span className="text-gold">✓</span> {inc}
                 </li>
@@ -579,7 +579,7 @@ function PackageCard({ pkg, index }: { pkg: Package; index: number }) {
 
           {/* Exclusions */}
           {pkg.exclusions && pkg.exclusions.length > 0 && (
-            <div className="mt-3 p-3 bg-orange-700 rounded-sm border border-orange-500">
+            <div className="mt-3 p-3 bg-gray-100 rounded-sm border border-gray-200">
               <p className="font-body text-red-500 text-xs font-semibold uppercase tracking-wider mb-2">
                 Exclusions
               </p>
@@ -587,7 +587,7 @@ function PackageCard({ pkg, index }: { pkg: Package; index: number }) {
                 {pkg.exclusions.map((exc) => (
                   <li
                     key={exc}
-                    className="font-body text-white/80 text-xs flex items-center gap-1.5"
+                    className="font-body text-gray-600 text-xs flex items-center gap-1.5"
                   >
                     <span className="text-red-400">✗</span> {exc}
                   </li>
@@ -625,7 +625,7 @@ function PackageCard({ pkg, index }: { pkg: Package; index: number }) {
 // ── About Section ──────────────────────────────────────────────────────────────
 function AboutSection() {
   return (
-    <section id="about" className="py-20" style={{ background: "#f97316" }}>
+    <section id="about" className="py-20" style={{ background: "#ffffff" }}>
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div>
@@ -635,24 +635,24 @@ function AboutSection() {
             >
               About Traveller Point
             </h2>
-            <p className="text-white mb-4 text-base leading-relaxed">
+            <p className="text-gray-700 mb-4 text-base leading-relaxed">
               Traveller Point is a premier travel agency based in Jaigaon,
               Alipurduar, West Bengal — your gateway to the enchanting kingdoms
               of Bhutan, the misty hills of Darjeeling, the scenic valleys of
               Sikkim, and beyond.
             </p>
-            <p className="text-white mb-4 text-base leading-relaxed">
+            <p className="text-gray-700 mb-4 text-base leading-relaxed">
               With years of experience in organising memorable tours, we
               specialise in customised group and private packages to Bhutan,
               Darjeeling, Sikkim, Nepal, Kashmir, Manali, and Shimla. Our expert
               team ensures every journey is seamless — from pickup at
               NJP/Bagdogra to your final destination.
             </p>
-            <p className="text-white mb-6 text-base leading-relaxed">
+            <p className="text-gray-700 mb-6 text-base leading-relaxed">
               We are committed to giving every traveller the best experience at
               the most affordable rates, with round-the-clock WhatsApp support.
             </p>
-            <p className="font-bold text-white mb-6 italic text-lg">
+            <p className="font-bold text-gray-700 mb-6 italic text-lg">
               "From your dream to the world."
             </p>
             <a
@@ -883,7 +883,7 @@ function BhutanTourCard() {
     <>
       <button
         type="button"
-        className="flex flex-col items-center text-center p-6 bg-orange-600 rounded-2xl shadow-md border border-gold/20 cursor-pointer hover:border-gold/50 transition-all duration-300 w-full"
+        className="flex flex-col items-center text-center p-6 bg-white rounded-2xl shadow-md border border-gold/20 cursor-pointer hover:border-gold/50 transition-all duration-300 w-full"
         onClick={() => setOpen(true)}
         data-ocid="bhutan_tour.open_modal_button"
       >
@@ -924,7 +924,7 @@ function BhutanTourCard() {
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent
-          className="max-w-2xl max-h-[85vh] overflow-y-auto bg-orange-600"
+          className="max-w-2xl max-h-[85vh] overflow-y-auto bg-white"
           data-ocid="bhutan_tour.dialog"
         >
           <DialogHeader>
@@ -969,7 +969,7 @@ function BhutanTourCard() {
                   </div>
                 </button>
                 {expanded === pkg.id && (
-                  <div className="px-4 pb-4 bg-orange-700 border-t border-gold/20">
+                  <div className="px-4 pb-4 bg-gray-100 border-t border-gold/20">
                     <div className="space-y-3 mt-3">
                       {pkg.itinerary.map((day) => (
                         <div key={day.day} className="flex gap-3">
@@ -977,10 +977,10 @@ function BhutanTourCard() {
                             {day.day}
                           </span>
                           <div>
-                            <p className="font-body text-white text-sm font-medium">
+                            <p className="font-body text-gray-900 text-sm font-medium">
                               {day.title}
                             </p>
-                            <p className="font-body text-white/80 text-xs mt-0.5 leading-relaxed">
+                            <p className="font-body text-gray-600 text-xs mt-0.5 leading-relaxed">
                               {day.details}
                             </p>
                           </div>
@@ -1021,13 +1021,13 @@ function BhutanTourCard() {
 
 function PackagesSection() {
   return (
-    <section id="packages" className="py-20 bg-orange-6000">
+    <section id="packages" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
           <p className="font-body text-gold tracking-[0.25em] text-sm uppercase mb-3">
             Explore
           </p>
-          <h2 className="font-display text-4xl md:text-5xl text-white mb-4">
+          <h2 className="font-display text-4xl md:text-5xl text-gray-900 mb-4">
             Our Tour Packages
           </h2>
           <div className="gold-divider" />
@@ -1052,12 +1052,12 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="group bg-orange-600 border border-gold/20 rounded-sm p-8 text-center hover:border-gold/50 hover:shadow-md transition-all duration-300 w-full"
+        className="group bg-white border border-gold/20 rounded-sm p-8 text-center hover:border-gold/50 hover:shadow-md transition-all duration-300 w-full"
         data-ocid={`services.open_modal_button.${index + 1}`}
       >
         <span className="text-5xl block mb-4">{service.icon}</span>
         <h3 className="font-display text-xl text-gold mb-2">{service.name}</h3>
-        <p className="font-body text-white/80 text-sm">{service.description}</p>
+        <p className="font-body text-gray-600 text-sm">{service.description}</p>
         <span className="inline-block mt-4 text-xs font-body text-gold/60 group-hover:text-gold transition-colors">
           Click for details →
         </span>
@@ -1065,7 +1065,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent
-          className="bg-orange-600 border border-gold/20 text-white max-w-md"
+          className="bg-white border border-gray-200 text-gray-900 max-w-md"
           data-ocid={`services.dialog.${index + 1}`}
         >
           <DialogHeader>
@@ -1073,7 +1073,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
               <span>{service.icon}</span> {service.name}
             </DialogTitle>
           </DialogHeader>
-          <p className="font-body text-white/80 leading-relaxed text-sm">
+          <p className="font-body text-gray-600 leading-relaxed text-sm">
             {service.detail}
           </p>
           <div className="flex gap-3 mt-4">
@@ -1113,13 +1113,13 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 
 function ServicesSection() {
   return (
-    <section id="services" className="py-20" style={{ background: "#f97316" }}>
+    <section id="services" className="py-20" style={{ background: "#f3f4f6" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
           <p className="font-body text-gold tracking-[0.25em] text-sm uppercase mb-3">
             What We Offer
           </p>
-          <h2 className="font-display text-4xl md:text-5xl text-white mb-4">
+          <h2 className="font-display text-4xl md:text-5xl text-gray-900 mb-4">
             Our Services
           </h2>
           <div className="gold-divider" />
@@ -1137,13 +1137,13 @@ function ServicesSection() {
 // ── Gallery Section ────────────────────────────────────────────────────────────
 function GallerySection() {
   return (
-    <section id="gallery" className="py-20" style={{ background: "#f97316" }}>
+    <section id="gallery" className="py-20" style={{ background: "#ffffff" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
           <p className="font-body text-gold tracking-[0.25em] text-sm uppercase mb-3">
             Our Trips
           </p>
-          <h2 className="font-display text-4xl md:text-5xl text-white mb-4">
+          <h2 className="font-display text-4xl md:text-5xl text-gray-900 mb-4">
             Happy Travellers
           </h2>
           <div className="gold-divider" />
@@ -1159,7 +1159,7 @@ function GallerySection() {
               alt="Traveller Point clients at Tiger's Nest, Bhutan"
               className="w-full h-80 object-cover hover:scale-105 transition-transform duration-500"
             />
-            <div className="p-4 bg-orange-600">
+            <div className="p-4 bg-white">
               <p className="font-display text-gray-900 text-lg">
                 Tiger's Nest, Bhutan
               </p>
@@ -1174,7 +1174,7 @@ function GallerySection() {
               alt="Traveller Point group tour at Bhutan Gate, Jaigaon"
               className="w-full h-80 object-cover hover:scale-105 transition-transform duration-500"
             />
-            <div className="p-4 bg-orange-600">
+            <div className="p-4 bg-white">
               <p className="font-display text-gray-900 text-lg">
                 Bhutan Gate, Jaigaon
               </p>
@@ -1189,7 +1189,7 @@ function GallerySection() {
               alt="Traveller Point group at Punakha Dzong, Bhutan"
               className="w-full h-80 object-cover hover:scale-105 transition-transform duration-500"
             />
-            <div className="p-4 bg-orange-600">
+            <div className="p-4 bg-white">
               <p className="font-display text-gray-900 text-lg">
                 Punakha Dzong, Bhutan
               </p>
@@ -1204,7 +1204,7 @@ function GallerySection() {
               alt="Rise of Group Tour - Travellers Point"
               className="w-full h-80 object-cover hover:scale-105 transition-transform duration-500"
             />
-            <div className="p-4 bg-orange-600">
+            <div className="p-4 bg-white">
               <p className="font-display text-gray-900 text-lg">
                 Rise of Group Tour
               </p>
@@ -1219,7 +1219,7 @@ function GallerySection() {
               alt="Travellers Point group at Punakha with banner"
               className="w-full h-80 object-cover hover:scale-105 transition-transform duration-500"
             />
-            <div className="p-4 bg-orange-600">
+            <div className="p-4 bg-white">
               <p className="font-display text-gray-900 text-lg">
                 Punakha, Bhutan
               </p>
@@ -1234,7 +1234,7 @@ function GallerySection() {
               alt="Travellers Point group at Tiger's Nest trek"
               className="w-full h-80 object-cover hover:scale-105 transition-transform duration-500"
             />
-            <div className="p-4 bg-orange-600">
+            <div className="p-4 bg-white">
               <p className="font-display text-gray-900 text-lg">
                 Tiger's Nest Trek, Bhutan
               </p>
@@ -1252,13 +1252,13 @@ function GallerySection() {
 // ── Reviews Section ────────────────────────────────────────────────────────────
 function ReviewsSection() {
   return (
-    <section id="reviews" className="py-20" style={{ background: "#f97316" }}>
+    <section id="reviews" className="py-20" style={{ background: "#f3f4f6" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
           <p className="font-body text-gold tracking-[0.25em] text-sm uppercase mb-3">
             Testimonials
           </p>
-          <h2 className="font-display text-4xl md:text-5xl text-white mb-4">
+          <h2 className="font-display text-4xl md:text-5xl text-gray-900 mb-4">
             What Our Travellers Say
           </h2>
           <div className="gold-divider" />
@@ -1267,7 +1267,7 @@ function ReviewsSection() {
           {REVIEWS.map((review, i) => (
             <div
               key={review.author}
-              className="bg-orange-600 border border-gold/20 rounded-sm p-6 hover:border-gold/40 transition-all duration-300 shadow-sm"
+              className="bg-white border border-gold/20 rounded-sm p-6 hover:border-gold/40 transition-all duration-300 shadow-sm"
               data-ocid={`reviews.item.${i + 1}`}
             >
               <div className="flex gap-1 mb-4">
@@ -1287,7 +1287,7 @@ function ReviewsSection() {
                   </span>
                 </div>
                 <div>
-                  <p className="font-body text-white text-sm font-medium">
+                  <p className="font-body text-gray-900 text-sm font-medium">
                     {review.author}
                   </p>
                   <p className="font-body text-gray-600 text-xs">
@@ -1322,13 +1322,13 @@ function ContactSection() {
   }
 
   return (
-    <section id="contact" style={{ background: "#f97316" }} className="py-20">
+    <section id="contact" style={{ background: "#ffffff" }} className="py-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
           <p className="font-body text-gold tracking-[0.25em] text-sm uppercase mb-3">
             Get In Touch
           </p>
-          <h2 className="font-display text-4xl md:text-5xl text-white mb-4">
+          <h2 className="font-display text-4xl md:text-5xl text-gray-900 mb-4">
             Contact Us
           </h2>
           <div className="gold-divider" />
@@ -1396,7 +1396,7 @@ function ContactSection() {
           {/* Form */}
           <form
             onSubmit={handleSubmit}
-            className="space-y-5 bg-orange-600 border border-gold/20 rounded-sm p-8 shadow-sm"
+            className="space-y-5 bg-white border border-gold/20 rounded-sm p-8 shadow-sm"
           >
             <div className="space-y-1.5">
               <Label
@@ -1487,7 +1487,7 @@ function Footer() {
   return (
     <footer
       className="py-12 border-t border-gold/10"
-      style={{ background: "#f97316" }}
+      style={{ background: "#1f2937" }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
@@ -1622,7 +1622,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen" style={{ background: "#f97316" }}>
+    <div className="min-h-screen" style={{ background: "#f3f4f6" }}>
       <Navbar scrolled={scrolled} />
       <main>
         <Hero />
