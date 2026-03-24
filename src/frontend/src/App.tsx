@@ -221,7 +221,7 @@ const SERVICES: Service[] = [
     name: "Hotels",
     description: "Premium hotel & resort bookings",
     detail:
-      "Premium hotel and resort bookings across all destinations — Bhutan, Darjeeling, Sikkim, Nepal, Manali, Shimla, Kashmir. Handpicked properties ensuring comfort and value for your stay.",
+      "Premium hotel and resort bookings across all destinations — Bhutan, Darjeeling, Sikkim. Handpicked properties ensuring comfort and value for your stay.",
   },
   {
     icon: "🗺️",
@@ -265,19 +265,9 @@ const REVIEWS: Review[] = [
     location: "West Bengal",
   },
   {
-    text: "Kashmir trip was absolutely breathtaking. Traveller Point made the whole experience stress-free and memorable.",
-    author: "Amit K.",
-    location: "Delhi",
-  },
-  {
     text: "Best Bhutan Group Tour! Met wonderful people, saw amazing places. Will definitely book again.",
     author: "Sneha D.",
     location: "Siliguri",
-  },
-  {
-    text: "Nepal tour was perfectly planned. All temples and viewpoints covered. Great guide provided.",
-    author: "Rohan B.",
-    location: "Kolkata",
   },
 ];
 
@@ -499,7 +489,7 @@ function PackageCard({ pkg, index }: { pkg: Package; index: number }) {
       data-ocid={`packages.item.${index + 1}`}
     >
       {/* Circular Image */}
-      <div className="w-40 h-40 rounded-xl overflow-hidden border-4 border-gold/30 shadow-lg mb-4">
+      <div className="w-full h-56 rounded-xl overflow-hidden border-4 border-gold/30 shadow-lg mb-4">
         <img
           src={pkg.image}
           alt={pkg.name}
@@ -652,9 +642,8 @@ function AboutSection() {
             <p className="text-foreground/80 mb-4 text-base leading-relaxed">
               With years of experience in organising memorable tours, we
               specialise in customised group and private packages to Bhutan,
-              Darjeeling, Sikkim, Nepal, Kashmir, Manali, and Shimla. Our expert
-              team ensures every journey is seamless — from pickup at
-              NJP/Bagdogra to your final destination.
+              Darjeeling, and Sikkim. Our expert team ensures every journey is
+              seamless — from pickup at NJP/Bagdogra to your final destination.
             </p>
             <p className="text-foreground/80 mb-6 text-base leading-relaxed">
               We are committed to giving every traveller the best experience at
@@ -896,7 +885,7 @@ function BhutanTourCard() {
         data-ocid="bhutan_tour.open_modal_button"
       >
         {/* Circular Image */}
-        <div className="w-40 h-40 rounded-xl overflow-hidden border-4 border-gold/30 shadow-lg mb-4">
+        <div className="w-full h-56 rounded-xl overflow-hidden border-4 border-gold/30 shadow-lg mb-4">
           <img
             src="/assets/generated/bhutan-tigers-nest.dim_1920x1080.jpg"
             alt="Bhutan Tour Packages"
@@ -1144,125 +1133,6 @@ function ServicesSection() {
   );
 }
 
-// ── Gallery Section ────────────────────────────────────────────────────────────
-function GallerySection() {
-  return (
-    <section
-      id="gallery"
-      className="py-20"
-      style={{ background: "var(--section-bg)" }}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-14">
-          <p className="font-body text-gold tracking-[0.25em] text-sm uppercase mb-3">
-            Our Trips
-          </p>
-          <h2 className="font-display text-4xl md:text-5xl text-foreground mb-4">
-            Happy Travellers
-          </h2>
-          <div className="gold-divider" />
-          <p className="font-body text-foreground/70 mt-4 max-w-xl mx-auto">
-            Real moments, real smiles — our travellers exploring Bhutan with
-            Traveller Point.
-          </p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div className="overflow-hidden rounded-sm shadow-lg border border-gold/20">
-            <img
-              src="/assets/uploads/IMG_20260319_002523-2.png"
-              alt="Traveller Point clients at Tiger's Nest, Bhutan"
-              className="w-full h-80 object-cover hover:scale-105 transition-transform duration-500"
-            />
-            <div className="p-4 bg-card">
-              <p className="font-display text-foreground text-lg">
-                Tiger's Nest, Bhutan
-              </p>
-              <p className="font-body text-foreground/60 text-sm mt-1">
-                Happy travellers at Taktshang Lhakhang
-              </p>
-            </div>
-          </div>
-          <div className="overflow-hidden rounded-sm shadow-lg border border-gold/20">
-            <img
-              src="/assets/uploads/IMG_20260319_002607-3.png"
-              alt="Traveller Point group tour at Bhutan Gate, Jaigaon"
-              className="w-full h-80 object-cover hover:scale-105 transition-transform duration-500"
-            />
-            <div className="p-4 bg-card">
-              <p className="font-display text-foreground text-lg">
-                Bhutan Gate, Jaigaon
-              </p>
-              <p className="font-body text-foreground/60 text-sm mt-1">
-                Travellers Point Bhutan Group Tour 2024
-              </p>
-            </div>
-          </div>
-          <div className="overflow-hidden rounded-sm shadow-lg border border-gold/20">
-            <img
-              src="/assets/uploads/Bhutan-Group-Tour-1920x960-1.jpg"
-              alt="Traveller Point group at Punakha Dzong, Bhutan"
-              className="w-full h-80 object-cover hover:scale-105 transition-transform duration-500"
-            />
-            <div className="p-4 bg-card">
-              <p className="font-display text-foreground text-lg">
-                Punakha Dzong, Bhutan
-              </p>
-              <p className="font-body text-foreground/60 text-sm mt-1">
-                Traveller Point group tour at Punakha
-              </p>
-            </div>
-          </div>
-          <div className="overflow-hidden rounded-sm shadow-lg border border-gold/20">
-            <img
-              src="/assets/uploads/IMG_20260319_022230-2.png"
-              alt="Rise of Group Tour - Travellers Point"
-              className="w-full h-80 object-cover hover:scale-105 transition-transform duration-500"
-            />
-            <div className="p-4 bg-card">
-              <p className="font-display text-foreground text-lg">
-                Rise of Group Tour
-              </p>
-              <p className="font-body text-foreground/60 text-sm mt-1">
-                Join Traveller Point group tours to Bhutan
-              </p>
-            </div>
-          </div>
-          <div className="overflow-hidden rounded-sm shadow-lg border border-gold/20">
-            <img
-              src="/assets/uploads/1773868851113-3.png"
-              alt="Travellers Point group at Punakha with banner"
-              className="w-full h-80 object-cover hover:scale-105 transition-transform duration-500"
-            />
-            <div className="p-4 bg-card">
-              <p className="font-display text-foreground text-lg">
-                Punakha, Bhutan
-              </p>
-              <p className="font-body text-foreground/60 text-sm mt-1">
-                Travellers Point Jaigaon group in Bhutan
-              </p>
-            </div>
-          </div>
-          <div className="overflow-hidden rounded-sm shadow-lg border border-gold/20">
-            <img
-              src="/assets/uploads/1773868740018-4.png"
-              alt="Travellers Point group at Tiger's Nest trek"
-              className="w-full h-80 object-cover hover:scale-105 transition-transform duration-500"
-            />
-            <div className="p-4 bg-card">
-              <p className="font-display text-foreground text-lg">
-                Tiger's Nest Trek, Bhutan
-              </p>
-              <p className="font-body text-foreground/60 text-sm mt-1">
-                Travellers Point group trekking to Tiger's Nest
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 // ── Reviews Section ────────────────────────────────────────────────────────────
 function ReviewsSection() {
   return (
@@ -1294,20 +1164,13 @@ function ReviewsSection() {
               <p className="font-body text-foreground/70 text-sm leading-relaxed italic mb-5">
                 &ldquo;{review.text}&rdquo;
               </p>
-              <div className="flex items-center gap-3 pt-4 border-t border-gold/10">
-                <div className="w-9 h-9 rounded-full bg-gold/20 border border-gold/30 flex items-center justify-center">
-                  <span className="font-display text-gold text-sm font-semibold">
-                    {review.author.charAt(0)}
-                  </span>
-                </div>
-                <div>
-                  <p className="font-body text-foreground text-sm font-medium">
-                    {review.author}
-                  </p>
-                  <p className="font-body text-foreground/70 text-xs">
-                    {review.location}
-                  </p>
-                </div>
+              <div className="pt-4 border-t border-gold/10">
+                <p className="font-body text-foreground text-sm font-medium">
+                  {review.author}
+                </p>
+                <p className="font-body text-foreground/70 text-xs">
+                  {review.location}
+                </p>
               </div>
             </div>
           ))}
@@ -1375,9 +1238,10 @@ function ContactSection() {
                   value: "Jaigaon, Alipurduar, West Bengal",
                 },
                 { icon: "📞", label: "Phone", value: "7719264029" },
+                { icon: "📞", label: "Phone", value: "9046497766" },
                 { icon: "💬", label: "WhatsApp", value: "7719264029" },
               ].map((item) => (
-                <div key={item.label} className="flex items-start gap-4">
+                <div key={item.value} className="flex items-start gap-4">
                   <span className="text-xl mt-0.5">{item.icon}</span>
                   <div>
                     <p className="font-body text-gold text-xs font-semibold uppercase tracking-wider">
@@ -1582,12 +1446,30 @@ function Footer() {
               </p>
               <p className="font-body text-cream-dark text-sm">
                 <a
+                  href="tel:9046497766"
+                  className="hover:text-gold transition-colors"
+                >
+                  📞 9046497766
+                </a>
+              </p>
+              <p className="font-body text-cream-dark text-sm">
+                <a
                   href={WA_BASE}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-gold transition-colors"
                 >
                   💬 WhatsApp: 7719264029
+                </a>
+              </p>
+              <p className="font-body text-cream-dark text-sm">
+                <a
+                  href="https://www.facebook.com/profile.php?id=61579447774652"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-gold transition-colors"
+                >
+                  📘 Facebook: Traveller Point
                 </a>
               </p>
             </address>
@@ -1647,7 +1529,6 @@ export default function App() {
         <AboutSection />
         <PackagesSection />
         <ServicesSection />
-        <GallerySection />
         <ReviewsSection />
         <ContactSection />
       </main>
