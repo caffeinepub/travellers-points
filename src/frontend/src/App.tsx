@@ -287,6 +287,7 @@ function Navbar({ scrolled }: { scrolled: boolean }) {
     { label: "Packages", href: "#packages" },
     { label: "About", href: "#about" },
     { label: "Services", href: "#services" },
+    { label: "Flights", href: "#flights" },
     { label: "Reviews", href: "#reviews" },
     { label: "Contact", href: "#contact" },
   ];
@@ -613,6 +614,239 @@ function PackageCard({ pkg, index }: { pkg: Package; index: number }) {
         </div>
       )}
     </div>
+  );
+}
+
+// ── Flight Booking Section ──────────────────────────────────────────────────────
+function FlightBookingSection() {
+  const [tripType, setTripType] = useState<"oneway" | "roundtrip">("oneway");
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const [departDate, setDepartDate] = useState("");
+  const [returnDate, setReturnDate] = useState("");
+  const [passengers, setPassengers] = useState(1);
+  const [flightClass, setFlightClass] = useState("Economy");
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const returnPart =
+      tripType === "roundtrip" ? `, Return: ${returnDate}` : "";
+    const msg = `Hi, I want to book a flight. From: ${from} To: ${to}, Date: ${departDate}${returnPart}, Passengers: ${passengers}, Class: ${flightClass}, Name: ${name}, Phone: ${phone}`;
+    window.open(waLink(msg), "_blank");
+  }
+
+  return (
+    <section
+      id="flights"
+      className="py-16 px-4"
+      style={{ background: "#181818" }}
+    >
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-10">
+          <h2
+            className="text-3xl md:text-4xl font-bold text-white mb-3"
+            style={{ fontFamily: "Playfair Display, serif" }}
+          >
+            Book Your <span style={{ color: "#D4AF37" }}>Flight</span>
+          </h2>
+          <div className="gold-divider mx-auto mb-4" />
+          <p className="text-gray-300 text-base">
+            Search and book flights instantly — we handle the rest
+          </p>
+        </div>
+
+        <form
+          onSubmit={handleSubmit}
+          className="rounded-2xl p-6 md:p-8 space-y-5"
+          style={{
+            background: "#2a2a2a",
+            border: "1px solid rgba(212,175,55,0.25)",
+          }}
+        >
+          {/* Trip Type Toggle */}
+          <div className="flex gap-3" data-ocid="flights.toggle">
+            {(["oneway", "roundtrip"] as const).map((t) => (
+              <button
+                key={t}
+                type="button"
+                onClick={() => setTripType(t)}
+                className="px-5 py-2 rounded-full text-sm font-semibold transition-all"
+                style={
+                  tripType === t
+                    ? { background: "#D4AF37", color: "#1f1f1f" }
+                    : {
+                        background: "transparent",
+                        color: "#D4AF37",
+                        border: "1px solid #D4AF37",
+                      }
+                }
+              >
+                {t === "oneway" ? "One Way" : "Round Trip"}
+              </button>
+            ))}
+          </div>
+
+          {/* From / To */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <Label className="text-gray-300 mb-1 block text-sm">From</Label>
+              <Input
+                data-ocid="flights.input"
+                required
+                value={from}
+                onChange={(e) => setFrom(e.target.value)}
+                placeholder="Departure City e.g. Kolkata"
+                className="text-white placeholder:text-gray-500"
+                style={{
+                  background: "#1f1f1f",
+                  borderColor: "rgba(212,175,55,0.3)",
+                }}
+              />
+            </div>
+            <div>
+              <Label className="text-gray-300 mb-1 block text-sm">To</Label>
+              <Input
+                required
+                value={to}
+                onChange={(e) => setTo(e.target.value)}
+                placeholder="Destination City e.g. Bagdogra"
+                className="text-white placeholder:text-gray-500"
+                style={{
+                  background: "#1f1f1f",
+                  borderColor: "rgba(212,175,55,0.3)",
+                }}
+              />
+            </div>
+          </div>
+
+          {/* Dates */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <Label className="text-gray-300 mb-1 block text-sm">
+                Departure Date
+              </Label>
+              <Input
+                required
+                type="date"
+                value={departDate}
+                onChange={(e) => setDepartDate(e.target.value)}
+                className="text-white"
+                style={{
+                  background: "#1f1f1f",
+                  borderColor: "rgba(212,175,55,0.3)",
+                  colorScheme: "dark",
+                }}
+              />
+            </div>
+            {tripType === "roundtrip" && (
+              <div>
+                <Label className="text-gray-300 mb-1 block text-sm">
+                  Return Date
+                </Label>
+                <Input
+                  required
+                  type="date"
+                  value={returnDate}
+                  onChange={(e) => setReturnDate(e.target.value)}
+                  className="text-white"
+                  style={{
+                    background: "#1f1f1f",
+                    borderColor: "rgba(212,175,55,0.3)",
+                    colorScheme: "dark",
+                  }}
+                />
+              </div>
+            )}
+          </div>
+
+          {/* Passengers + Class */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <Label className="text-gray-300 mb-1 block text-sm">
+                Passengers
+              </Label>
+              <Input
+                required
+                type="number"
+                min={1}
+                max={20}
+                value={passengers}
+                onChange={(e) => setPassengers(Number(e.target.value))}
+                className="text-white"
+                style={{
+                  background: "#1f1f1f",
+                  borderColor: "rgba(212,175,55,0.3)",
+                }}
+              />
+            </div>
+            <div>
+              <Label className="text-gray-300 mb-1 block text-sm">Class</Label>
+              <select
+                data-ocid="flights.select"
+                value={flightClass}
+                onChange={(e) => setFlightClass(e.target.value)}
+                className="w-full rounded-md px-3 py-2 text-sm text-white"
+                style={{
+                  background: "#1f1f1f",
+                  border: "1px solid rgba(212,175,55,0.3)",
+                }}
+              >
+                <option>Economy</option>
+                <option>Business</option>
+                <option>First Class</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Name + Phone */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <Label className="text-gray-300 mb-1 block text-sm">
+                Passenger Name
+              </Label>
+              <Input
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Your full name"
+                className="text-white placeholder:text-gray-500"
+                style={{
+                  background: "#1f1f1f",
+                  borderColor: "rgba(212,175,55,0.3)",
+                }}
+              />
+            </div>
+            <div>
+              <Label className="text-gray-300 mb-1 block text-sm">
+                Phone Number
+              </Label>
+              <Input
+                required
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="Your phone number"
+                className="text-white placeholder:text-gray-500"
+                style={{
+                  background: "#1f1f1f",
+                  borderColor: "rgba(212,175,55,0.3)",
+                }}
+              />
+            </div>
+          </div>
+
+          <Button
+            data-ocid="flights.submit_button"
+            type="submit"
+            className="w-full py-3 text-base font-bold rounded-xl text-white"
+            style={{ background: "#D4AF37", color: "#1f1f1f" }}
+          >
+            ✈ Search & Book Flight via WhatsApp
+          </Button>
+        </form>
+      </div>
+    </section>
   );
 }
 
@@ -1526,6 +1760,7 @@ export default function App() {
       <Navbar scrolled={scrolled} />
       <main>
         <Hero />
+        <FlightBookingSection />
         <AboutSection />
         <PackagesSection />
         <ServicesSection />
