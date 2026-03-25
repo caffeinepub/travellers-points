@@ -637,6 +637,13 @@ function FlightBookingSection() {
     window.open(waLink(msg), "_blank");
   }
 
+  function handleCleartrip() {
+    const cleartripBase = "https://www.cleartrip.com/flights/results";
+    const tripParam = tripType === "roundtrip" ? "roundtrip" : "oneway";
+    const url = `${cleartripBase}?adults=${passengers}&childs=0&infants=0&class=${flightClass.toLowerCase()}&depart_date=${departDate}&return_date=${returnDate}&from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&intl=n&sd=1&trip_type=${tripParam}`;
+    window.open(url, "_blank");
+  }
+
   return (
     <section
       id="flights"
@@ -842,9 +849,28 @@ function FlightBookingSection() {
             className="w-full py-3 text-base font-bold rounded-xl text-white"
             style={{ background: "#D4AF37", color: "#1f1f1f" }}
           >
-            ✈ Search & Book Flight via WhatsApp
+            ✈ Send Booking Request via WhatsApp
           </Button>
         </form>
+
+        {/* Cleartrip search button */}
+        <div className="mt-4 text-center">
+          <p className="text-gray-400 text-sm mb-3">
+            Or search real-time flight prices directly on Cleartrip
+          </p>
+          <button
+            type="button"
+            onClick={handleCleartrip}
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-white text-sm transition-all hover:opacity-90"
+            style={{ background: "#E8523A", border: "none" }}
+          >
+            ✈ Search Flights on Cleartrip
+          </button>
+          <p className="text-gray-500 text-xs mt-2">
+            You will be taken to Cleartrip.com to view prices and complete
+            booking
+          </p>
+        </div>
       </div>
     </section>
   );
